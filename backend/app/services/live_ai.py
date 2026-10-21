@@ -181,7 +181,8 @@ def _run_batch(batch_id: int) -> None:
         profile, plan = dict(session.profile), dict(session.state["plan"])
         session_id, targets = session.id, list(batch.targets)
     who = profile_text(profile, plan)
-    for target in targets:
+    open_quota = session.state.get("max_open", 0)
+    for n, target in enumerate(targets):
         try:
             with SessionLocal() as db:
                 sub = db.get(Subtopic, target["subtopic_id"])
@@ -191,18 +192,25 @@ def _run_batch(batch_id: int) -> None:
                                       for s in sub.sources if s.fragment]
                 existing = [q.stem for q in sub.questions]
                 name, concepts = sub.name, list(sub.concepts or [])
+                # Garantiza preguntas abiertas: si a esta sesión le faltan, el primer subtema del lote trae una.
+                open_have = db.scalar(select(func.count()).select_from(Question).where(
+                    Question.session_id == session_id, Question.kind == "open",
+                    Question.status == "verificada")) or 0
+            open_count = 1 if n == 0 and open_have < open_quota else 0
             questions, gen_errors = ai.generate_batch(
                 subtopic_name=name, concepts=concepts, sources=sources, count=target["count"],
                 existing_stems=existing, levels=[target["level"]] * target["count"], approach=plan["approach"],
-                profile=who, focus_errors=target["focus"])
+                profile=who, focus_errors=target["focus"], open_count=open_count)
             checks = ai.verify_batch(questions, {s["id"]: s for s in sources})
             with SessionLocal() as db:
                 for q, check in zip(questions, checks):
                     risk = check["risk"] if check["risk"] != "ninguno" else "media"
                     db.add(Question(
-                        subtopic_id=target["subtopic_id"], level=int(q["level"]), approach=q["approach"], kind="mc",
-                        concept=(q.get("concept") or "")[:160], stem=q["stem"], options=q["options"],
-                        correct_key=q["correct_key"], source_id=q["source_id"], origin="ia",
+                        subtopic_id=target["subtopic_id"], level=min(int(q["level"]), plan["max_level"]),
+                        approach=q["approach"], kind=q.get("kind", "mc"),
+                        concept=(q.get("concept") or "")[:160], stem=q["stem"], options=q.get("options") or [],
+                        correct_key=q.get("correct_key") or "", rubric=q.get("rubric") or [],
+                        source_id=q["source_id"], origin="ia",
                         status="verificada" if check["approved"] else "rechazada", risk_level=risk,
                         risk_note="Generada por IA durante un diagnóstico, a la medida del perfil; pendiente de revisión docente.",
                         verifier_note="; ".join(check["issues"]) or "El verificador no encontró problemas.",

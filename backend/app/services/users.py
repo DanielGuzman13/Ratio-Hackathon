@@ -23,6 +23,11 @@ def normalize_email(email: str) -> str:
     return (email or "").strip().lower()
 
 
+def me_payload(db: Session, user: User) -> dict:
+    from .diagnostic import account_formation
+    return user_payload(user) | {"formacion": account_formation(db, user)}
+
+
 def user_payload(user: User) -> dict:
     return {"id": user.id, "email": user.email, "name": user.name, "role": user.role, "provider": user.provider or "correo"}
 

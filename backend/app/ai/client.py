@@ -142,6 +142,39 @@ def _post_with_retry(url: str, *, json_body: dict, headers: dict, timeout: float
     raise AIUnavailable(last_error)
 
 
+# Consumo de IA desde que arrancó el servidor + últimos límites que informó el proveedor (Groq los manda
+# en cabeceras x-ratelimit-*). Se muestra al administrador para vigilar la cuota del plan gratis.
+USAGE = {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "errors_429": 0,
+         "since": time.time(), "limits": {}, "by_model": {}}
+_usage_lock = threading.Lock()
+
+
+def _record_usage(model: str, response) -> None:
+    try:
+        usage = (response.json() or {}).get("usage") or {}
+    except ValueError:
+        usage = {}
+    limits = {k.removeprefix("x-ratelimit-"): v for k, v in response.headers.items() if k.lower().startswith("x-ratelimit-")}
+    with _usage_lock:
+        USAGE["calls"] += 1
+        for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
+            USAGE[key] += int(usage.get(key) or 0)
+        m = USAGE["by_model"].setdefault(model, {"calls": 0, "total_tokens": 0})
+        m["calls"] += 1
+        m["total_tokens"] += int(usage.get("total_tokens") or 0)
+        if response.status_code == 429:
+            USAGE["errors_429"] += 1
+        if limits:
+            USAGE["limits"] = limits
+
+
+def usage_snapshot() -> dict:
+    with _usage_lock:
+        data = json.loads(json.dumps(USAGE))
+    data["hours"] = round((time.time() - data.pop("since")) / 3600, 2)
+    return data
+
+
 class OpenAICompatibleClient:
     def __init__(self, endpoint: AIEndpoint, timeout: float | None = None):
         self.endpoint = endpoint
@@ -172,6 +205,7 @@ class OpenAICompatibleClient:
             _reasoning_unsupported.set()
             body.pop("reasoning_effort")
             response = _post_with_retry(url, json_body=body, headers=headers, timeout=self.timeout)
+        _record_usage(self.endpoint.model, response)
         if response.status_code >= 400:
             raise AIUnavailable(f"El proveedor de IA respondió {response.status_code}: {response.text[:300]}")
         try:

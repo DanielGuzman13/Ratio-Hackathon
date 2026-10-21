@@ -53,9 +53,40 @@ def _normalize_options(raw) -> list:
     return out
 
 
+def _validate_open(data: dict, valid_sources: set[str] | None = None) -> list[str]:
+    """Pregunta abierta: caso con rúbrica de 2 a 4 criterios con palabras clave (para calificar sin IA si falla)."""
+    errors = []
+    if valid_sources is not None and data.get("source_id") not in valid_sources:
+        errors.append("Cita una fuente que no está en la lista cerrada")
+    if data.get("level") not in (1, 2, 3, None):
+        errors.append("Nivel inválido")
+    stem = data.get("stem") or ""
+    if len(stem) < 40:
+        errors.append("Falta el caso o es muy corto")
+    if unnamed_article_refs(stem, []):
+        errors.append("Cita un artículo sin decir de qué norma es")
+    if wrong_weekday_dates(stem):
+        errors.append("Fecha imposible")
+    rubric = data.get("rubric")
+    if not isinstance(rubric, list) or not 2 <= len(rubric) <= 4:
+        return errors + ["La rúbrica debe tener de 2 a 4 criterios"]
+    clean = []
+    for i, r in enumerate(rubric, start=1):
+        if not isinstance(r, dict) or not r.get("criterion"):
+            return errors + ["Criterio de rúbrica inválido"]
+        keywords = [str(k).strip().lower() for k in (r.get("keywords") or []) if str(k).strip()]
+        if len(keywords) < 2:
+            return errors + ["Cada criterio necesita al menos 2 palabras clave"]
+        clean.append({"id": f"r{i}", "criterion": str(r["criterion"])[:300], "keywords": keywords[:8]})
+    data["rubric"], data["options"], data["correct_key"], data["kind"] = clean, [], "", "open"
+    return errors
+
+
 def _validate_generated(data: dict, valid_sources: set[str] | None = None) -> list[str]:
     if not isinstance(data, dict):
         return ["Formato inválido: la pregunta no es un objeto"]
+    if data.get("kind") == "open":
+        return _validate_open(data, valid_sources)
     data["options"] = _normalize_options(data.get("options"))
     errors = []
     if data.get("error"):
@@ -150,7 +181,8 @@ def _distribution(count: int) -> tuple[str, list[int]]:
 
 def generate_batch(*, subtopic_name: str, concepts: list[str], sources: list[dict], count: int,
                    existing_stems: list[str], levels: list[int] | None = None, approach: str | None = None,
-                   profile: str = "", focus_errors: list[str] | None = None) -> tuple[list[dict], list[str]]:
+                   profile: str = "", focus_errors: list[str] | None = None,
+                   open_count: int = 0) -> tuple[list[dict], list[str]]:
     """Devuelve (preguntas_válidas, errores). Cada fuente: {id, citation, fragment}.
 
     Con `levels`, `approach`, `profile` y `focus_errors` la IA genera preguntas a la medida de la persona:
@@ -174,6 +206,8 @@ def generate_batch(*, subtopic_name: str, concepts: list[str], sources: list[dic
         user += ("\nErrores que la persona ya mostró en este subtema (diseña preguntas que permitan confirmarlos o "
                  "descartarlos, usando esos errores como distractores cuando el fragmento lo permita): "
                  + "; ".join(focus_errors[:4]))
+    if open_count:
+        user += prompts.OPEN_ADDON.format(open_count=open_count)
     data = generator.chat_json(prompts.BATCH_GENERATOR_SYSTEM, user, temperature=0.7)
     valid_ids = {s["id"] for s in sources}
     good, errors = [], []
@@ -205,9 +239,14 @@ def verify_batch(questions: list[dict], fragments: dict[str, dict]) -> list[dict
     items = []
     for i, q in enumerate(questions):
         src = fragments[q["source_id"]]
-        items.append({"index": i, "fuente": src["citation"], "fragmento": src["fragment"], "pregunta": q["stem"],
-                      "opciones": [{"key": o["key"], "text": o["text"]} for o in q["options"]],
-                      "correcta": q["correct_key"]})
+        item = {"index": i, "fuente": src["citation"], "fragmento": src["fragment"], "pregunta": q["stem"]}
+        if q.get("kind") == "open":
+            item["tipo"] = "abierta"
+            item["criterios"] = [r["criterion"] for r in q["rubric"]]
+        else:
+            item["opciones"] = [{"key": o["key"], "text": o["text"]} for o in q["options"]]
+            item["correcta"] = q["correct_key"]
+        items.append(item)
     data = verifier.chat_json(prompts.BATCH_VERIFIER_SYSTEM,
                               prompts.BATCH_VERIFIER_USER.format(items=json.dumps(items, ensure_ascii=False, indent=1)),
                               temperature=0)

@@ -52,6 +52,12 @@ class FakeAI:
                                        {"key": "D", "text": f"Opción D{i}", "misconception": "Ignora la regla D"}]})
             qs.append({"level": 2, "stem": "Sin fuente válida", "source_id": "inventada", "correct_key": "A",
                        "options": []})  # se descarta por formato antes de verificar
+            if "ABIERTA" in user:
+                qs.append({"level": levels[0], "approach": approach, "kind": "open", "concept": "Caso abierto",
+                           "source_id": ids[0], "stem": f"[IA] Caso abierto de {subtopic}: explica qué derecho aplica y qué "
+                           f"debe hacer la persona. " + _distinct_words(),
+                           "rubric": [{"id": "x", "criterion": "Identifica el derecho", "keywords": ["derecho", "norma"]},
+                                      {"id": "y", "criterion": "Indica qué hacer", "keywords": ["reclamar", "solicitar"]}]})
             return {"questions": qs}
         if system == prompts.BATCH_VERIFIER_SYSTEM:
             items = re.findall(r'"pregunta": "([^"]*)"', user)
@@ -115,6 +121,8 @@ def wait_batches(sid, timeout=10):
 
 
 def shown_key(public_q, q, correct):
+    if q.kind == "open":  # abierta: con las palabras de la rúbrica (acierto) o sin desarrollar (error)
+        return " ".join(r["keywords"][0] for r in q.rubric) + " y lo explico" if correct else "No lo sé, no tengo idea."
     target = q.correct_key if correct else next(o["key"] for o in q.options if o["key"] != q.correct_key)
     text = next(o["text"] for o in q.options if o["key"] == target)
     return next(o["key"] for o in public_q["options"] if o["text"] == text)
@@ -177,7 +185,7 @@ def test_ai_generates_tailored_batches_during_the_diagnostic(client, fake_ai, te
     assert detail["ai_batches"] and detail["ai_batches"][0]["targets"]
 
 
-def test_non_lawyer_gets_practical_ai_questions(client, fake_ai):
+def test_non_lawyer_gets_practical_ai_questions(client, fake_ai, fresh_user):
     profile = BASE | {"perfil": "no_abogado", "semestre": None, "objetivo": "conocer_derechos",
                       "area_id": "constitucional", "intereses": ["con_peticion", "con_tutela"]}
     sid = client.post("/api/sessions", json=profile).json()["session_id"]
@@ -320,3 +328,31 @@ def test_serverless_mode_runs_ai_in_its_own_request(client, fake_ai):
         assert client.get(f"/api/sessions/{sid}/next").json()["ai"]["pending"] is False
     finally:
         object.__setattr__(settings, "serverless", False)
+
+
+
+def test_every_diagnostic_gets_open_questions_even_for_non_lawyers(client, fake_ai, fresh_user):
+    """Las abiertas ya no dependen del enfoque técnico: la IA las genera para el perfil y el motor las reparte."""
+    profile = BASE | {"perfil": "no_abogado", "semestre": None, "objetivo": "conocer_derechos",
+                      "area_id": "laboral", "intereses": ["lab_jornada"]}
+    sid = client.post("/api/sessions", json=profile).json()["session_id"]
+    wait_batches(sid)
+    with SessionLocal() as db:
+        opens = db.scalars(select(Question).where(Question.session_id == sid, Question.kind == "open")).all()
+        assert opens and all(len(q.rubric) == 2 and q.approach == "practico" and q.level <= 2 for q in opens)
+    kinds = []
+    with SessionLocal() as db:
+        while True:
+            nxt = client.get(f"/api/sessions/{sid}/next").json()
+            if nxt.get("waiting"):
+                time.sleep(0.05)
+                continue
+            if nxt["finished"]:
+                break
+            q = db.get(Question, nxt["question"]["id"])
+            kinds.append(q.kind)
+            client.post(f"/api/sessions/{sid}/answers",
+                        json={"question_id": q.id, "answer": shown_key(nxt["question"], q, len(kinds) % 2 == 0)})
+            wait_batches(sid)
+    assert kinds.count("open") >= 1, f"debe haber al menos una abierta: {kinds}"
+    assert kinds.count("open") <= 2

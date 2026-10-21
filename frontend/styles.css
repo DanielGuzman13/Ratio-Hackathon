@@ -378,3 +378,6 @@ table.list th { font-weight: 500; color: var(--muted); font-size: .8rem; text-tr
 .prose h2 { font-size: 1.2rem; margin-top: 1.2rem; }
 .prose ul { padding-left: 1.2rem; }
 .prose li { margin-bottom: .4rem; }
+
+.formation-saved { font-weight: 600; margin: .2rem 0 .7rem; }
+.formation-saved .muted { font-weight: 400; font-size: .85rem; }

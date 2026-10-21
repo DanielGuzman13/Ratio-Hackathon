@@ -117,7 +117,12 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(String(10), default="usuario")
     provider: Mapped[str] = mapped_column(String(10), default="correo")  # correo | google
-    token_version: Mapped[int] = mapped_column(Integer, default=0)  # sube al cambiar la contraseña: cierra sesiones
+    token_version: Mapped[int] = mapped_column(Integer, default=0)
+    # Formación: se pide en el primer diagnóstico y queda en la cuenta. Después solo puede avanzar
+    # (subir de semestre o pasar de estudiante a abogado).
+    formacion: Mapped[str | None] = mapped_column(String(12), nullable=True)  # estudiante | abogado | no_abogado
+    semestre: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    profesion: Mapped[str] = mapped_column(String(80), default="")  # sube al cambiar la contraseña: cierra sesiones
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
     last_login: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 

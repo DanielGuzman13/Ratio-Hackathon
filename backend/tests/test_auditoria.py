@@ -145,3 +145,20 @@ def test_register_rejects_html_in_email_and_hsts_in_production(client, monkeypat
     from app import security
     monkeypatch.setattr(security, "settings", dataclasses.replace(config.settings, production=True))
     assert "strict-transport-security" in client.get("/").headers, "también en la página, no solo en la API"
+
+
+def test_formation_is_saved_once_and_can_only_advance(client, fresh_user):
+    from tests.test_ratio import STUDENT
+    base = STUDENT | {"intereses": ["lab_jornada"]}
+    assert client.get("/api/auth/me").json()["formacion"] is None, "cuenta nueva: aún no tiene formación"
+    assert client.post("/api/sessions", json=base | {"perfil": "estudiante", "semestre": 4}).status_code == 201
+    me = client.get("/api/auth/me").json()["formacion"]
+    assert me["perfil"] == "estudiante" and me["semestre"] == 4
+    # No puede cambiar a otra formación ni bajar de semestre.
+    assert client.post("/api/sessions", json=base | {"perfil": "no_abogado", "semestre": None}).status_code == 422
+    assert client.post("/api/sessions", json=base | {"perfil": "estudiante", "semestre": 3}).status_code == 422
+    # Sí puede avanzar de semestre y graduarse.
+    assert client.post("/api/sessions", json=base | {"perfil": "estudiante", "semestre": 6}).status_code == 201
+    assert client.post("/api/sessions", json=base | {"perfil": "abogado", "semestre": None}).status_code == 201
+    assert client.get("/api/auth/me").json()["formacion"]["perfil"] == "abogado"
+    assert client.post("/api/sessions", json=base | {"perfil": "estudiante", "semestre": 9}).status_code == 422

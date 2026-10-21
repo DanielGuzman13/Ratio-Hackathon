@@ -83,8 +83,8 @@ def delete_my_account(body: DeleteAccountIn, request: Request, user: User = Depe
 
 
 @public.get("/auth/me")
-def me(user: User = Depends(current_user)):
-    return users.user_payload(user)
+def me(user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return users.me_payload(db, user)
 
 
 @public.get("/me/sessions")
@@ -178,6 +178,23 @@ def teacher_review(session_id: str, body: ReviewIn, admin: User = Depends(admin_
 @docente.post("/reports/{session_id}/email")
 def teacher_email(session_id: str, admin: User = Depends(admin_user), db: Session = Depends(get_db)):
     return _run(diagnostic.resend_report, db, session_id, admin)
+
+
+@docente.get("/ai-usage")
+def teacher_ai_usage(_: User = Depends(admin_user), db: Session = Depends(get_db)):
+    """Consumo de IA para vigilar la cuota: tokens desde el arranque, límites que informa el proveedor
+    y lotes recientes guardados en la base de datos (sobreviven a reinicios)."""
+    from datetime import datetime, timedelta, timezone
+
+    from sqlalchemy import func, select
+
+    from ..ai.client import quota_blocked, usage_snapshot
+    from ..models import AIBatch
+    since = datetime.now(timezone.utc) - timedelta(hours=24)
+    batches = db.scalar(select(func.count()).select_from(AIBatch).where(AIBatch.created_at >= since)) or 0
+    sessions = db.scalar(select(func.count(func.distinct(AIBatch.session_id))).where(AIBatch.created_at >= since)) or 0
+    return usage_snapshot() | {"batches_24h": batches, "sessions_with_ai_24h": sessions,
+                               "quota_blocked": quota_blocked(), "model": settings.generator.model}
 
 
 @docente.get("/questions")

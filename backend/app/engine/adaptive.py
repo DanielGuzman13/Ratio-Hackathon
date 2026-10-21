@@ -135,6 +135,12 @@ def _is_doubtful(sub_state: dict) -> bool:
     return len(outcomes) == 2
 
 
+def _open_due(state: dict) -> bool:
+    """Reparte las abiertas: con cupo 2 en 15 preguntas, tocan a partir de la 5.ª y de la 10.ª."""
+    spacing = max(2, state["max_questions"] // (state["max_open"] + 1))
+    return state["count"] >= spacing * (state["open_used"] + 1)
+
+
 def _concept_key(concept: str) -> str:
     return " ".join((concept or "").lower().split())[:80]
 
@@ -147,11 +153,14 @@ def _pick_question(state: dict, sid: str, bank: list[QuestionRef]) -> QuestionRe
     if not pool:
         return None
     prefs = APPROACH_PREFERENCE[plan["approach"]]
-    # Pregunta abierta: solo en enfoque técnico, con cupo, y cuando el subtema está
-    # dudoso (aciertos y errores mezclados) o el perfil arranca en nivel avanzado.
-    allow_open = state["open_used"] < state["max_open"] and plan["approach"] == "tecnico" and (
-        _is_doubtful(sub) or plan["start_level"] >= 2)
-    if not allow_open:
+    # Preguntas abiertas: cada diagnóstico tiene un cupo (max_open) que se reparte a lo largo de la prueba.
+    # Cuando toca una («open_due») y el subtema tiene una disponible, va primero; fuera de esos momentos
+    # solo se usan si el subtema está dudoso (aciertos y errores mezclados).
+    open_left = state["open_used"] < state["max_open"]
+    opens = [q for q in pool if q.kind == "open"] if open_left else []
+    if opens and _open_due(state):
+        return min(opens, key=lambda q: (abs(q.level - sub["level"]), q.shown // 3, jitter(state.get("seed", 0), q.id)))
+    if not (open_left and _is_doubtful(sub)):
         pool = [q for q in pool if q.kind != "open"]
     if not pool:
         return None

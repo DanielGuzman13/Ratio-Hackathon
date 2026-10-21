@@ -162,7 +162,7 @@ def test_student_flow_detects_gaps_and_builds_justified_route(client):
     assert report["result"]["trace"], "cada decisión del motor queda trazada"
 
 
-def test_non_lawyer_gets_practical_approach_and_level_ceiling(client):
+def test_non_lawyer_gets_practical_approach_and_level_ceiling(client, fresh_user):
     report = run_diagnostic(client, NON_LAWYER, weak={"con_tutela"})
     assert report["result"]["global"]["approach"] == "practico"
     assert max(report["_asked_levels"]) <= 2

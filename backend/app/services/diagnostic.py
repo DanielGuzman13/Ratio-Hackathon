@@ -96,7 +96,9 @@ def build_initial_state(db: Session, area_id: str, profile: dict) -> dict:
     refs = [adaptive.SubtopicRef(s.id, s.name, tuple(p for p in s.prerequisites if p in ids), s.order)
             for s in subtopics]
     budget, per = question_budget(len(refs))
-    return adaptive.new_state(refs, plan.as_dict(), [], budget, per,
+    # Siempre hay preguntas abiertas: 2 en diagnósticos cortos y 3 desde 25 preguntas.
+    max_open = 2 if budget < 25 else 3
+    return adaptive.new_state(refs, plan.as_dict(), [], budget, per, max_open=max_open,
                               prefer_generated=settings.ai_prefer_generated)
 
 
@@ -120,10 +122,62 @@ def _free_topic_area(db: Session, topic: str) -> tuple[Area, bool]:
     return area, False
 
 
+FORMATION_LABELS = {"estudiante": "Estudiante de Derecho", "abogado": "Abogado(a)",
+                    "no_abogado": "Otra profesión o sin formación jurídica"}
+
+
+def account_formation(db: Session, user) -> dict | None:
+    """Formación guardada en la cuenta. Las cuentas anteriores la toman de su último diagnóstico."""
+    if user is None:
+        return None
+    if not user.formacion:
+        last = db.scalar(select(DiagnosticSession).where(DiagnosticSession.user_id == user.id)
+                         .order_by(DiagnosticSession.created_at.desc()))
+        if last is None or not (last.profile or {}).get("perfil"):
+            return None
+        user.formacion = last.profile["perfil"]
+        user.semestre = last.profile.get("semestre")
+        user.profesion = (last.profile.get("profesion") or "")[:80]
+        db.commit()
+    return {"perfil": user.formacion, "semestre": user.semestre, "profesion": user.profesion or "",
+            "label": FORMATION_LABELS.get(user.formacion, user.formacion)}
+
+
+def _apply_formation(db: Session, user, profile: dict) -> None:
+    """La formación no se vuelve a elegir libremente: solo puede avanzar.
+
+    - Estudiante: puede subir de semestre o pasar a abogado(a).
+    - Abogado(a) y otra profesión: quedan fijos (en otra profesión puede actualizar a qué se dedica).
+    """
+    saved = account_formation(db, user)
+    new, semester = profile.get("perfil"), profile.get("semestre")
+    if saved is None:
+        user.formacion, user.semestre = new, semester if new == "estudiante" else None
+        user.profesion = (profile.get("profesion") or "")[:80] if new == "no_abogado" else ""
+        return
+    old = saved["perfil"]
+    if new != old and not (old == "estudiante" and new == "abogado"):
+        raise DiagnosticError(f"Tu formación está registrada como «{saved['label']}» y no se puede cambiar. "
+                              "Solo puedes subir de semestre o, si eres estudiante, registrarte como abogado(a).", 422)
+    if new == "estudiante":
+        if not semester:
+            raise DiagnosticError("Indica el semestre que cursas.", 422)
+        if saved["semestre"] and semester < saved["semestre"]:
+            raise DiagnosticError(f"Ya estabas en {saved['semestre']}.º semestre: no puedes elegir uno anterior.", 422)
+        user.semestre = semester
+    elif new == "abogado":
+        user.semestre = None
+    else:
+        profile["profesion"] = (profile.get("profesion") or user.profesion or "")[:80] or None
+        user.profesion = profile["profesion"] or ""
+    user.formacion = new
+
+
 def start_session(db: Session, profile: dict, user=None) -> dict:
     profile.pop("consentimiento", None)
     if user is not None:
         profile["nombre"], profile["email"] = user.name, user.email
+        _apply_formation(db, user, profile)
     topic = (profile.get("tema_libre") or "").strip()
     job = None
     if profile["area_id"] == "libre":

@@ -522,21 +522,14 @@ async function viewPrivacy() {
 }
 
 // ---------- vistas: diagnóstico ----------
-async function viewProfile() {
-  loading();
-  const [areas, m] = await Promise.all([api("/areas"), meta()]);
-  const user = auth.user();
-  const state = { area: null };
-  const opts = (n, label) => Array.from({ length: n }, (_, i) => `<option value="${i + 1}">${label(i + 1)}</option>`).join("");
-  const areaChoices = areas.map((a) => html`
-    <label class="choice"><input type="radio" name="area_id" value="${esc(a.id)}">
-      <strong>${esc(a.name)}</strong><small>${esc(a.description)}</small></label>`).join("");
-  // autocomplete="off" y ningún valor por defecto: nada aparece preseleccionado.
-  $app.innerHTML = html`
-  <form class="card stack" id="profile" novalidate autocomplete="off">
-    <div><p class="eyebrow">Momento 1 · Perfilar</p><h2>Cuéntanos sobre ti</h2>
-      <p class="muted">Diagnóstico de <strong>${esc(user.name)}</strong> (${esc(user.email)}). Con estas respuestas ajustamos el enfoque, el nivel inicial y la ruta a tu tiempo real.</p></div>
-    <fieldset><legend>¿Cuál es tu formación? *</legend>
+// Formación: la primera vez se elige; después queda en la cuenta y solo puede avanzar
+// (subir de semestre o pasar de estudiante a abogado). El servidor aplica la misma regla.
+function formationHtml(f, opts) {
+  const semesterOpts = (from) => Array.from({ length: 10 - from + 1 }, (_, i) => from + i)
+    .map((n) => `<option value="${n}" ${n === from ? "selected" : ""}>${n}.º semestre</option>`).join("");
+  if (!f) {
+    return html`<fieldset><legend>¿Cuál es tu formación? *</legend>
+      <p class="hint">Se guarda en tu cuenta: en los próximos diagnósticos no te la volveremos a preguntar (solo podrás actualizar tu semestre o registrarte como abogado(a)).</p>
       <div class="choices">
         <label class="choice"><input type="radio" name="perfil" value="estudiante"><strong>Estudiante de Derecho</strong><small>Enfoque técnico-jurídico</small></label>
         <label class="choice"><input type="radio" name="perfil" value="abogado"><strong>Abogado(a)</strong><small>Enfoque técnico-jurídico, desde nivel intermedio</small></label>
@@ -546,7 +539,47 @@ async function viewProfile() {
     <div id="semestre-wrap" hidden><label class="field-label" for="semestre">Semestre que cursas *</label>
       <select id="semestre" name="semestre"><option value="" selected disabled>Selecciona…</option>${opts(10, (n) => `${n}.º semestre`)}</select></div>
     <div id="profesion-wrap" hidden><label class="field-label" for="profesion">¿A qué te dedicas? <span class="muted">(opcional)</span></label>
-      <input type="text" id="profesion" name="profesion" maxlength="80" placeholder="Ej.: ingeniera, contador, emprendedor"></div>
+      <input type="text" id="profesion" name="profesion" maxlength="80" placeholder="Ej.: ingeniera, contador, emprendedor"></div>`;
+  }
+  if (f.perfil === "estudiante") {
+    const from = f.semestre || 1;
+    return html`<fieldset class="formation"><legend>Tu formación</legend>
+      <p class="formation-saved">Estudiante de Derecho · ${from}.º semestre <span class="muted">(registrada en tu cuenta)</span></p>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="perfil" value="estudiante" checked><strong>Sigo estudiando Derecho</strong><small>Actualiza tu semestre si avanzaste</small></label>
+        <label class="choice"><input type="radio" name="perfil" value="abogado"><strong>Ya me gradué: soy abogado(a)</strong><small>Pasarás a evaluarte desde nivel intermedio</small></label>
+      </div>
+    </fieldset>
+    <div id="semestre-wrap"><label class="field-label" for="semestre">Semestre que cursas *</label>
+      <select id="semestre" name="semestre">${semesterOpts(from)}</select></div>
+    <div id="profesion-wrap" hidden><input type="hidden" id="profesion" name="profesion" value=""></div>`;
+  }
+  const isLawyer = f.perfil === "abogado";
+  return html`<fieldset class="formation"><legend>Tu formación</legend>
+    <p class="formation-saved">${esc(f.label)}${!isLawyer && f.profesion ? ` · ${esc(f.profesion)}` : ""} <span class="muted">(registrada en tu cuenta)</span></p>
+    <input type="radio" name="perfil" value="${esc(f.perfil)}" checked hidden>
+  </fieldset>
+  <div id="semestre-wrap" hidden><select id="semestre" name="semestre"><option value=""></option></select></div>
+  <div id="profesion-wrap" ${isLawyer ? "hidden" : ""}><label class="field-label" for="profesion">¿A qué te dedicas? <span class="muted">(opcional)</span></label>
+    <input type="text" id="profesion" name="profesion" maxlength="80" value="${esc(f.profesion || "")}" placeholder="Ej.: ingeniera, contador, emprendedor"></div>`;
+}
+
+async function viewProfile() {
+  loading();
+  const [areas, m, me] = await Promise.all([api("/areas"), meta(), api("/auth/me")]);
+  const user = auth.user();
+  const f = me.formacion;
+  const state = { area: null };
+  const opts = (n, label) => Array.from({ length: n }, (_, i) => `<option value="${i + 1}">${label(i + 1)}</option>`).join("");
+  const areaChoices = areas.map((a) => html`
+    <label class="choice"><input type="radio" name="area_id" value="${esc(a.id)}">
+      <strong>${esc(a.name)}</strong><small>${esc(a.description)}</small></label>`).join("");
+  // autocomplete="off" y ningún valor por defecto: nada aparece preseleccionado.
+  $app.innerHTML = html`
+  <form class="card stack" id="profile" novalidate autocomplete="off">
+    <div><p class="eyebrow">Momento 1 · Perfilar</p><h2>${f ? "Nuevo diagnóstico" : "Cuéntanos sobre ti"}</h2>
+      <p class="muted">Diagnóstico de <strong>${esc(user.name)}</strong> (${esc(user.email)}). Con estas respuestas ajustamos el enfoque, el nivel inicial y la ruta a tu tiempo real.</p></div>
+    ${formationHtml(f, opts)}
     <fieldset><legend>Área que quieres valorar *</legend><div class="choices">${areaChoices}</div></fieldset>
     <fieldset id="interests-wrap" hidden><legend>¿Sobre qué temas quieres que te evaluemos? *</legend>
       <p class="hint">Te preguntaremos <strong>solo</strong> sobre los temas que marques: 15 preguntas si eliges uno, y 5 más por cada tema adicional (máximo 45).${m.ai.live_generation ? " Mientras respondes, la IA prepara preguntas nuevas a la medida de tu perfil y de tus respuestas." : ""}</p>
@@ -984,7 +1017,7 @@ async function viewAdmin() {
   <div class="stack">
     <div><p class="eyebrow">Administración</p><h2>Revisión de informes y calidad del banco</h2></div>
     <div class="tabs" role="tablist">
-      ${[["rutas", "Informes por aprobar"], ["todos", "Todos los informes"], ["banco", "Banco de preguntas"], ["riesgos", "Riesgos normativos"]].map(([id, label]) =>
+      ${[["rutas", "Informes por aprobar"], ["todos", "Todos los informes"], ["banco", "Banco de preguntas"], ["riesgos", "Riesgos normativos"], ["ia", "Consumo de IA"]].map(([id, label]) =>
         `<button class="tab" role="tab" data-tab="${id}" aria-selected="${tab === id}">${label}</button>`).join("")}
     </div>
     <div id="tab-body"><div class="spinner"></div></div>
@@ -994,6 +1027,31 @@ async function viewAdmin() {
   if (tab === "rutas" || tab === "todos") await tabReports(body, tab === "rutas");
   if (tab === "banco") await tabBank(body);
   if (tab === "riesgos") await tabRisks(body);
+  if (tab === "ia") await tabUsage(body);
+}
+
+// Consumo de IA: para vigilar la cuota del plan gratuito del proveedor (Groq).
+async function tabUsage(body) {
+  const u = await api("/teacher/ai-usage");
+  const n = (x) => Number(x || 0).toLocaleString("es-CO");
+  const lim = u.limits || {};
+  const row = (label, limit, remaining, reset) => limit
+    ? html`<tr><td>${label}</td><td>${n(remaining)} de ${n(limit)}</td><td>${esc(reset || "—")}</td></tr>` : "";
+  const perDiag = u.sessions_with_ai_24h ? Math.round(u.total_tokens / Math.max(1, u.sessions_with_ai_24h)) : null;
+  body.innerHTML = html`<div class="stack">
+    ${u.quota_blocked ? html`<div class="banner"><strong>IA en pausa por cuota:</strong> ${esc(u.quota_blocked)} Mientras tanto se usa el banco de preguntas.</div>` : ""}
+    <div class="level-hero">
+      <div class="stat"><div class="label">Tokens usados</div><div class="value">${n(u.total_tokens)}</div><small class="muted">en ${u.hours} h desde el último arranque</small></div>
+      <div class="stat"><div class="label">Llamadas a la IA</div><div class="value">${n(u.calls)}</div><small class="muted">${n(u.errors_429)} rechazadas por límite (429)</small></div>
+      <div class="stat"><div class="label">Diagnósticos con IA (24 h)</div><div class="value">${n(u.sessions_with_ai_24h)}</div><small class="muted">${n(u.batches_24h)} lotes${perDiag ? ` · ≈ ${n(perDiag)} tokens c/u` : ""}</small></div>
+    </div>
+    <div class="card table-wrap"><h3>Límites que informa el proveedor</h3>
+      ${Object.keys(lim).length ? html`<table class="list"><thead><tr><th>Límite</th><th>Disponible</th><th>Se renueva en</th></tr></thead><tbody>
+        ${row("Solicitudes por día", lim["limit-requests"], lim["remaining-requests"], lim["reset-requests"])}
+        ${row("Tokens por minuto", lim["limit-tokens"], lim["remaining-tokens"], lim["reset-tokens"])}
+      </tbody></table>` : '<p class="muted">Aún no hay llamadas desde el último arranque del servidor.</p>'}
+      <p class="hint" style="margin-top:.8rem">El límite diario de tokens no llega en estas cabeceras: revísalo en console.groq.com → Settings → Limits (y el gasto en Usage). Modelo: ${esc(u.model || "—")}.</p>
+    </div></div>`;
 }
 
 async function tabReports(body, onlyPending) {
