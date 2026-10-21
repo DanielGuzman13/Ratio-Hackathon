@@ -1,0 +1,1883 @@
+{
+ "area": {
+  "id": "constitucional",
+  "name": "Derecho constitucional",
+  "description": "Supremacía constitucional, derecho de petición y acción de tutela: concepto, procedencia y tutela contra providencias judiciales."
+ },
+ "subtopics": [
+  {
+   "id": "con_fundamentos",
+   "name": "Supremacía constitucional y principios",
+   "module": "Básico · B1-B2 / Intermedio · I6",
+   "order": 1,
+   "prerequisites": [],
+   "objective_tecnico": "Explicar la supremacía de la Constitución, la excepción de inconstitucionalidad y el bloque de constitucionalidad.",
+   "objective_practico": "Entender por qué la Constitución está por encima de cualquier otra norma y qué significa que Colombia sea un Estado social de derecho.",
+   "concepts": [
+    "Norma de normas",
+    "Estado social de derecho",
+    "Excepción de inconstitucionalidad",
+    "Bloque de constitucionalidad"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_1_4",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 1 y 4",
+     "detail": "Estado social de derecho y supremacía constitucional.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 1: Colombia es un Estado social de derecho, organizado en forma de República unitaria, descentralizada, con autonomía de sus entidades territoriales. Art. 4: la Constitución es norma de normas; en caso de incompatibilidad con la ley u otra norma jurídica, se aplicarán las disposiciones constitucionales.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_cp_93",
+     "kind": "norma",
+     "citation": "Constitución Política, art. 93",
+     "detail": "Prevalencia de tratados de derechos humanos y bloque de constitucionalidad.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Los tratados y convenios internacionales ratificados por el Congreso que reconocen los derechos humanos y prohíben su limitación en los estados de excepción prevalecen en el orden interno.",
+     "min_level": 3,
+     "priority": 2
+    }
+   ],
+   "questions": [
+    {
+     "id": "cf1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Norma de normas",
+     "source_id": "src_cp_1_4",
+     "stem": "¿Qué artículo de la Constitución establece que ella es 'norma de normas'?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Artículo 4",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Artículo 1",
+       "misconception": "Confunde la supremacía constitucional con la cláusula de Estado social de derecho"
+      },
+      {
+       "key": "C",
+       "text": "Artículo 86",
+       "misconception": "Confunde la supremacía constitucional con la acción de tutela"
+      },
+      {
+       "key": "D",
+       "text": "Artículo 241",
+       "misconception": "Confunde la supremacía con las funciones de la Corte Constitucional"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cf2",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Estado social de derecho",
+     "source_id": "src_cp_1_4",
+     "stem": "Según el artículo 1 de la Constitución, ¿cómo se define Colombia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Como un Estado federal de derecho",
+       "misconception": "Confunde la república unitaria con un Estado federal"
+      },
+      {
+       "key": "B",
+       "text": "Como un Estado social de derecho, organizado como república unitaria y descentralizada",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Como un Estado liberal de derecho",
+       "misconception": "Desconoce la cláusula social del Estado"
+      },
+      {
+       "key": "D",
+       "text": "Como una república centralista sin autonomía territorial",
+       "misconception": "Desconoce la descentralización y autonomía territorial"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "cf3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Excepción de inconstitucionalidad",
+     "source_id": "src_cp_1_4",
+     "stem": "Un juez advierte que la norma legal aplicable a un caso es abiertamente incompatible con la Constitución. ¿Qué puede hacer?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Inaplicarla en ese caso concreto (excepción de inconstitucionalidad), con efectos solo entre las partes",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Declararla inexequible con efectos generales",
+       "misconception": "Confunde el control difuso con el control concentrado de la Corte Constitucional"
+      },
+      {
+       "key": "C",
+       "text": "Aplicarla de todas formas porque la ley prevalece",
+       "misconception": "Desconoce la supremacía constitucional"
+      },
+      {
+       "key": "D",
+       "text": "Suspender el proceso hasta que el Congreso derogue la norma",
+       "misconception": "Desconoce el deber del juez de aplicar directamente la Constitución"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cf4",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Bloque de constitucionalidad",
+     "source_id": "src_cp_93",
+     "stem": "¿Qué lugar ocupan los tratados de derechos humanos ratificados por Colombia que prohíben su limitación en estados de excepción?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Prevalecen en el orden interno e integran el bloque de constitucionalidad en sentido estricto",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Tienen rango de ley ordinaria",
+       "misconception": "Desconoce el bloque de constitucionalidad"
+      },
+      {
+       "key": "C",
+       "text": "Son solo criterios auxiliares de interpretación",
+       "misconception": "Confunde el bloque en sentido estricto con fuentes auxiliares"
+      },
+      {
+       "key": "D",
+       "text": "Prevalecen incluso sobre la propia Constitución",
+       "misconception": "Cree que los tratados están por encima de la Constitución"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "con_peticion",
+   "name": "Derecho de petición",
+   "module": "Básico · B6",
+   "order": 2,
+   "prerequisites": [
+    "con_fundamentos"
+   ],
+   "objective_tecnico": "Aplicar los términos, destinatarios y requisitos de una respuesta de fondo según el art. 23 CP y la Ley 1755 de 2015.",
+   "objective_practico": "Saber cómo pedir información o una solución a una entidad, cuánto deben tardar en responder y qué hacer si no lo hacen bien.",
+   "concepts": [
+    "Términos de respuesta",
+    "Destinatarios",
+    "Respuesta de fondo",
+    "Ampliación del plazo"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_23",
+     "kind": "norma",
+     "citation": "Constitución Política, art. 23",
+     "detail": "Derecho a presentar peticiones respetuosas y obtener pronta resolución.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Toda persona tiene derecho a presentar peticiones respetuosas a las autoridades por motivos de interés general o particular y a obtener pronta resolución. El legislador podrá reglamentar su ejercicio ante organizaciones privadas.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_ley1755",
+     "kind": "norma",
+     "citation": "Ley 1755 de 2015, arts. 13, 14 y 32",
+     "detail": "Términos: 15 días general, 10 días documentos, 30 días consultas; ampliación hasta el doble.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1755_2015.html",
+     "fragment": "Toda petición debe resolverse dentro de los 15 días siguientes a su recepción; las de documentos e información, dentro de 10 días; las consultas, dentro de 30 días. Si no es posible, se informará antes del vencimiento, expresando los motivos y un plazo razonable que no podrá exceder el doble del inicialmente previsto.",
+     "min_level": 1,
+     "priority": 2
+    }
+   ],
+   "questions": [
+    {
+     "id": "cp1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Términos de respuesta",
+     "source_id": "src_ley1755",
+     "stem": "¿Cuál es el plazo general para responder un derecho de petición?",
+     "options": [
+      {
+       "key": "A",
+       "text": "15 días",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "10 días",
+       "misconception": "Confunde el término general con el de solicitudes de documentos"
+      },
+      {
+       "key": "C",
+       "text": "30 días",
+       "misconception": "Confunde el término general con el de consultas"
+      },
+      {
+       "key": "D",
+       "text": "5 días",
+       "misconception": "Desconoce los términos legales del derecho de petición"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cp2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Destinatarios",
+     "source_id": "src_cp_23",
+     "stem": "¿Ante quién se puede presentar un derecho de petición?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Ante autoridades y, en los casos que señala la ley, ante organizaciones privadas",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Solo ante autoridades públicas",
+       "misconception": "Desconoce la petición ante particulares"
+      },
+      {
+       "key": "C",
+       "text": "Solo ante jueces",
+       "misconception": "Confunde la petición con una acción judicial"
+      },
+      {
+       "key": "D",
+       "text": "Solo por escrito y por medio de abogado",
+       "misconception": "Cree que la petición exige formalidades y apoderado"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cp3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Términos de respuesta",
+     "source_id": "src_ley1755",
+     "stem": "¿En qué plazo debe resolverse una petición de documentos o información?",
+     "options": [
+      {
+       "key": "A",
+       "text": "10 días",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "15 días",
+       "misconception": "Aplica el término general a una solicitud de documentos"
+      },
+      {
+       "key": "C",
+       "text": "30 días",
+       "misconception": "Confunde la solicitud de documentos con una consulta"
+      },
+      {
+       "key": "D",
+       "text": "3 días",
+       "misconception": "Confunde el término de respuesta con el de entrega de copias"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cp4",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Respuesta de fondo",
+     "source_id": "src_cp_23",
+     "stem": "Una EPS responde a tiempo un derecho de petición, pero solo dice: 'su solicitud está en trámite'. ¿Cumplió con su deber?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Sí, porque respondió dentro del plazo",
+       "misconception": "Cree que cualquier respuesta oportuna satisface el derecho de petición"
+      },
+      {
+       "key": "B",
+       "text": "No: la respuesta debe ser de fondo, clara, precisa y congruente con lo pedido",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Sí, porque las EPS no están obligadas a responder peticiones",
+       "misconception": "Desconoce la petición ante particulares que prestan servicios públicos"
+      },
+      {
+       "key": "D",
+       "text": "No, porque debía responder en 5 días",
+       "misconception": "Desconoce los términos legales del derecho de petición"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "cp5",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Ampliación del plazo",
+     "source_id": "src_ley1755",
+     "stem": "Si una autoridad no puede resolver una petición dentro del plazo legal, ¿qué debe hacer?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Informarlo antes del vencimiento, explicar los motivos y fijar un plazo razonable que no exceda el doble del inicial",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Responder cuando pueda, sin avisar",
+       "misconception": "Desconoce el deber de informar la ampliación"
+      },
+      {
+       "key": "C",
+       "text": "Archivar la petición",
+       "misconception": "Cree que la imposibilidad de responder permite archivar"
+      },
+      {
+       "key": "D",
+       "text": "Remitirla a un juez",
+       "misconception": "Confunde la petición con un trámite judicial"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "con_tutela",
+   "name": "Acción de tutela: concepto y trámite",
+   "module": "Básico · B7 / Intermedio · I2",
+   "order": 3,
+   "prerequisites": [
+    "con_fundamentos"
+   ],
+   "objective_tecnico": "Explicar el objeto, los legitimados, los términos del trámite, la impugnación y el desacato en la acción de tutela.",
+   "objective_practico": "Saber qué es una tutela, quién puede presentarla y qué pasa si la entidad no cumple el fallo.",
+   "concepts": [
+    "Objeto de la tutela",
+    "Términos",
+    "Impugnación",
+    "Legitimación",
+    "Desacato"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_86",
+     "kind": "norma",
+     "citation": "Constitución Política, art. 86",
+     "detail": "Acción de tutela: objeto, término de fallo, subsidiariedad y tutela contra particulares.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Toda persona tendrá acción de tutela para reclamar ante los jueces, por sí misma o por quien actúe a su nombre, la protección inmediata de sus derechos constitucionales fundamentales. En ningún caso podrán transcurrir más de diez días entre la solicitud y su resolución. Solo procederá cuando el afectado no disponga de otro medio de defensa judicial, salvo que se utilice como mecanismo transitorio para evitar un perjuicio irremediable.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_d2591",
+     "kind": "norma",
+     "citation": "Decreto 2591 de 1991, arts. 10, 31 y 52",
+     "detail": "Legitimación, impugnación dentro de los 3 días y desacato.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2591_1991.html",
+     "fragment": "Art. 31: el fallo podrá ser impugnado dentro de los 3 días siguientes a su notificación. Art. 52: quien incumpla una orden de tutela incurrirá en desacato sancionable con arresto hasta de 6 meses y multa hasta de 20 salarios mínimos mensuales.",
+     "min_level": 2,
+     "priority": 2
+    }
+   ],
+   "questions": [
+    {
+     "id": "ct1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Objeto de la tutela",
+     "source_id": "src_cp_86",
+     "stem": "¿Qué protege la acción de tutela?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Los derechos fundamentales amenazados o vulnerados",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Cualquier derecho económico o contractual",
+       "misconception": "Cree que la tutela sirve para cualquier reclamo patrimonial"
+      },
+      {
+       "key": "C",
+       "text": "Los derechos colectivos, como el ambiente",
+       "misconception": "Confunde la tutela con la acción popular"
+      },
+      {
+       "key": "D",
+       "text": "El cumplimiento de leyes y actos administrativos",
+       "misconception": "Confunde la tutela con la acción de cumplimiento"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "ct2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Términos",
+     "source_id": "src_cp_86",
+     "stem": "¿Cuál es el plazo máximo entre la presentación de la tutela y el fallo de primera instancia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "10 días",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "15 días",
+       "misconception": "Confunde el término de la tutela con el del derecho de petición"
+      },
+      {
+       "key": "C",
+       "text": "30 días",
+       "misconception": "Desconoce el carácter sumario de la tutela"
+      },
+      {
+       "key": "D",
+       "text": "48 horas",
+       "misconception": "Confunde el término de fallo con el de medidas urgentes"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "ct3",
+     "level": 2,
+     "approach": "ambos",
+     "concept": "Legitimación",
+     "source_id": "src_cp_86",
+     "stem": "¿Se necesita abogado para presentar una acción de tutela?",
+     "options": [
+      {
+       "key": "A",
+       "text": "No: cualquier persona puede presentarla por sí misma o por quien actúe a su nombre",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Sí, siempre",
+       "misconception": "Cree que la tutela exige apoderado judicial"
+      },
+      {
+       "key": "C",
+       "text": "Solo si es contra un particular",
+       "misconception": "Confunde reglas de procedencia contra particulares con representación"
+      },
+      {
+       "key": "D",
+       "text": "Solo pueden presentarla personas mayores de edad",
+       "misconception": "Desconoce que cualquier persona es titular de la tutela"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "ct4",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Impugnación",
+     "source_id": "src_d2591",
+     "stem": "¿Dentro de qué término puede impugnarse el fallo de tutela de primera instancia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "3 días siguientes a su notificación",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "10 días siguientes a su notificación",
+       "misconception": "Confunde el término de impugnación con el de fallo"
+      },
+      {
+       "key": "C",
+       "text": "5 días hábiles",
+       "misconception": "Desconoce el término del Decreto 2591 de 1991"
+      },
+      {
+       "key": "D",
+       "text": "El fallo de tutela no es impugnable",
+       "misconception": "Desconoce la segunda instancia en tutela"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "ct5",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Desacato",
+     "source_id": "src_d2591",
+     "stem": "Una entidad no cumple la orden de un fallo de tutela. ¿Qué ocurre?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Procede el incidente de desacato: arresto hasta de 6 meses y multa hasta de 20 SMMLV, sin perjuicio de otras sanciones",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Debe presentarse una nueva tutela por los mismos hechos",
+       "misconception": "Desconoce el desacato y se expone a la temeridad"
+      },
+      {
+       "key": "C",
+       "text": "Solo procede una multa administrativa",
+       "misconception": "Desconoce el alcance de la sanción por desacato"
+      },
+      {
+       "key": "D",
+       "text": "Nada: el fallo es una recomendación",
+       "misconception": "Desconoce la obligatoriedad de los fallos de tutela"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "con_procedencia",
+   "name": "Procedencia de la tutela",
+   "module": "Intermedio · I1",
+   "order": 4,
+   "prerequisites": [
+    "con_tutela"
+   ],
+   "objective_tecnico": "Analizar los requisitos de procedencia: legitimación, inmediatez, subsidiariedad, perjuicio irremediable y tutela contra particulares.",
+   "objective_practico": "Saber en qué casos sí sirve una tutela y en cuáles hay que usar otro camino.",
+   "concepts": [
+    "Subsidiariedad",
+    "Inmediatez",
+    "Perjuicio irremediable",
+    "Tutela contra particulares",
+    "Tutela en materia laboral"
+   ],
+   "risk_level": "media",
+   "risk_note": "Requisitos con fuerte desarrollo jurisprudencial: verificar que las reglas citadas sigan vigentes en sentencias de unificación recientes.",
+   "sources": [
+    {
+     "id": "src_cp_86_proc",
+     "kind": "norma",
+     "citation": "Constitución Política, art. 86 (incisos 3 y 5)",
+     "detail": "Subsidiariedad, mecanismo transitorio y procedencia contra particulares.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Solo procederá cuando el afectado no disponga de otro medio de defensa judicial, salvo que se utilice como mecanismo transitorio para evitar un perjuicio irremediable. La ley establecerá los casos en que procede contra particulares encargados de la prestación de un servicio público o cuya conducta afecte grave y directamente el interés colectivo, o respecto de quienes el solicitante se halle en estado de subordinación o indefensión.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_d2591_6",
+     "kind": "norma",
+     "citation": "Decreto 2591 de 1991, art. 6",
+     "detail": "Causales de improcedencia; idoneidad y eficacia del otro medio.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/decreto_2591_1991.html",
+     "fragment": "La existencia de otros medios de defensa judicial será apreciada en concreto, en cuanto a su eficacia, atendiendo las circunstancias en que se encuentra el solicitante.",
+     "min_level": 2,
+     "priority": 2
+    },
+    {
+     "id": "src_c543_1992",
+     "kind": "jurisprudencia",
+     "citation": "Corte Constitucional, Sentencia C-543 de 1992",
+     "detail": "Inexistencia de término de caducidad de la tutela; base del requisito de inmediatez.",
+     "url": "https://www.corteconstitucional.gov.co/relatoria/1992/C-543-92.htm",
+     "fragment": "La tutela no está sujeta a un término de caducidad, pero debe interponerse en un plazo razonable desde la vulneración.",
+     "min_level": 2,
+     "priority": 3,
+     "risk_level": "media",
+     "risk_note": "Regla de inmediatez desarrollada por jurisprudencia posterior; verificar sentencia ancla vigente."
+    }
+   ],
+   "questions": [
+    {
+     "id": "cpr1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Tutela contra particulares",
+     "source_id": "src_cp_86_proc",
+     "stem": "¿Procede la tutela contra particulares?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Sí, cuando prestan un servicio público, afectan grave y directamente el interés colectivo o hay subordinación o indefensión",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "No, solo procede contra autoridades públicas",
+       "misconception": "Desconoce la tutela contra particulares"
+      },
+      {
+       "key": "C",
+       "text": "Sí, contra cualquier particular y en cualquier caso",
+       "misconception": "Ignora los supuestos que habilitan la tutela contra particulares"
+      },
+      {
+       "key": "D",
+       "text": "Solo contra empresas con más de 50 trabajadores",
+       "misconception": "Inventa un criterio de procedencia inexistente"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cpr2",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Subsidiariedad",
+     "source_id": "src_cp_86_proc",
+     "stem": "La tutela es improcedente cuando existe otro medio de defensa judicial, salvo cuando...",
+     "options": [
+      {
+       "key": "A",
+       "text": "Se usa como mecanismo transitorio para evitar un perjuicio irremediable, o el otro medio no es idóneo ni eficaz en el caso concreto",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "El accionante prefiere la tutela por ser más rápida",
+       "misconception": "Cree que la rapidez de la tutela justifica desplazar los medios ordinarios"
+      },
+      {
+       "key": "C",
+       "text": "No existe excepción alguna",
+       "misconception": "Desconoce las excepciones a la subsidiariedad"
+      },
+      {
+       "key": "D",
+       "text": "La demanda es contra un particular",
+       "misconception": "Confunde subsidiariedad con procedencia contra particulares"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cpr3",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Inmediatez",
+     "source_id": "src_c543_1992",
+     "stem": "María presentó una tutela tres años después de la vulneración, sin explicar por qué esperó tanto. ¿Qué requisito puede no cumplir?",
+     "options": [
+      {
+       "key": "A",
+       "text": "La inmediatez",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "La subsidiariedad",
+       "misconception": "Confunde inmediatez con subsidiariedad"
+      },
+      {
+       "key": "C",
+       "text": "La legitimación por activa",
+       "misconception": "Confunde inmediatez con legitimación"
+      },
+      {
+       "key": "D",
+       "text": "La caducidad de 4 meses de la tutela",
+       "misconception": "Cree que la tutela tiene un término fijo de caducidad"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cpr4",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Tutela en materia laboral",
+     "source_id": "src_d2591_6",
+     "stem": "¿Procede la tutela para reclamar el pago de acreencias laborales, como las cesantías?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Por regla general no, porque existe el proceso ordinario laboral; excepcionalmente sí, si se afecta el mínimo vital",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Sí, siempre que haya una deuda laboral",
+       "misconception": "Desconoce la subsidiariedad frente al proceso ordinario laboral"
+      },
+      {
+       "key": "C",
+       "text": "Nunca, porque son derechos económicos",
+       "misconception": "Desconoce la procedencia excepcional por afectación del mínimo vital"
+      },
+      {
+       "key": "D",
+       "text": "Solo si el trabajador tiene abogado",
+       "misconception": "Confunde procedencia con representación"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cpr5",
+     "level": 3,
+     "approach": "tecnico",
+     "kind": "open",
+     "concept": "Perjuicio irremediable",
+     "source_id": "src_d2591_6",
+     "risk_level": "media",
+     "risk_note": "Análisis jurisprudencial: el docente debe validar la rúbrica.",
+     "stem": "Una persona de 78 años, sin ingresos, reclama por tutela una pensión que le negaron hace dos meses. Analiza si la tutela procede.",
+     "rubric": [
+      {
+       "id": "r1",
+       "criterion": "Identifica la subsidiariedad y la existencia del proceso ordinario",
+       "keywords": [
+        "subsidiariedad",
+        "proceso ordinario",
+        "otro medio",
+        "juez laboral"
+       ]
+      },
+      {
+       "id": "r2",
+       "criterion": "Evalúa idoneidad y eficacia del otro medio por tratarse de un sujeto de especial protección",
+       "keywords": [
+        "idoneo",
+        "eficaz",
+        "especial proteccion",
+        "adulto mayor",
+        "edad"
+       ]
+      },
+      {
+       "id": "r3",
+       "criterion": "Analiza el mínimo vital o el perjuicio irremediable",
+       "keywords": [
+        "minimo vital",
+        "perjuicio irremediable",
+        "sin ingresos",
+        "subsistencia"
+       ]
+      },
+      {
+       "id": "r4",
+       "criterion": "Verifica la inmediatez (plazo razonable)",
+       "keywords": [
+        "inmediatez",
+        "plazo razonable",
+        "dos meses"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "con_providencias",
+   "name": "Tutela contra providencias judiciales y efectos de las sentencias",
+   "module": "Intermedio · I9 / Avanzado · A2",
+   "order": 5,
+   "prerequisites": [
+    "con_procedencia"
+   ],
+   "objective_tecnico": "Aplicar los requisitos generales y las causales específicas de procedibilidad de la tutela contra providencias (C-590 de 2005) y distinguir los efectos de las sentencias C, T y SU.",
+   "objective_practico": "Entender que, de forma excepcional, una tutela puede dirigirse contra una decisión judicial, y cómo se aplican las decisiones de la Corte.",
+   "concepts": [
+    "Procedencia excepcional",
+    "Requisitos generales",
+    "Causales específicas",
+    "Efectos de las sentencias"
+   ],
+   "risk_level": "media",
+   "risk_note": "Línea jurisprudencial viva: verificar sentencias de unificación recientes que precisen la C-590 de 2005.",
+   "sources": [
+    {
+     "id": "src_c590_2005",
+     "kind": "jurisprudencia",
+     "citation": "Corte Constitucional, Sentencia C-590 de 2005",
+     "detail": "Requisitos generales y causales específicas de procedibilidad de la tutela contra providencias judiciales.",
+     "url": "https://www.corteconstitucional.gov.co/relatoria/2005/C-590-05.htm",
+     "fragment": "Requisitos generales: relevancia constitucional, agotamiento de los medios de defensa, inmediatez, irregularidad procesal decisiva, identificación de los hechos y que no se trate de sentencias de tutela. Causales específicas: defecto orgánico, procedimental, fáctico, material o sustantivo, error inducido, decisión sin motivación, desconocimiento del precedente y violación directa de la Constitución.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_efectos_sentencias",
+     "kind": "guia",
+     "citation": "Corte Constitucional — Relatoría: tipos de providencias",
+     "detail": "Sentencias C (constitucionalidad, efectos erga omnes), T (tutela, inter partes) y SU (unificación).",
+     "url": "https://www.corteconstitucional.gov.co/relatoria/",
+     "fragment": "Las sentencias de constitucionalidad tienen efectos erga omnes; las de tutela, inter partes; las de unificación fijan el alcance de los derechos y vinculan como precedente.",
+     "min_level": 2,
+     "priority": 2
+    }
+   ],
+   "questions": [
+    {
+     "id": "cpp1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Procedencia excepcional",
+     "source_id": "src_c590_2005",
+     "stem": "¿Puede presentarse una tutela contra una sentencia judicial?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Sí, de forma excepcional y si se cumplen requisitos estrictos",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Nunca, por la cosa juzgada",
+       "misconception": "Desconoce la tutela contra providencias judiciales"
+      },
+      {
+       "key": "C",
+       "text": "Siempre que se pierda el proceso",
+       "misconception": "Cree que la tutela es una tercera instancia"
+      },
+      {
+       "key": "D",
+       "text": "Solo contra sentencias de la Corte Constitucional",
+       "misconception": "Invierte la lógica de la tutela contra providencias"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cpp2",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Efectos de las sentencias",
+     "source_id": "src_efectos_sentencias",
+     "stem": "¿Qué efectos tiene, por regla general, una sentencia de revisión de tutela (T)?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Inter partes: obliga a las partes del caso",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Erga omnes: obliga a todos",
+       "misconception": "Confunde los efectos de las sentencias T con los de las sentencias C"
+      },
+      {
+       "key": "C",
+       "text": "Ninguno: es una recomendación",
+       "misconception": "Desconoce la obligatoriedad de los fallos de tutela"
+      },
+      {
+       "key": "D",
+       "text": "Deroga la norma aplicada",
+       "misconception": "Confunde la tutela con el control abstracto"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cpp3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Requisitos generales",
+     "source_id": "src_c590_2005",
+     "stem": "¿Qué sentencia sistematizó los requisitos de la tutela contra providencias judiciales?",
+     "options": [
+      {
+       "key": "A",
+       "text": "C-590 de 2005",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "T-025 de 2004",
+       "misconception": "Confunde la tutela contra providencias con el estado de cosas inconstitucional"
+      },
+      {
+       "key": "C",
+       "text": "C-551 de 2003",
+       "misconception": "Confunde la tutela contra providencias con la sustitución de la Constitución"
+      },
+      {
+       "key": "D",
+       "text": "T-760 de 2008",
+       "misconception": "Confunde la tutela contra providencias con la línea sobre derecho a la salud"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cpp4",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Requisitos generales",
+     "source_id": "src_c590_2005",
+     "stem": "¿Cuál de los siguientes NO es un requisito general de procedencia de la tutela contra providencias, sino una causal específica?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Que el asunto tenga relevancia constitucional",
+       "misconception": "No identifica la relevancia constitucional como requisito general"
+      },
+      {
+       "key": "B",
+       "text": "Que se hayan agotado los medios de defensa ordinarios y extraordinarios",
+       "misconception": "No identifica el agotamiento de recursos como requisito general"
+      },
+      {
+       "key": "C",
+       "text": "Que se cumpla la inmediatez",
+       "misconception": "No identifica la inmediatez como requisito general"
+      },
+      {
+       "key": "D",
+       "text": "Que el juez haya incurrido en un defecto fáctico",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    },
+    {
+     "id": "cpp5",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Causales específicas",
+     "source_id": "src_c590_2005",
+     "stem": "Un juez decide un caso con base en una norma que había sido derogada. ¿Qué defecto se configura?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Defecto material o sustantivo",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Defecto orgánico",
+       "misconception": "Confunde el defecto material con la falta de competencia"
+      },
+      {
+       "key": "C",
+       "text": "Defecto procedimental",
+       "misconception": "Confunde el defecto material con errores de trámite"
+      },
+      {
+       "key": "D",
+       "text": "Defecto fáctico",
+       "misconception": "Confunde el defecto material con errores en la valoración probatoria"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "con_derechos",
+   "name": "Clasificación de los derechos",
+   "module": "Básico · B3",
+   "order": 6,
+   "prerequisites": [
+    "con_fundamentos"
+   ],
+   "objective_tecnico": "Clasificar los derechos según el Título II de la Constitución e identificar los de aplicación inmediata (art. 85).",
+   "objective_practico": "Saber distinguir derechos fundamentales, sociales y colectivos, y cuáles se protegen de forma inmediata.",
+   "concepts": [
+    "Derechos fundamentales",
+    "Derechos económicos, sociales y culturales",
+    "Derechos colectivos y del ambiente",
+    "Aplicación inmediata"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_titulo2",
+     "kind": "norma",
+     "citation": "Constitución Política, Título II (arts. 11 a 95) y art. 85",
+     "detail": "Clasificación de los derechos y derechos de aplicación inmediata.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "El Título II se divide en: derechos fundamentales (capítulo 1, arts. 11 a 41), derechos sociales, económicos y culturales (capítulo 2, arts. 42 a 77), derechos colectivos y del ambiente (capítulo 3, arts. 78 a 82), protección y aplicación de los derechos (capítulo 4) y deberes y obligaciones (capítulo 5). Art. 11: el derecho a la vida es inviolable; no habrá pena de muerte. Art. 85 enumera los derechos de aplicación inmediata, entre ellos los de los artículos 11 (vida), 13 (igualdad), 15 (intimidad y habeas data), 23 (petición), 29 (debido proceso) y 37 (reunión). El derecho a la vivienda digna (art. 51) y a la recreación (art. 52) están en el capítulo de derechos sociales; el ambiente sano (art. 79), en el de derechos colectivos.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "cd1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Derechos fundamentales",
+     "source_id": "src_cp_titulo2",
+     "stem": "¿Puede existir la pena de muerte en Colombia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Sí, para delitos graves",
+       "misconception": "Desconoce la inviolabilidad del derecho a la vida (art. 11)"
+      },
+      {
+       "key": "B",
+       "text": "No: el derecho a la vida es inviolable y no habrá pena de muerte",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Solo durante un estado de excepción",
+       "misconception": "Cree que los estados de excepción permiten suspender el derecho a la vida"
+      },
+      {
+       "key": "D",
+       "text": "Solo si la aprueba un referendo",
+       "misconception": "Cree que un referendo puede desconocer la inviolabilidad de la vida"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "cd2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Derechos colectivos y del ambiente",
+     "source_id": "src_cp_titulo2",
+     "stem": "Según la Constitución Política, el derecho a gozar de un ambiente sano (art. 79) se clasifica como un derecho…",
+     "options": [
+      {
+       "key": "A",
+       "text": "Fundamental de aplicación inmediata",
+       "misconception": "Confunde los derechos colectivos con los fundamentales"
+      },
+      {
+       "key": "B",
+       "text": "Económico, social y cultural",
+       "misconception": "Ubica mal el capítulo del derecho al ambiente sano"
+      },
+      {
+       "key": "C",
+       "text": "Colectivo y del ambiente",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Un deber del ciudadano, no un derecho",
+       "misconception": "Confunde derechos con deberes"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "cd3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Aplicación inmediata",
+     "source_id": "src_cp_titulo2",
+     "stem": "¿Cuál de estos derechos es de aplicación inmediata según el artículo 85 de la Constitución Política?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Vivienda digna (art. 51)",
+       "misconception": "Confunde un derecho social con uno de aplicación inmediata"
+      },
+      {
+       "key": "B",
+       "text": "Ambiente sano (art. 79)",
+       "misconception": "Confunde un derecho colectivo con uno de aplicación inmediata"
+      },
+      {
+       "key": "C",
+       "text": "Recreación (art. 52)",
+       "misconception": "Confunde un derecho social con uno de aplicación inmediata"
+      },
+      {
+       "key": "D",
+       "text": "Debido proceso (art. 29)",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  },
+  {
+   "id": "con_estado",
+   "name": "Organización del Estado",
+   "module": "Básico · B4",
+   "order": 7,
+   "prerequisites": [
+    "con_fundamentos"
+   ],
+   "objective_tecnico": "Identificar las ramas del poder público, los órganos de control y la organización electoral, y el principio de colaboración armónica (arts. 113 a 120).",
+   "objective_practico": "Saber qué entidades componen el Estado y para qué sirve cada una.",
+   "concepts": [
+    "Ramas del poder público",
+    "Órganos de control",
+    "Organización electoral",
+    "Colaboración armónica"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_113_120",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 113, 117, 118 y 120",
+     "detail": "Ramas del poder, órganos de control y organización electoral.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 113: son ramas del poder público la legislativa, la ejecutiva y la judicial; además existen otros órganos autónomos e independientes, y los diferentes órganos del Estado tienen funciones separadas pero colaboran armónicamente. Art. 117: el Ministerio Público y la Contraloría General de la República son órganos de control. Art. 118: el Ministerio Público lo ejercen el Procurador General de la Nación, el Defensor del Pueblo, los procuradores delegados, los agentes del Ministerio Público y los personeros municipales. Art. 120: la organización electoral está conformada por el Consejo Nacional Electoral y la Registraduría Nacional del Estado Civil.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "ce1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Ramas del poder público",
+     "source_id": "src_cp_113_120",
+     "stem": "¿Cuáles son las ramas del poder público en Colombia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Legislativa, ejecutiva y judicial",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Ejecutiva, judicial y electoral",
+       "misconception": "Confunde la organización electoral con una rama del poder"
+      },
+      {
+       "key": "C",
+       "text": "Legislativa, ejecutiva y de control",
+       "misconception": "Confunde los órganos de control con una rama del poder"
+      },
+      {
+       "key": "D",
+       "text": "Nacional, departamental y municipal",
+       "misconception": "Confunde las ramas del poder con los niveles territoriales"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "ce2",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Organización electoral",
+     "source_id": "src_cp_113_120",
+     "stem": "¿Cuál de estas entidades hace parte de la organización electoral?",
+     "options": [
+      {
+       "key": "A",
+       "text": "La Procuraduría General de la Nación",
+       "misconception": "Confunde los órganos de control con la organización electoral"
+      },
+      {
+       "key": "B",
+       "text": "La Fiscalía General de la Nación",
+       "misconception": "Confunde la rama judicial con la organización electoral"
+      },
+      {
+       "key": "C",
+       "text": "La Registraduría Nacional del Estado Civil",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "La Contraloría General de la República",
+       "misconception": "Confunde los órganos de control con la organización electoral"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "ce3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Órganos de control",
+     "source_id": "src_cp_113_120",
+     "stem": "¿Quiénes ejercen el Ministerio Público?",
+     "options": [
+      {
+       "key": "A",
+       "text": "El Fiscal General y los fiscales",
+       "misconception": "Confunde el Ministerio Público con la Fiscalía"
+      },
+      {
+       "key": "B",
+       "text": "El Procurador General, el Defensor del Pueblo, los procuradores delegados, los agentes del Ministerio Público y los personeros",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "El Contralor General de la República",
+       "misconception": "Confunde el control fiscal con el Ministerio Público"
+      },
+      {
+       "key": "D",
+       "text": "Los jueces de la República",
+       "misconception": "Confunde la rama judicial con el Ministerio Público"
+      }
+     ],
+     "correct_key": "B"
+    }
+   ]
+  },
+  {
+   "id": "con_participacion",
+   "name": "Mecanismos de participación ciudadana",
+   "module": "Básico · B5",
+   "order": 8,
+   "prerequisites": [
+    "con_fundamentos"
+   ],
+   "objective_tecnico": "Distinguir los mecanismos de participación del artículo 103 y sus reglas (Leyes 134 de 1994 y 1757 de 2015).",
+   "objective_practico": "Saber qué mecanismos tiene un ciudadano para participar y para qué sirve cada uno.",
+   "concepts": [
+    "Plebiscito",
+    "Referendo",
+    "Cabildo abierto",
+    "Revocatoria del mandato",
+    "Iniciativa legislativa"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_103",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 103 y 259; Leyes 134 de 1994 y 1757 de 2015",
+     "detail": "Mecanismos de participación ciudadana.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 103: son mecanismos de participación del pueblo en ejercicio de su soberanía el voto, el plebiscito, el referendo, la consulta popular, el cabildo abierto, la iniciativa legislativa y la revocatoria del mandato. El referendo es la convocatoria al pueblo para que apruebe o rechace un proyecto de norma jurídica o derogue una norma vigente. El plebiscito es el pronunciamiento del pueblo, convocado por el Presidente de la República, para apoyar o rechazar una decisión del Ejecutivo. El cabildo abierto es la reunión pública de los concejos o de las juntas administradoras locales en la que los habitantes participan directamente para discutir asuntos de interés para la comunidad. Art. 259: la revocatoria del mandato procede respecto de gobernadores y alcaldes, como consecuencia del voto programático.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "cpa1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Cabildo abierto",
+     "source_id": "src_cp_103",
+     "stem": "Los vecinos quieren que el concejo discuta en una reunión pública, con su participación directa, un problema del barrio. ¿Qué mecanismo deben usar?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Referendo",
+       "misconception": "Confunde la discusión pública con la aprobación de normas"
+      },
+      {
+       "key": "B",
+       "text": "Cabildo abierto",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Plebiscito",
+       "misconception": "Cree que la comunidad puede convocar un plebiscito"
+      },
+      {
+       "key": "D",
+       "text": "Revocatoria del mandato",
+       "misconception": "Confunde la participación en asuntos comunitarios con la revocatoria"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "cpa2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Revocatoria del mandato",
+     "source_id": "src_cp_103",
+     "stem": "¿Respecto de quiénes procede la revocatoria del mandato?",
+     "options": [
+      {
+       "key": "A",
+       "text": "El Presidente de la República",
+       "misconception": "Cree que la revocatoria aplica al Presidente"
+      },
+      {
+       "key": "B",
+       "text": "Los congresistas",
+       "misconception": "Cree que la revocatoria aplica a los congresistas"
+      },
+      {
+       "key": "C",
+       "text": "Los jueces",
+       "misconception": "Confunde la revocatoria con la responsabilidad de los jueces"
+      },
+      {
+       "key": "D",
+       "text": "Gobernadores y alcaldes",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    },
+    {
+     "id": "cpa3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Plebiscito",
+     "source_id": "src_cp_103",
+     "stem": "¿Qué diferencia al plebiscito del referendo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "El plebiscito apoya o rechaza una decisión del Ejecutivo; el referendo aprueba o rechaza una norma jurídica",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Son el mismo mecanismo",
+       "misconception": "No distingue el objeto de cada mecanismo"
+      },
+      {
+       "key": "C",
+       "text": "El referendo solo puede convocarlo el Presidente",
+       "misconception": "Confunde quién convoca cada mecanismo"
+      },
+      {
+       "key": "D",
+       "text": "El plebiscito sirve para reformar la Constitución",
+       "misconception": "Confunde el plebiscito con el referendo constitucional"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "con_acciones",
+   "name": "Acciones de cumplimiento, populares y de grupo",
+   "module": "Intermedio · I4",
+   "order": 9,
+   "prerequisites": [
+    "con_tutela"
+   ],
+   "objective_tecnico": "Distinguir el objeto, la legitimación y los términos de las acciones de cumplimiento, populares y de grupo (arts. 87 y 88; Leyes 393 de 1997 y 472 de 1998).",
+   "objective_practico": "Saber qué acción usar cuando una autoridad no cumple una norma, cuando se afecta un derecho colectivo o cuando un grupo sufre un daño.",
+   "concepts": [
+    "Acción de cumplimiento",
+    "Acción popular",
+    "Acción de grupo"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_87_88",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 87 y 88; Leyes 393 de 1997 y 472 de 1998",
+     "detail": "Acciones de cumplimiento, populares y de grupo.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 87: toda persona puede acudir ante la autoridad judicial para hacer efectivo el cumplimiento de una ley o de un acto administrativo (acción de cumplimiento). Art. 88: las acciones populares protegen los derechos e intereses colectivos, como el espacio público, la seguridad y salubridad públicas, la moral administrativa y el ambiente; las acciones de grupo buscan la reparación de los daños ocasionados a un número plural de personas. La Ley 472 de 1998 exige que la acción de grupo la integren al menos veinte personas y que se presente dentro de los dos años siguientes al daño. La acción popular puede presentarse durante el tiempo que subsista la amenaza o el peligro al derecho colectivo.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "cac1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Acción popular",
+     "source_id": "src_cp_87_88",
+     "stem": "Una empresa contamina el río del que se abastece un municipio. ¿Qué acción protege ese derecho colectivo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Acción de cumplimiento",
+       "misconception": "Confunde la protección de derechos colectivos con el cumplimiento de normas"
+      },
+      {
+       "key": "B",
+       "text": "Acción de grupo",
+       "misconception": "Confunde la protección del derecho colectivo con la reparación a un grupo"
+      },
+      {
+       "key": "C",
+       "text": "Acción popular",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Derecho de petición",
+       "misconception": "Confunde una solicitud a la autoridad con una acción judicial"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "cac2",
+     "level": 2,
+     "approach": "ambos",
+     "concept": "Acción de cumplimiento",
+     "source_id": "src_cp_87_88",
+     "stem": "Un alcalde se niega a aplicar un decreto que le ordena crear un programa social. ¿Qué acción procede para exigir que lo cumpla?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Acción de cumplimiento",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Acción popular",
+       "misconception": "Confunde el cumplimiento de normas con la protección de derechos colectivos"
+      },
+      {
+       "key": "C",
+       "text": "Acción de grupo",
+       "misconception": "Confunde el cumplimiento de normas con la reparación a un grupo"
+      },
+      {
+       "key": "D",
+       "text": "Acción pública de inconstitucionalidad",
+       "misconception": "Confunde exigir el cumplimiento de una norma con cuestionar su validez"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cac3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Acción de grupo",
+     "source_id": "src_cp_87_88",
+     "stem": "¿Cuántas personas, como mínimo, deben integrar una acción de grupo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Diez",
+       "misconception": "Desconoce el número mínimo de la Ley 472 de 1998"
+      },
+      {
+       "key": "B",
+       "text": "Basta una persona",
+       "misconception": "Confunde la acción de grupo con la acción popular"
+      },
+      {
+       "key": "C",
+       "text": "Cincuenta",
+       "misconception": "Desconoce el número mínimo de la Ley 472 de 1998"
+      },
+      {
+       "key": "D",
+       "text": "Veinte",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  },
+  {
+   "id": "con_control",
+   "name": "Control de constitucionalidad",
+   "module": "Intermedio · I5",
+   "order": 10,
+   "prerequisites": [
+    "con_fundamentos"
+   ],
+   "objective_tecnico": "Explicar el control concentrado de la Corte Constitucional, la acción pública de inconstitucionalidad y el control automático (arts. 241 y 242).",
+   "objective_practico": "Saber cómo un ciudadano puede pedir que se revise si una ley va en contra de la Constitución.",
+   "concepts": [
+    "Acción pública de inconstitucionalidad",
+    "Control automático",
+    "Control de reformas constitucionales"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_241",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 241 y 242",
+     "detail": "Competencias de la Corte Constitucional y acción pública de inconstitucionalidad.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 241: a la Corte Constitucional se le confía la guarda de la integridad y supremacía de la Constitución. Decide las demandas de inconstitucionalidad que presenten los ciudadanos contra las leyes y contra los actos reformatorios de la Constitución, estos últimos solo por vicios de procedimiento en su formación, y revisa de forma automática los decretos legislativos dictados en los estados de excepción y los proyectos de ley estatutaria. Art. 242: cualquier ciudadano puede ejercer la acción pública de inconstitucionalidad e intervenir como impugnador o defensor de las normas sometidas a control.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "cct1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Acción pública de inconstitucionalidad",
+     "source_id": "src_cp_241",
+     "stem": "¿Quién puede presentar una demanda de inconstitucionalidad contra una ley?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Solo los abogados",
+       "misconception": "Cree que la acción pública exige ser abogado"
+      },
+      {
+       "key": "B",
+       "text": "Cualquier ciudadano",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Solo el Procurador General",
+       "misconception": "Desconoce que la acción es pública"
+      },
+      {
+       "key": "D",
+       "text": "Solo los congresistas",
+       "misconception": "Desconoce que la acción es pública"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "cct2",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Control automático",
+     "source_id": "src_cp_241",
+     "stem": "¿Qué normas revisa la Corte Constitucional de forma automática, sin necesidad de demanda?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Todas las leyes ordinarias",
+       "misconception": "Cree que todo el control de constitucionalidad es automático"
+      },
+      {
+       "key": "B",
+       "text": "Los actos administrativos de los alcaldes",
+       "misconception": "Confunde el control constitucional con el de la jurisdicción contencioso-administrativa"
+      },
+      {
+       "key": "C",
+       "text": "Los decretos legislativos de los estados de excepción y los proyectos de ley estatutaria",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Todas las sentencias de tutela",
+       "misconception": "Confunde la revisión eventual de tutelas con el control automático"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "cct3",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Control de reformas constitucionales",
+     "source_id": "src_cp_241",
+     "stem": "Un ciudadano demanda un acto legislativo porque considera injusto su contenido. ¿Qué límite tiene la Corte?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Los actos reformatorios de la Constitución solo pueden demandarse por vicios de procedimiento en su formación",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "La Corte puede revisar libremente su contenido",
+       "misconception": "Desconoce el límite del control sobre las reformas constitucionales"
+      },
+      {
+       "key": "C",
+       "text": "Los actos legislativos no tienen ningún control",
+       "misconception": "Desconoce que las reformas sí tienen control constitucional"
+      },
+      {
+       "key": "D",
+       "text": "Solo el Consejo de Estado puede revisarlos",
+       "misconception": "Confunde la competencia de la Corte Constitucional"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "con_excepcion",
+   "name": "Estados de excepción",
+   "module": "Intermedio · I7",
+   "order": 11,
+   "prerequisites": [
+    "con_fundamentos"
+   ],
+   "objective_tecnico": "Distinguir los tres estados de excepción, sus límites temporales y sus garantías (arts. 212 a 215).",
+   "objective_practico": "Entender qué puede y qué no puede hacer el Gobierno durante una emergencia o una conmoción interior.",
+   "concepts": [
+    "Guerra exterior",
+    "Conmoción interior",
+    "Emergencia económica, social y ecológica",
+    "Límites y control"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_212_215",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 212 a 215",
+     "detail": "Estados de excepción: clases, duración y límites.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Hay tres estados de excepción: guerra exterior (art. 212), conmoción interior (art. 213) y emergencia económica, social y ecológica (art. 215). La conmoción interior se declara por un término no mayor de noventa días, prorrogable hasta por dos períodos iguales; el segundo requiere concepto previo y favorable del Senado. La emergencia se declara por períodos de hasta treinta días que en total no pueden exceder noventa días en el año calendario. Art. 214: no pueden suspenderse los derechos humanos ni las libertades fundamentales, no se interrumpe el normal funcionamiento de las ramas del poder público y los decretos legislativos tienen control automático de la Corte Constitucional.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "cex1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Límites y control",
+     "source_id": "src_cp_212_215",
+     "stem": "Durante un estado de excepción, ¿el Gobierno puede suspender los derechos humanos?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Sí, todos ellos",
+       "misconception": "Cree que el estado de excepción suspende todos los derechos"
+      },
+      {
+       "key": "B",
+       "text": "Sí, si el Congreso lo autoriza",
+       "misconception": "Cree que el Congreso puede autorizar la suspensión de derechos humanos"
+      },
+      {
+       "key": "C",
+       "text": "No, nunca puede suspenderlos",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Solo durante una guerra exterior",
+       "misconception": "Cree que la guerra exterior permite suspender derechos humanos"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "cex2",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Conmoción interior",
+     "source_id": "src_cp_212_215",
+     "stem": "¿Por cuánto tiempo puede declararse inicialmente la conmoción interior?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Treinta días, sin prórroga",
+       "misconception": "Confunde la conmoción interior con la emergencia económica"
+      },
+      {
+       "key": "B",
+       "text": "Hasta noventa días, prorrogables por dos períodos iguales; el segundo con concepto favorable del Senado",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Un año",
+       "misconception": "Sobrestima el término constitucional"
+      },
+      {
+       "key": "D",
+       "text": "Indefinidamente, mientras dure la crisis",
+       "misconception": "Desconoce los límites temporales de la excepción"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "cex3",
+     "level": 2,
+     "approach": "ambos",
+     "concept": "Emergencia económica, social y ecológica",
+     "source_id": "src_cp_212_215",
+     "stem": "Un desastre natural grave perturba de forma súbita el orden económico y social del país. ¿Qué estado de excepción corresponde?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Conmoción interior",
+       "misconception": "Confunde la perturbación del orden público con una crisis económica o ecológica"
+      },
+      {
+       "key": "B",
+       "text": "Guerra exterior",
+       "misconception": "Confunde la crisis interna con un conflicto con otro Estado"
+      },
+      {
+       "key": "C",
+       "text": "Ninguno: solo el Congreso puede legislar",
+       "misconception": "Desconoce las facultades excepcionales del Gobierno"
+      },
+      {
+       "key": "D",
+       "text": "Emergencia económica, social y ecológica",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  },
+  {
+   "id": "con_reforma",
+   "name": "Reforma de la Constitución",
+   "module": "Intermedio · I8",
+   "order": 12,
+   "prerequisites": [
+    "con_control"
+   ],
+   "objective_tecnico": "Explicar los mecanismos de reforma constitucional (acto legislativo, asamblea constituyente y referendo) y su trámite (arts. 374 a 379).",
+   "objective_practico": "Saber quién puede cambiar la Constitución y cómo se hace.",
+   "concepts": [
+    "Acto legislativo",
+    "Asamblea constituyente",
+    "Referendo constitucional",
+    "Control de la reforma"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cp_374_379",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 374 a 379",
+     "detail": "Mecanismos y trámite de reforma constitucional.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 374: la Constitución puede ser reformada por el Congreso, por una Asamblea Constituyente o por el pueblo mediante referendo. Art. 375: los actos legislativos se tramitan en dos períodos ordinarios y consecutivos; en el segundo período la aprobación requiere el voto de la mayoría de los miembros de cada cámara. Art. 376: mediante ley aprobada por la mayoría de los miembros de una y otra cámara, el Congreso puede disponer que el pueblo, en votación popular, decida si convoca una Asamblea Constituyente. Art. 379: los actos legislativos, la convocatoria a referendo, la consulta popular o el acto de convocación de la Asamblea Constituyente solo pueden declararse inconstitucionales cuando se violen los requisitos establecidos en ese título.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "cre1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Acto legislativo",
+     "source_id": "src_cp_374_379",
+     "stem": "¿Por qué vías puede reformarse la Constitución?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Solo por el Presidente mediante decreto",
+       "misconception": "Cree que el Ejecutivo puede reformar la Constitución"
+      },
+      {
+       "key": "B",
+       "text": "Solo por la Corte Constitucional",
+       "misconception": "Confunde el control de constitucionalidad con la reforma"
+      },
+      {
+       "key": "C",
+       "text": "Por el Congreso, una Asamblea Constituyente o el pueblo mediante referendo",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Solo mediante consulta popular",
+       "misconception": "Confunde la consulta popular con los mecanismos de reforma"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "cre2",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Acto legislativo",
+     "source_id": "src_cp_374_379",
+     "stem": "¿En cuántos períodos legislativos se tramita un acto legislativo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Dos períodos ordinarios y consecutivos",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Un solo período",
+       "misconception": "Confunde el trámite de un acto legislativo con el de una ley ordinaria"
+      },
+      {
+       "key": "C",
+       "text": "Tres períodos",
+       "misconception": "Desconoce el trámite del art. 375"
+      },
+      {
+       "key": "D",
+       "text": "Un período ordinario y uno extraordinario",
+       "misconception": "Desconoce que los períodos deben ser ordinarios y consecutivos"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "cre3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Asamblea constituyente",
+     "source_id": "src_cp_374_379",
+     "stem": "¿Quién decide si se convoca una Asamblea Constituyente?",
+     "options": [
+      {
+       "key": "A",
+       "text": "El Presidente, por decreto",
+       "misconception": "Cree que el Ejecutivo puede convocar la Asamblea"
+      },
+      {
+       "key": "B",
+       "text": "La Corte Constitucional",
+       "misconception": "Confunde el control con la convocatoria"
+      },
+      {
+       "key": "C",
+       "text": "El Congreso por sí solo, sin votación popular",
+       "misconception": "Desconoce que el pueblo decide la convocatoria"
+      },
+      {
+       "key": "D",
+       "text": "El pueblo en votación popular, después de que el Congreso lo disponga por ley aprobada por la mayoría de cada cámara",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  }
+ ]
+}

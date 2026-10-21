@@ -1,0 +1,2243 @@
+{
+ "area": {
+  "id": "laboral",
+  "name": "Derecho laboral",
+  "description": "Contrato de trabajo, jornada, prestaciones, terminación y estabilidad laboral reforzada en Colombia, con las reglas de transición de la Ley 2466 de 2025."
+ },
+ "subtopics": [
+  {
+   "id": "lab_contrato",
+   "name": "Contrato de trabajo y primacía de la realidad",
+   "module": "Nivel 1 · Módulo 2 / Nivel 2 · Módulo 1",
+   "order": 1,
+   "prerequisites": [],
+   "objective_tecnico": "Identificar los elementos esenciales del contrato de trabajo, la presunción del art. 24 CST y aplicar la primacía de la realidad frente a contratos simulados.",
+   "objective_practico": "Reconocer cuándo una relación de trabajo es un contrato laboral aunque no haya nada firmado o se llame de otra forma.",
+   "concepts": [
+    "Elementos esenciales",
+    "Contrato verbal",
+    "Presunción del art. 24",
+    "Primacía de la realidad",
+    "Contrato indefinido como regla general"
+   ],
+   "risk_level": "media",
+   "risk_note": "La Ley 2466 de 2025 modificó reglas de contratación (indefinido como regla general, plataformas de reparto). Verificar texto vigente antes de publicar preguntas nuevas.",
+   "sources": [
+    {
+     "id": "src_cst_22_24",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, arts. 22 a 24",
+     "detail": "Definición, elementos esenciales y presunción del contrato de trabajo.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Art. 23: elementos esenciales: actividad personal del trabajador, continuada subordinación o dependencia, y un salario como retribución. Art. 24: se presume que toda relación de trabajo personal está regida por un contrato de trabajo.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_cp_53",
+     "kind": "norma",
+     "citation": "Constitución Política, art. 53",
+     "detail": "Principios mínimos fundamentales del trabajo, incluida la primacía de la realidad sobre las formalidades.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 53: principios mínimos fundamentales: igualdad de oportunidades, remuneración mínima vital y móvil, irrenunciabilidad, favorabilidad, primacía de la realidad sobre formalidades establecidas por los sujetos de las relaciones laborales.",
+     "min_level": 1,
+     "priority": 2
+    },
+    {
+     "id": "src_ley2466_contrato",
+     "kind": "norma",
+     "citation": "Ley 2466 de 2025 (reforma laboral) — modalidades de contratación",
+     "detail": "Contrato a término indefinido como regla general; regulación de trabajo en plataformas de reparto.",
+     "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=260676",
+     "fragment": "La reforma prioriza el contrato a término indefinido como regla general y limita el uso de modalidades temporales.",
+     "min_level": 2,
+     "priority": 3,
+     "verified_on": "2026-10-20",
+     "risk_level": "media",
+     "risk_note": "Norma reciente con reglamentación en curso."
+    }
+   ],
+   "questions": [
+    {
+     "id": "lc1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Elementos esenciales",
+     "source_id": "src_cst_22_24",
+     "stem": "Según el Código Sustantivo del Trabajo, ¿cuáles son los elementos esenciales del contrato de trabajo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Actividad personal, continuada subordinación y salario",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Contrato escrito, salario y horario fijo",
+       "misconception": "Cree que el contrato de trabajo debe constar por escrito"
+      },
+      {
+       "key": "C",
+       "text": "Afiliación a seguridad social, salario y subordinación",
+       "misconception": "Confunde una obligación del empleador con un elemento esencial del contrato"
+      },
+      {
+       "key": "D",
+       "text": "Prestación personal, exclusividad y salario",
+       "misconception": "Cree que la exclusividad es un elemento esencial"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lc2",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Contrato verbal",
+     "source_id": "src_cst_22_24",
+     "stem": "Pedro trabaja hace un año en una panadería, de lunes a sábado, en el horario que fija el dueño, y le pagan cada quincena. Nunca firmó nada. ¿Tiene contrato de trabajo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "No, porque no hay contrato escrito",
+       "misconception": "Cree que el contrato de trabajo debe constar por escrito"
+      },
+      {
+       "key": "B",
+       "text": "Sí: el contrato puede ser verbal y se cumplen los elementos esenciales",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Solo si el dueño lo afilió a seguridad social",
+       "misconception": "Confunde una obligación del empleador con un elemento esencial del contrato"
+      },
+      {
+       "key": "D",
+       "text": "No, es prestación de servicios porque le pagan por quincena",
+       "misconception": "Confunde la forma de pago con la naturaleza de la relación"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "lc3",
+     "level": 2,
+     "approach": "ambos",
+     "concept": "Primacía de la realidad",
+     "source_id": "src_cp_53",
+     "stem": "Una empresa vincula a una diseñadora con un 'contrato de prestación de servicios', pero ella cumple horario, recibe órdenes de un jefe y usa los equipos de la empresa. ¿Qué principio permite declarar que existe un contrato de trabajo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Favorabilidad",
+       "misconception": "Confunde favorabilidad (duda en la aplicación de normas) con primacía de la realidad"
+      },
+      {
+       "key": "B",
+       "text": "Primacía de la realidad sobre las formalidades",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Irrenunciabilidad de los derechos mínimos",
+       "misconception": "Confunde irrenunciabilidad con primacía de la realidad"
+      },
+      {
+       "key": "D",
+       "text": "Autonomía de la voluntad: prevalece lo que firmaron",
+       "misconception": "Cree que la denominación del contrato prevalece sobre la realidad de la relación"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "lc4",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Presunción del art. 24",
+     "source_id": "src_cst_22_24",
+     "stem": "¿Qué establece la presunción del artículo 24 del CST?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Que toda relación de trabajo personal se presume regida por un contrato de trabajo",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Que todo contrato verbal se presume a término fijo",
+       "misconception": "Confunde la presunción del art. 24 con reglas sobre duración del contrato"
+      },
+      {
+       "key": "C",
+       "text": "Que todo contratista independiente es trabajador dependiente",
+       "misconception": "Sobregeneraliza la presunción: admite prueba en contrario"
+      },
+      {
+       "key": "D",
+       "text": "Que el trabajador siempre debe probar la subordinación",
+       "misconception": "No entiende el efecto de la presunción sobre la carga de la prueba"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lc5",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Contrato indefinido como regla general",
+     "source_id": "src_ley2466_contrato",
+     "risk_level": "media",
+     "risk_note": "Pregunta basada en la Ley 2466 de 2025; revisar reglamentación.",
+     "stem": "Tras la Ley 2466 de 2025, ¿cuál es la regla general de contratación laboral en Colombia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "El contrato a término indefinido; las demás modalidades son excepcionales",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "El contrato a término fijo inferior a un año",
+       "misconception": "Mantiene la práctica anterior a la reforma laboral"
+      },
+      {
+       "key": "C",
+       "text": "El contrato por obra o labor",
+       "misconception": "Desconoce el carácter excepcional de las modalidades temporales"
+      },
+      {
+       "key": "D",
+       "text": "La prestación de servicios",
+       "misconception": "Confunde un contrato civil con la regla de contratación laboral"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lc6",
+     "level": 3,
+     "approach": "tecnico",
+     "kind": "open",
+     "concept": "Primacía de la realidad",
+     "source_id": "src_cp_53",
+     "risk_level": "media",
+     "risk_note": "La Ley 2466 de 2025 reguló el trabajo en plataformas de reparto; verificar alcance antes de calificar.",
+     "stem": "Una plataforma de domicilios afirma que sus repartidores son 'socios independientes'. Explica qué debería analizar un juez para determinar si existe contrato de trabajo y qué consecuencias tendría declararlo.",
+     "rubric": [
+      {
+       "id": "r1",
+       "criterion": "Invoca la primacía de la realidad (art. 53 CP)",
+       "keywords": [
+        "primacia",
+        "realidad",
+        "articulo 53",
+        "art. 53"
+       ]
+      },
+      {
+       "id": "r2",
+       "criterion": "Analiza los elementos: prestación personal, subordinación y remuneración",
+       "keywords": [
+        "subordinacion",
+        "dependencia",
+        "prestacion personal",
+        "remuneracion",
+        "salario"
+       ]
+      },
+      {
+       "id": "r3",
+       "criterion": "Menciona la presunción del art. 24 CST",
+       "keywords": [
+        "presuncion",
+        "presume",
+        "articulo 24",
+        "art. 24"
+       ]
+      },
+      {
+       "id": "r4",
+       "criterion": "Señala consecuencias: prestaciones, seguridad social o indemnizaciones",
+       "keywords": [
+        "prestaciones",
+        "seguridad social",
+        "cesantias",
+        "indemnizacion",
+        "prima",
+        "vacaciones"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lab_jornada",
+   "name": "Jornada laboral y recargos",
+   "module": "Nivel 1 · Módulo 3 / Nivel 2 · Módulo 2",
+   "order": 2,
+   "prerequisites": [
+    "lab_contrato"
+   ],
+   "objective_tecnico": "Aplicar la jornada máxima vigente y calcular recargos nocturnos, dominicales, festivos y horas extra según las reglas de transición de las Leyes 2101 de 2021 y 2466 de 2025.",
+   "objective_practico": "Saber cuántas horas se puede trabajar a la semana y cuánto se debe pagar de más por trabajar de noche, en domingo o festivo.",
+   "concepts": [
+    "Jornada máxima",
+    "Trabajo nocturno",
+    "Recargo dominical y festivo",
+    "Horas extra",
+    "Acumulación de recargos"
+   ],
+   "risk_level": "alta",
+   "risk_note": "Subtema en transición: jornada de 42 h desde el 15/07/2026 (Ley 2101); nocturno desde las 7 p. m. desde el 25/12/2025 y dominical del 90 % desde el 01/07/2026, que sube al 100 % el 01/07/2027 (Ley 2466). Revisar en cada cambio de tramo.",
+   "sources": [
+    {
+     "id": "src_ley2101",
+     "kind": "norma",
+     "citation": "Ley 2101 de 2021",
+     "detail": "Reducción gradual de la jornada máxima semanal hasta 42 horas.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2101_2021.html",
+     "fragment": "Reducción gradual de la jornada: 47 h (2023), 46 h (2024), 44 h (2025) y 42 h desde el 15 de julio de 2026.",
+     "min_level": 1,
+     "priority": 1,
+     "verified_on": "2026-10-20",
+     "risk_level": "media",
+     "risk_note": "Cronograma terminado en julio de 2026; verificar reglamentación sobre horas mensuales."
+    },
+    {
+     "id": "src_ley2466_jornada",
+     "kind": "norma",
+     "citation": "Ley 2466 de 2025, arts. 10 y 14",
+     "detail": "Trabajo diurno (6 a. m.–7 p. m.) y nocturno (7 p. m.–6 a. m.); recargo dominical y festivo gradual hasta el 100 %.",
+     "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=260676",
+     "fragment": "Nocturno entre las 7:00 p. m. y las 6:00 a. m. (desde el 25/12/2025). Dominical y festivo: 80 % desde 01/07/2025, 90 % desde 01/07/2026, 100 % desde 01/07/2027. Los recargos nocturno y dominical se acumulan.",
+     "min_level": 1,
+     "priority": 2,
+     "verified_on": "2026-10-20",
+     "risk_level": "alta",
+     "risk_note": "Porcentaje dominical cambia el 01/07/2027."
+    },
+    {
+     "id": "src_cst_168",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 168",
+     "detail": "Tasas de recargo: nocturno 35 %, extra diurna 25 %, extra nocturna 75 %.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Recargo nocturno: 35 % sobre el valor del trabajo diurno. Trabajo extra diurno: 25 %. Trabajo extra nocturno: 75 %.",
+     "min_level": 2,
+     "priority": 3
+    }
+   ],
+   "questions": [
+    {
+     "id": "lj1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Trabajo nocturno",
+     "source_id": "src_ley2466_jornada",
+     "risk_level": "alta",
+     "risk_note": "Regla vigente desde el 25/12/2025 (Ley 2466).",
+     "stem": "Desde el 25 de diciembre de 2025, ¿a qué hora empieza el trabajo nocturno en Colombia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "9:00 p. m.",
+       "misconception": "Aplica la regla anterior a la reforma laboral de 2025"
+      },
+      {
+       "key": "B",
+       "text": "7:00 p. m.",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "10:00 p. m.",
+       "misconception": "Desconoce la regla legal de jornada nocturna"
+      },
+      {
+       "key": "D",
+       "text": "6:00 p. m.",
+       "misconception": "Desconoce la regla legal de jornada nocturna"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "lj2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Jornada máxima",
+     "source_id": "src_ley2101",
+     "risk_level": "media",
+     "risk_note": "Último tramo de la Ley 2101 aplicado el 15/07/2026.",
+     "stem": "¿Cuál es la jornada máxima legal semanal vigente en octubre de 2026?",
+     "options": [
+      {
+       "key": "A",
+       "text": "48 horas",
+       "misconception": "Aplica la jornada anterior a la Ley 2101 de 2021"
+      },
+      {
+       "key": "B",
+       "text": "44 horas",
+       "misconception": "No actualizó el último tramo de la reducción de jornada (julio de 2026)"
+      },
+      {
+       "key": "C",
+       "text": "42 horas",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "40 horas",
+       "misconception": "Confunde la jornada colombiana con la de otros países"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "lj3",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Recargo dominical y festivo",
+     "source_id": "src_ley2466_jornada",
+     "risk_level": "alta",
+     "risk_note": "El porcentaje cambia al 100 % el 01/07/2027.",
+     "stem": "Ana trabaja un domingo de agosto de 2026, que es su día de descanso obligatorio. ¿Qué recargo le corresponde sobre la hora ordinaria?",
+     "options": [
+      {
+       "key": "A",
+       "text": "75 %",
+       "misconception": "Aplica el recargo anterior a la reforma laboral de 2025"
+      },
+      {
+       "key": "B",
+       "text": "80 %",
+       "misconception": "Aplica el tramo vigente entre julio de 2025 y junio de 2026"
+      },
+      {
+       "key": "C",
+       "text": "90 %",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "100 %",
+       "misconception": "Anticipa el tramo que solo rige desde julio de 2027"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "lj4",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Horas extra",
+     "source_id": "src_cst_168",
+     "stem": "¿Con qué recargo se remunera la hora extra diurna?",
+     "options": [
+      {
+       "key": "A",
+       "text": "25 %",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "35 %",
+       "misconception": "Confunde la hora extra diurna con el recargo nocturno"
+      },
+      {
+       "key": "C",
+       "text": "75 %",
+       "misconception": "Confunde la hora extra diurna con la extra nocturna"
+      },
+      {
+       "key": "D",
+       "text": "100 %",
+       "misconception": "Confunde la hora extra con el recargo dominical"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lj5",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Acumulación de recargos",
+     "source_id": "src_ley2466_jornada",
+     "risk_level": "alta",
+     "risk_note": "Depende del tramo dominical vigente.",
+     "stem": "En septiembre de 2026, un trabajador labora un festivo de 8:00 p. m. a 11:00 p. m. dentro de su jornada ordinaria (no son horas extra). ¿Qué recargos se aplican sobre la hora ordinaria?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Solo el 35 % nocturno",
+       "misconception": "No acumula el recargo festivo con el nocturno"
+      },
+      {
+       "key": "B",
+       "text": "Solo el 90 % festivo",
+       "misconception": "No acumula el recargo nocturno con el festivo"
+      },
+      {
+       "key": "C",
+       "text": "35 % nocturno más 90 % festivo, acumulados",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "75 % de hora extra nocturna",
+       "misconception": "Confunde recargo de jornada ordinaria con hora extra"
+      }
+     ],
+     "correct_key": "C"
+    }
+   ]
+  },
+  {
+   "id": "lab_prestaciones",
+   "name": "Prestaciones sociales y vacaciones",
+   "module": "Nivel 1 · Módulo 4 / Nivel 2 · Módulo 2",
+   "order": 3,
+   "prerequisites": [
+    "lab_contrato"
+   ],
+   "objective_tecnico": "Determinar y liquidar cesantías, intereses, prima de servicios y vacaciones, con sus plazos de pago y consignación.",
+   "objective_practico": "Saber qué pagos adicionales al salario le corresponden a un trabajador, cuánto y cuándo.",
+   "concepts": [
+    "Cesantías",
+    "Intereses a las cesantías",
+    "Prima de servicios",
+    "Vacaciones",
+    "Liquidación final"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cst_249",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 249",
+     "detail": "Cesantías: un mes de salario por cada año de servicio.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Todo empleador está obligado a pagar a sus trabajadores un mes de salario por cada año de servicios y proporcionalmente por fracción de año.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_ley50_99",
+     "kind": "norma",
+     "citation": "Ley 50 de 1990, art. 99",
+     "detail": "Consignación anual de cesantías en el fondo antes del 15 de febrero.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0050_1990.html",
+     "fragment": "El valor liquidado se consignará antes del 15 de febrero del año siguiente en cuenta individual en el fondo de cesantías.",
+     "min_level": 2,
+     "priority": 2
+    },
+    {
+     "id": "src_ley52",
+     "kind": "norma",
+     "citation": "Ley 52 de 1975",
+     "detail": "Intereses a las cesantías del 12 % anual, pagados directamente al trabajador.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0052_1975.html",
+     "fragment": "Intereses del 12 % anual sobre las cesantías, pagaderos al trabajador en el mes de enero del año siguiente.",
+     "min_level": 2,
+     "priority": 3
+    },
+    {
+     "id": "src_cst_306",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 306",
+     "detail": "Prima de servicios: 30 días de salario por año, en dos pagos.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Prima de servicios de 30 días de salario por año: la mitad a más tardar el 30 de junio y la otra mitad en los primeros 20 días de diciembre.",
+     "min_level": 1,
+     "priority": 4
+    },
+    {
+     "id": "src_cst_186",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 186",
+     "detail": "Vacaciones: 15 días hábiles consecutivos por año.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Los trabajadores que hubieren prestado sus servicios durante un año tienen derecho a quince días hábiles consecutivos de vacaciones remuneradas.",
+     "min_level": 1,
+     "priority": 5
+    }
+   ],
+   "questions": [
+    {
+     "id": "lp1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Vacaciones",
+     "source_id": "src_cst_186",
+     "stem": "¿Cuántos días de vacaciones remuneradas tiene un trabajador por cada año de servicio?",
+     "options": [
+      {
+       "key": "A",
+       "text": "15 días hábiles consecutivos",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "15 días calendario",
+       "misconception": "Confunde días hábiles con días calendario"
+      },
+      {
+       "key": "C",
+       "text": "30 días hábiles",
+       "misconception": "Sobrestima el derecho legal a vacaciones"
+      },
+      {
+       "key": "D",
+       "text": "10 días hábiles",
+       "misconception": "Subestima el derecho legal a vacaciones"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lp2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Cesantías",
+     "source_id": "src_cst_249",
+     "stem": "¿Cuánto corresponde de cesantías por cada año completo de servicio?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Un mes de salario",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "15 días de salario",
+       "misconception": "Confunde cesantías con un pago semestral de prima"
+      },
+      {
+       "key": "C",
+       "text": "El 12 % del salario anual",
+       "misconception": "Confunde cesantías con los intereses sobre cesantías"
+      },
+      {
+       "key": "D",
+       "text": "Dos meses de salario",
+       "misconception": "Sobrestima el valor legal de las cesantías"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lp3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Cesantías",
+     "source_id": "src_ley50_99",
+     "stem": "¿Hasta cuándo debe el empleador consignar en el fondo las cesantías liquidadas a 31 de diciembre?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Antes del 15 de febrero del año siguiente",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "A más tardar el 31 de enero",
+       "misconception": "Confunde el plazo de consignación con el de pago de intereses"
+      },
+      {
+       "key": "C",
+       "text": "A más tardar el 30 de junio",
+       "misconception": "Confunde cesantías con el primer pago de prima"
+      },
+      {
+       "key": "D",
+       "text": "En los primeros 20 días de diciembre",
+       "misconception": "Confunde cesantías con el segundo pago de prima"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lp4",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Prima de servicios",
+     "source_id": "src_cst_306",
+     "stem": "Luis trabajó con salario fijo todo el primer semestre del año. ¿Cuánto y cuándo debe recibir de prima de servicios por ese semestre?",
+     "options": [
+      {
+       "key": "A",
+       "text": "15 días de salario, a más tardar el 30 de junio",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Un mes de salario en diciembre",
+       "misconception": "Confunde la prima semestral con un pago anual único"
+      },
+      {
+       "key": "C",
+       "text": "15 días de salario en enero",
+       "misconception": "Confunde los plazos de prima con los de intereses a las cesantías"
+      },
+      {
+       "key": "D",
+       "text": "Solo si la empresa tuvo utilidades",
+       "misconception": "Confunde la prima legal con una participación en utilidades"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lp5",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Intereses a las cesantías",
+     "source_id": "src_ley52",
+     "stem": "¿Cómo se reconocen los intereses a las cesantías?",
+     "options": [
+      {
+       "key": "A",
+       "text": "12 % anual sobre el saldo, pagados directamente al trabajador en enero",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "12 % anual, consignados en el fondo de cesantías",
+       "misconception": "Confunde a quién se pagan los intereses"
+      },
+      {
+       "key": "C",
+       "text": "1 % mensual, pagados con la prima de junio",
+       "misconception": "Confunde la periodicidad y el plazo de los intereses"
+      },
+      {
+       "key": "D",
+       "text": "Los paga el fondo, no el empleador",
+       "misconception": "Confunde la rentabilidad del fondo con los intereses legales"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lp6",
+     "level": 3,
+     "approach": "tecnico",
+     "kind": "open",
+     "concept": "Liquidación final",
+     "source_id": "src_cst_249",
+     "stem": "Un trabajador con contrato indefinido es despedido sin justa causa el 15 de septiembre. Explica qué conceptos debe incluir su liquidación final y de dónde surge cada uno.",
+     "rubric": [
+      {
+       "id": "r1",
+       "criterion": "Incluye cesantías e intereses proporcionales",
+       "keywords": [
+        "cesantias",
+        "intereses"
+       ]
+      },
+      {
+       "id": "r2",
+       "criterion": "Incluye prima de servicios proporcional del semestre",
+       "keywords": [
+        "prima"
+       ]
+      },
+      {
+       "id": "r3",
+       "criterion": "Incluye vacaciones causadas y no disfrutadas",
+       "keywords": [
+        "vacaciones"
+       ]
+      },
+      {
+       "id": "r4",
+       "criterion": "Incluye la indemnización por despido sin justa causa (art. 64 CST)",
+       "keywords": [
+        "indemnizacion",
+        "articulo 64",
+        "art. 64",
+        "sin justa causa"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lab_terminacion",
+   "name": "Terminación del contrato",
+   "module": "Nivel 1 · Módulo 6 / Nivel 2 · Módulo 3",
+   "order": 4,
+   "prerequisites": [
+    "lab_contrato"
+   ],
+   "objective_tecnico": "Distinguir terminación con y sin justa causa, calcular la indemnización del art. 64 CST y aplicar el procedimiento disciplinario previo.",
+   "objective_practico": "Entender cuándo un despido es legal, qué se debe pagar y qué hacer si lo despiden.",
+   "concepts": [
+    "Despido sin justa causa",
+    "Motivación del despido",
+    "Indemnización art. 64",
+    "Contrato a término fijo",
+    "Debido proceso disciplinario"
+   ],
+   "risk_level": "media",
+   "risk_note": "La Ley 2466 de 2025 reforzó el debido proceso disciplinario (art. 115 CST). Verificar texto vigente de los arts. 62, 64 y 115 antes de publicar preguntas nuevas.",
+   "sources": [
+    {
+     "id": "src_cst_62_66",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, arts. 62 y 66",
+     "detail": "Justas causas de terminación y deber de manifestar la causal al momento del despido.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Art. 66: la parte que termina unilateralmente el contrato debe manifestar a la otra, en el momento de la extinción, la causal o motivo; posteriormente no pueden alegarse válidamente causales distintas.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_cst_64",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 64",
+     "detail": "Indemnización por terminación unilateral sin justa causa.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Contrato a término indefinido, salario inferior a 10 SMMLV: 30 días de salario por el primer año y 20 días adicionales por cada año subsiguiente y proporcionalmente por fracción. Término fijo: salarios correspondientes al tiempo que faltare para cumplir el plazo.",
+     "min_level": 1,
+     "priority": 2,
+     "risk_level": "media",
+     "risk_note": "Verificar si la Ley 2466 de 2025 modificó el artículo."
+    },
+    {
+     "id": "src_cst_115",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 115 (modificado por la Ley 2466 de 2025)",
+     "detail": "Procedimiento disciplinario: cargos, descargos, pruebas y decisión motivada.",
+     "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=260676",
+     "fragment": "Antes de sancionar, el empleador debe comunicar formalmente los cargos, permitir los descargos y la controversia de pruebas, y adoptar una decisión motivada susceptible de impugnación.",
+     "min_level": 3,
+     "priority": 3,
+     "risk_level": "alta",
+     "risk_note": "Texto reformado en 2025: confirmar alcance exacto y si aplica al despido con justa causa."
+    }
+   ],
+   "questions": [
+    {
+     "id": "lt1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Despido sin justa causa",
+     "source_id": "src_cst_64",
+     "stem": "¿Puede un empleador despedir a un trabajador sin justa causa?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Sí, pero debe pagarle una indemnización",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "No, nunca está permitido",
+       "misconception": "Confunde la regla general con la estabilidad laboral reforzada"
+      },
+      {
+       "key": "C",
+       "text": "Sí, y sin pagar nada si avisa con 15 días de anticipación",
+       "misconception": "Confunde el despido con el preaviso de no prórroga del contrato a término fijo"
+      },
+      {
+       "key": "D",
+       "text": "Solo con autorización del Ministerio del Trabajo",
+       "misconception": "Generaliza la autorización que solo se exige para trabajadores protegidos"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lt2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Motivación del despido",
+     "source_id": "src_cst_62_66",
+     "stem": "Cuando un empleador termina el contrato con justa causa, ¿qué debe hacer según el art. 66 del CST?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Indicar la causal en el momento de la terminación; después no puede alegar otras",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Nada: basta con entregar la liquidación",
+       "misconception": "Desconoce el deber de manifestar la causal"
+      },
+      {
+       "key": "C",
+       "text": "Indicar la causal dentro de los 30 días siguientes",
+       "misconception": "Cree que la causal puede informarse después del despido"
+      },
+      {
+       "key": "D",
+       "text": "Pedir autorización previa a un juez laboral",
+       "misconception": "Confunde el despido ordinario con el levantamiento del fuero sindical"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lt3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Indemnización art. 64",
+     "source_id": "src_cst_64",
+     "risk_level": "media",
+     "risk_note": "Verificar vigencia del art. 64 tras la Ley 2466 de 2025.",
+     "stem": "Un trabajador con contrato a término indefinido, 3 años de antigüedad y salario de 2 SMMLV es despedido sin justa causa. ¿Qué indemnización le corresponde?",
+     "options": [
+      {
+       "key": "A",
+       "text": "30 días de salario por el primer año y 20 días por cada año adicional",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "45 días de salario por el primer año",
+       "misconception": "Aplica el régimen de indemnización anterior a la Ley 789 de 2002"
+      },
+      {
+       "key": "C",
+       "text": "Nada, el empleador puede terminar libremente",
+       "misconception": "Confunde la facultad de terminar con la ausencia de indemnización"
+      },
+      {
+       "key": "D",
+       "text": "Reintegro obligatorio al cargo",
+       "misconception": "Confunde el despido ordinario con la estabilidad laboral reforzada"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lt4",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Contrato a término fijo",
+     "source_id": "src_cst_64",
+     "stem": "Sofía tiene un contrato a término fijo de un año y la despiden sin justa causa al cuarto mes. ¿Qué le corresponde?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Los salarios del tiempo que falta para terminar el plazo pactado",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "30 días de salario",
+       "misconception": "Aplica la regla del contrato indefinido al contrato a término fijo"
+      },
+      {
+       "key": "C",
+       "text": "Nada, porque el contrato era temporal",
+       "misconception": "Cree que el contrato a término fijo no genera indemnización"
+      },
+      {
+       "key": "D",
+       "text": "15 días de salario",
+       "misconception": "Desconoce la regla de indemnización del contrato a término fijo"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lt5",
+     "level": 3,
+     "approach": "tecnico",
+     "kind": "open",
+     "concept": "Debido proceso disciplinario",
+     "source_id": "src_cst_115",
+     "risk_level": "alta",
+     "risk_note": "Basada en el art. 115 CST reformado en 2025: el docente debe validar la rúbrica.",
+     "stem": "Una empresa quiere sancionar a un trabajador por llegar tarde varias veces. Explica qué garantías debe respetar antes de imponer la sanción.",
+     "rubric": [
+      {
+       "id": "r1",
+       "criterion": "Comunicación formal de los cargos o de la apertura del proceso",
+       "keywords": [
+        "cargos",
+        "comunicacion",
+        "apertura",
+        "notificar",
+        "informar"
+       ]
+      },
+      {
+       "id": "r2",
+       "criterion": "Derecho a presentar descargos y a ser oído",
+       "keywords": [
+        "descargos",
+        "ser oido",
+        "defensa",
+        "escuchar"
+       ]
+      },
+      {
+       "id": "r3",
+       "criterion": "Posibilidad de controvertir y aportar pruebas",
+       "keywords": [
+        "pruebas",
+        "controvertir",
+        "evidencia"
+       ]
+      },
+      {
+       "id": "r4",
+       "criterion": "Decisión motivada y posibilidad de impugnarla",
+       "keywords": [
+        "motivada",
+        "impugnar",
+        "recurso",
+        "proporcional"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lab_estabilidad",
+   "name": "Estabilidad laboral reforzada",
+   "module": "Nivel 2 · Módulo 5",
+   "order": 5,
+   "prerequisites": [
+    "lab_terminacion"
+   ],
+   "objective_tecnico": "Determinar los requisitos, la autoridad competente y las consecuencias del despido de trabajadores protegidos (maternidad, salud, fuero sindical), contrastando la jurisprudencia de ambas cortes.",
+   "objective_practico": "Reconocer cuándo una persona no puede ser despedida sin permiso y qué puede reclamar si la despiden.",
+   "concepts": [
+    "Fuero de maternidad",
+    "Autorización del inspector de trabajo",
+    "Estabilidad por salud",
+    "Fuero sindical",
+    "Ineficacia del despido"
+   ],
+   "risk_level": "alta",
+   "risk_note": "La Corte Constitucional (SU-049 de 2017) y la Sala Laboral de la Corte Suprema (SL1152-2023) fijan criterios distintos sobre estabilidad por salud. La herramienta no elige entre ellas: marca revisión docente.",
+   "sources": [
+    {
+     "id": "src_cst_239_240",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, arts. 239 y 240",
+     "detail": "Prohibición de despido por embarazo o lactancia, presunción y autorización del inspector de trabajo.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Art. 239: se presume despido por embarazo o lactancia el efectuado durante el embarazo o dentro de las 18 semanas posteriores al parto sin autorización; indemnización de 60 días de salario. Art. 240: para despedir se requiere autorización del inspector de trabajo (o del alcalde donde no lo haya).",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_ley361_26",
+     "kind": "norma",
+     "citation": "Ley 361 de 1997, art. 26",
+     "detail": "Despido de persona en situación de discapacidad sin autorización del Ministerio del Trabajo.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0361_1997.html",
+     "fragment": "Ninguna persona podrá ser despedida por razón de su limitación sin autorización de la oficina del trabajo; quien lo haga sin ella deberá pagar 180 días de salario, sin perjuicio de las demás indemnizaciones.",
+     "min_level": 2,
+     "priority": 2
+    },
+    {
+     "id": "src_su049_2017",
+     "kind": "jurisprudencia",
+     "citation": "Corte Constitucional, Sentencia SU-049 de 2017",
+     "detail": "Estabilidad ocupacional reforzada por debilidad manifiesta en salud, aun sin calificación de pérdida de capacidad.",
+     "url": "https://www.corteconstitucional.gov.co/relatoria/2017/SU049-17.htm",
+     "fragment": "La estabilidad reforzada por salud protege a quien tiene una afectación de salud que le impide o dificulta sustancialmente el desempeño de sus labores, sin exigir calificación previa.",
+     "min_level": 3,
+     "priority": 3,
+     "risk_level": "alta",
+     "risk_note": "Postura distinta a la de la Sala Laboral de la Corte Suprema (SL1152-2023)."
+    },
+    {
+     "id": "src_sl1152_2023",
+     "kind": "jurisprudencia",
+     "citation": "Corte Suprema de Justicia, Sala de Casación Laboral, SL1152-2023",
+     "detail": "Criterios de la Sala Laboral para la estabilidad por discapacidad a la luz de la Convención sobre los Derechos de las Personas con Discapacidad.",
+     "url": "https://cortesuprema.gov.co/sala-laboral-relatoria/",
+     "fragment": "La Sala Laboral exige acreditar una deficiencia de mediano o largo plazo, barreras para el trabajo y que el empleador las conocía.",
+     "min_level": 3,
+     "priority": 4,
+     "risk_level": "alta",
+     "risk_note": "Choque entre cortes; enlace a la relatoría general, ubicar la providencia exacta."
+    },
+    {
+     "id": "src_cst_405",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 405",
+     "detail": "Fuero sindical: despido con previa calificación judicial de la justa causa.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Los trabajadores amparados por fuero sindical no pueden ser despedidos sin justa causa previamente calificada por el juez del trabajo.",
+     "min_level": 2,
+     "priority": 5
+    }
+   ],
+   "questions": [
+    {
+     "id": "le1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Autorización del inspector de trabajo",
+     "source_id": "src_cst_239_240",
+     "stem": "¿Quién debe autorizar el despido de una trabajadora en embarazo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Un juez laboral",
+       "misconception": "Confunde el fuero de maternidad con el fuero sindical"
+      },
+      {
+       "key": "B",
+       "text": "El inspector de trabajo",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "La ARL",
+       "misconception": "Confunde la autoridad laboral con la entidad de riesgos laborales"
+      },
+      {
+       "key": "D",
+       "text": "El comité de convivencia laboral",
+       "misconception": "Confunde la autorización de despido con el manejo del acoso laboral"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "le2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Fuero de maternidad",
+     "source_id": "src_cst_239_240",
+     "stem": "Si se despide sin autorización a una trabajadora, ¿durante qué periodo se presume que el despido fue por embarazo o lactancia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Durante el embarazo y dentro de las 18 semanas posteriores al parto",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Solo durante el embarazo",
+       "misconception": "Desconoce la protección posterior al parto"
+      },
+      {
+       "key": "C",
+       "text": "Solo mientras disfruta la licencia de maternidad",
+       "misconception": "Reduce la protección al periodo de licencia"
+      },
+      {
+       "key": "D",
+       "text": "Durante el año siguiente al parto",
+       "misconception": "Sobrestima el periodo legal de la presunción"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "le3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Ineficacia del despido",
+     "source_id": "src_cst_239_240",
+     "risk_level": "media",
+     "risk_note": "Las consecuencias (reintegro) son de origen jurisprudencial (SU-070 de 2013, SU-075 de 2018).",
+     "stem": "Una trabajadora informa su embarazo y, semanas después, es despedida sin autorización del inspector de trabajo. ¿Qué consecuencia tiene?",
+     "options": [
+      {
+       "key": "A",
+       "text": "El despido es válido si se paga la indemnización del art. 64 del Código Sustantivo del Trabajo",
+       "misconception": "Desconoce el fuero de maternidad"
+      },
+      {
+       "key": "B",
+       "text": "El despido es ineficaz: procede reintegro, pago de salarios y la indemnización de 60 días",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Es válido si la trabajadora estaba en periodo de prueba",
+       "misconception": "Cree que el periodo de prueba excluye la protección a la maternidad"
+      },
+      {
+       "key": "D",
+       "text": "Solo debe pagarse la licencia de maternidad",
+       "misconception": "Reduce la protección a la licencia de maternidad"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "le4",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Fuero sindical",
+     "source_id": "src_cst_405",
+     "stem": "¿Qué se necesita para despedir a un trabajador amparado por fuero sindical?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Autorización del inspector de trabajo",
+       "misconception": "Confunde el fuero sindical con el fuero de maternidad"
+      },
+      {
+       "key": "B",
+       "text": "Que un juez laboral califique previamente la justa causa (levantamiento del fuero)",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Autorización del sindicato",
+       "misconception": "Cree que el sindicato decide sobre el despido"
+      },
+      {
+       "key": "D",
+       "text": "No se necesita nada si se paga indemnización",
+       "misconception": "Desconoce el fuero sindical"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "le5",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Estabilidad por salud",
+     "source_id": "src_ley361_26",
+     "risk_level": "alta",
+     "risk_note": "Criterios de titularidad distintos entre Corte Constitucional y Corte Suprema.",
+     "stem": "Carlos lleva meses incapacitado por una lesión de columna y lo despiden por esa razón, sin permiso del Ministerio del Trabajo. ¿Qué puede invocar?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Estabilidad laboral reforzada por salud: el despido sin autorización es ineficaz y procede una indemnización de 180 días",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Nada, si le pagan la indemnización del art. 64 del Código Sustantivo del Trabajo",
+       "misconception": "Desconoce la estabilidad laboral reforzada por salud"
+      },
+      {
+       "key": "C",
+       "text": "Solo el fuero sindical",
+       "misconception": "Confunde la protección por salud con el fuero sindical"
+      },
+      {
+       "key": "D",
+       "text": "Solo si lleva más de 10 años en la empresa",
+       "misconception": "Cree que la protección depende de la antigüedad"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "le6",
+     "level": 3,
+     "approach": "tecnico",
+     "kind": "open",
+     "concept": "Fuero de maternidad",
+     "source_id": "src_cst_239_240",
+     "risk_level": "alta",
+     "risk_note": "Caso con matices jurisprudenciales (vencimiento del plazo y fuero de maternidad): requiere validación docente.",
+     "stem": "Una trabajadora con contrato a término fijo informa su embarazo y el empleador decide no renovar el contrato al vencimiento. Analiza si la decisión es válida y qué debió hacer el empleador.",
+     "rubric": [
+      {
+       "id": "r1",
+       "criterion": "Identifica el fuero de maternidad y la presunción de despido",
+       "keywords": [
+        "fuero",
+        "maternidad",
+        "presuncion",
+        "embarazo"
+       ]
+      },
+      {
+       "id": "r2",
+       "criterion": "Exige autorización del inspector de trabajo",
+       "keywords": [
+        "inspector",
+        "autorizacion",
+        "ministerio"
+       ]
+      },
+      {
+       "id": "r3",
+       "criterion": "Explica que el vencimiento del plazo no basta por sí solo si subsisten las causas del contrato",
+       "keywords": [
+        "vencimiento",
+        "plazo",
+        "subsisten",
+        "causas",
+        "objeto"
+       ]
+      },
+      {
+       "id": "r4",
+       "criterion": "Señala consecuencias: reintegro o renovación e indemnización de 60 días",
+       "keywords": [
+        "reintegro",
+        "renovacion",
+        "60 dias",
+        "sesenta",
+        "indemnizacion"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lab_salario",
+   "name": "Salario y pagos laborales",
+   "module": "Nivel 1 · Módulo 3 / Nivel 2 · Módulo 2",
+   "order": 6,
+   "prerequisites": [
+    "lab_contrato"
+   ],
+   "objective_tecnico": "Distinguir los pagos constitutivos y no constitutivos de salario, y aplicar el salario integral y el auxilio de transporte.",
+   "objective_practico": "Saber qué pagos cuentan como salario, quién recibe auxilio de transporte y qué es el salario integral.",
+   "concepts": [
+    "Elementos integrantes del salario",
+    "Pagos no constitutivos de salario",
+    "Salario integral",
+    "Auxilio de transporte"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cst_127_128",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, arts. 127 y 128",
+     "detail": "Elementos integrantes del salario y pagos que no constituyen salario.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Art. 127: constituye salario no solo la remuneración ordinaria, fija o variable, sino todo lo que recibe el trabajador en dinero o en especie como contraprestación directa del servicio, como primas, sobresueldos, bonificaciones habituales, valor del trabajo suplementario o de las horas extras, porcentajes sobre ventas y comisiones. Art. 128: no constituyen salario las sumas que ocasionalmente y por mera liberalidad recibe el trabajador, ni lo que recibe en dinero o en especie para desempeñar a cabalidad sus funciones, como gastos de representación, medios de transporte o elementos de trabajo, ni las prestaciones sociales.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_cst_132",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 132",
+     "detail": "Salario integral.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Puede pactarse un salario integral cuando el trabajador devengue un salario ordinario superior a diez salarios mínimos legales mensuales, más el factor prestacional correspondiente a la empresa, que no puede ser inferior al 30 % de dicha cuantía; en total, no menos de trece salarios mínimos. El salario integral compensa de antemano el valor de prestaciones, recargos y beneficios como el trabajo nocturno, extraordinario o dominical, las primas, las cesantías y sus intereses, excepto las vacaciones.",
+     "min_level": 2,
+     "priority": 2
+    },
+    {
+     "id": "src_auxilio_transporte",
+     "kind": "norma",
+     "citation": "Ley 15 de 1959 y decretos anuales del auxilio de transporte",
+     "detail": "Auxilio de transporte para quienes devengan hasta dos salarios mínimos.",
+     "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/",
+     "fragment": "El auxilio de transporte se paga a los trabajadores que devenguen hasta dos salarios mínimos legales mensuales vigentes; su valor lo fija cada año el Gobierno nacional. No constituye salario, pero se incluye en la base para liquidar las cesantías y la prima de servicios.",
+     "min_level": 1,
+     "priority": 3
+    }
+   ],
+   "questions": [
+    {
+     "id": "ls1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Pagos no constitutivos de salario",
+     "source_id": "src_cst_127_128",
+     "stem": "A Laura le entregan un portátil y un plan de datos para poder trabajar desde casa. ¿Esos elementos son salario?",
+     "options": [
+      {
+       "key": "A",
+       "text": "No: son elementos para desempeñar sus funciones, no una retribución del servicio",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Sí: todo lo que entrega el empleador es salario",
+       "misconception": "Cree que todo pago del empleador constituye salario"
+      },
+      {
+       "key": "C",
+       "text": "Solo si se los entregan todos los meses",
+       "misconception": "Confunde la habitualidad con la naturaleza retributiva del pago"
+      },
+      {
+       "key": "D",
+       "text": "Sí, porque tienen valor económico",
+       "misconception": "Confunde el valor económico con la contraprestación directa del servicio"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "ls2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Auxilio de transporte",
+     "source_id": "src_auxilio_transporte",
+     "stem": "¿Quién tiene derecho al auxilio de transporte?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Todos los trabajadores, sin importar su salario",
+       "misconception": "Desconoce el tope salarial del auxilio de transporte"
+      },
+      {
+       "key": "B",
+       "text": "Los trabajadores que devengan hasta dos salarios mínimos",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Solo quienes viven lejos del lugar de trabajo",
+       "misconception": "Confunde el auxilio legal con un beneficio por distancia"
+      },
+      {
+       "key": "D",
+       "text": "Solo quienes ganan más de dos salarios mínimos",
+       "misconception": "Invierte el criterio del tope salarial"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "ls3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Elementos integrantes del salario",
+     "source_id": "src_cst_127_128",
+     "stem": "Un vendedor recibe cada mes comisiones por ventas además de su salario básico. ¿Cómo se tratan esas comisiones?",
+     "options": [
+      {
+       "key": "A",
+       "text": "No son salario porque son variables",
+       "misconception": "Cree que la remuneración variable no es salario"
+      },
+      {
+       "key": "B",
+       "text": "Solo son salario si superan el básico",
+       "misconception": "Inventa un umbral que la ley no establece"
+      },
+      {
+       "key": "C",
+       "text": "Son salario y se tienen en cuenta para liquidar prestaciones",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Son una bonificación por mera liberalidad",
+       "misconception": "Confunde una contraprestación directa con un pago ocasional"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "ls4",
+     "level": 3,
+     "approach": "tecnico",
+     "concept": "Salario integral",
+     "source_id": "src_cst_132",
+     "stem": "¿Cuál es el valor mínimo de un salario integral?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Diez salarios mínimos exactos",
+       "misconception": "Olvida sumar el factor prestacional"
+      },
+      {
+       "key": "B",
+       "text": "Cualquier valor, si el trabajador lo acepta por escrito",
+       "misconception": "Desconoce el mínimo legal del salario integral"
+      },
+      {
+       "key": "C",
+       "text": "Cinco salarios mínimos más el 30 %",
+       "misconception": "Confunde el umbral del salario integral"
+      },
+      {
+       "key": "D",
+       "text": "Diez salarios mínimos más un factor prestacional no inferior al 30 % (trece en total)",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  },
+  {
+   "id": "lab_periodo_prueba",
+   "name": "Período de prueba",
+   "module": "Nivel 2 · Módulo 1",
+   "order": 7,
+   "prerequisites": [
+    "lab_contrato"
+   ],
+   "objective_tecnico": "Aplicar los requisitos y límites del período de prueba (arts. 76 a 80 CST) y sus efectos en la terminación del contrato.",
+   "objective_practico": "Saber cuánto puede durar el período de prueba y qué derechos se tienen durante ese tiempo.",
+   "concepts": [
+    "Estipulación por escrito",
+    "Duración máxima",
+    "Contratos a término fijo",
+    "Derechos durante la prueba"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_cst_76_80",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, arts. 76 a 80",
+     "detail": "Período de prueba: estipulación, duración y efectos.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "El período de prueba debe estipularse por escrito; de lo contrario, los servicios se entienden regulados por las normas generales del contrato de trabajo. No puede exceder de dos meses. En los contratos a término fijo inferiores a un año, no puede ser superior a la quinta parte del término inicialmente pactado, sin exceder dos meses. Durante el período de prueba cualquiera de las partes puede dar por terminado el contrato sin previo aviso. Los trabajadores en período de prueba gozan de todas las prestaciones.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "lpp1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Estipulación por escrito",
+     "source_id": "src_cst_76_80",
+     "stem": "A Andrés le dijeron verbalmente que tendría «un mes de prueba», pero nada quedó por escrito. ¿Tiene período de prueba?",
+     "options": [
+      {
+       "key": "A",
+       "text": "No: el período de prueba debe pactarse por escrito",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Sí, el acuerdo verbal es suficiente",
+       "misconception": "Desconoce que el período de prueba debe constar por escrito"
+      },
+      {
+       "key": "C",
+       "text": "Sí, todo contrato tiene dos meses de prueba automáticos",
+       "misconception": "Cree que el período de prueba se presume"
+      },
+      {
+       "key": "D",
+       "text": "Solo si el contrato es a término fijo",
+       "misconception": "Confunde la modalidad del contrato con la estipulación de la prueba"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lpp2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Duración máxima",
+     "source_id": "src_cst_76_80",
+     "stem": "¿Cuál es la duración máxima del período de prueba?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Tres meses",
+       "misconception": "Sobrestima la duración legal"
+      },
+      {
+       "key": "B",
+       "text": "Seis meses",
+       "misconception": "Sobrestima la duración legal"
+      },
+      {
+       "key": "C",
+       "text": "Dos meses",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Un año",
+       "misconception": "Confunde el período de prueba con la duración del contrato"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "lpp3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Contratos a término fijo",
+     "source_id": "src_cst_76_80",
+     "stem": "En un contrato a término fijo de cinco meses, ¿cuál es el período de prueba máximo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Dos meses",
+       "misconception": "No aplica la regla de la quinta parte en contratos inferiores a un año"
+      },
+      {
+       "key": "B",
+       "text": "Un mes, la quinta parte del término pactado",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Quince días",
+       "misconception": "Calcula mal la proporción legal"
+      },
+      {
+       "key": "D",
+       "text": "No puede pactarse período de prueba",
+       "misconception": "Cree que los contratos cortos no admiten período de prueba"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "lpp4",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Derechos durante la prueba",
+     "source_id": "src_cst_76_80",
+     "stem": "Durante el período de prueba, ¿el trabajador tiene derecho a prestaciones sociales?",
+     "options": [
+      {
+       "key": "A",
+       "text": "No, solo después de superar la prueba",
+       "misconception": "Cree que la prueba suspende las prestaciones"
+      },
+      {
+       "key": "B",
+       "text": "Solo a la mitad de ellas",
+       "misconception": "Inventa una reducción que la ley no prevé"
+      },
+      {
+       "key": "C",
+       "text": "Solo si la prueba dura más de un mes",
+       "misconception": "Inventa una condición que la ley no prevé"
+      },
+      {
+       "key": "D",
+       "text": "Sí, goza de todas las prestaciones",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  },
+  {
+   "id": "lab_seguridad_social",
+   "name": "Seguridad social: salud, pensiones y riesgos laborales",
+   "module": "Nivel 1 · Módulo 5 / Nivel 2 · Módulo 4",
+   "order": 8,
+   "prerequisites": [
+    "lab_contrato"
+   ],
+   "objective_tecnico": "Aplicar las reglas de afiliación, cotización, riesgos laborales e incapacidades del Sistema de Seguridad Social Integral.",
+   "objective_practico": "Saber a qué debe estar afiliado un trabajador, quién paga cada aporte y qué pasa si se incapacita.",
+   "concepts": [
+    "Afiliación obligatoria",
+    "Cotizaciones",
+    "Riesgos laborales",
+    "Incapacidades"
+   ],
+   "risk_level": "media",
+   "risk_note": "La reforma pensional (Ley 2381 de 2024) tiene una situación jurídica que debe verificarse antes de formular preguntas sobre pensiones.",
+   "sources": [
+    {
+     "id": "src_ley100",
+     "kind": "norma",
+     "citation": "Ley 100 de 1993 y normas de cotización",
+     "detail": "Afiliación obligatoria y cotizaciones a salud y pensiones.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_0100_1993.html",
+     "fragment": "La afiliación al Sistema de Seguridad Social Integral es obligatoria para los trabajadores dependientes. La cotización a pensiones es del 16 % del salario: 12 % a cargo del empleador y 4 % a cargo del trabajador. La cotización a salud es del 12,5 %: 8,5 % a cargo del empleador y 4 % del trabajador, aunque algunos empleadores están exonerados de su parte en ciertos casos.",
+     "min_level": 1,
+     "priority": 1,
+     "risk_level": "media",
+     "risk_note": "Verificar reglas vigentes de cotización y exoneraciones."
+    },
+    {
+     "id": "src_ley1562",
+     "kind": "norma",
+     "citation": "Ley 1562 de 2012",
+     "detail": "Sistema General de Riesgos Laborales y definición de accidente de trabajo.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1562_2012.html",
+     "fragment": "La afiliación al Sistema General de Riesgos Laborales es obligatoria para los trabajadores dependientes y la cotización está a cargo exclusivamente del empleador. Es accidente de trabajo todo suceso repentino que sobrevenga por causa o con ocasión del trabajo y que produzca en el trabajador una lesión orgánica, una perturbación funcional o psiquiátrica, una invalidez o la muerte; también el que se produce durante la ejecución de órdenes del empleador, aun fuera del lugar y las horas de trabajo.",
+     "min_level": 1,
+     "priority": 2
+    },
+    {
+     "id": "src_incapacidades",
+     "kind": "norma",
+     "citation": "Decreto 780 de 2016, art. 3.2.1.10",
+     "detail": "Pago de incapacidades de origen común.",
+     "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/",
+     "fragment": "En las incapacidades originadas por enfermedad general (origen común), el pago de los dos primeros días está a cargo del empleador y, a partir del tercer día, a cargo de la EPS.",
+     "min_level": 2,
+     "priority": 3
+    }
+   ],
+   "questions": [
+    {
+     "id": "lss1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Riesgos laborales",
+     "source_id": "src_ley1562",
+     "stem": "¿Quién paga la cotización a riesgos laborales (ARL) de un trabajador dependiente?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Mitad el empleador y mitad el trabajador",
+       "misconception": "Confunde la cotización a riesgos laborales con la de pensiones"
+      },
+      {
+       "key": "B",
+       "text": "El empleador en su totalidad",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "El trabajador",
+       "misconception": "Desconoce que la cotización a riesgos laborales es del empleador"
+      },
+      {
+       "key": "D",
+       "text": "El Estado",
+       "misconception": "Cree que la ARL es un subsidio estatal"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "lss2",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Cotizaciones",
+     "source_id": "src_ley100",
+     "stem": "¿Cómo se distribuye la cotización a pensiones de un trabajador dependiente?",
+     "options": [
+      {
+       "key": "A",
+       "text": "12,5 %: 8,5 % el empleador y 4 % el trabajador",
+       "misconception": "Confunde la cotización a pensiones con la de salud"
+      },
+      {
+       "key": "B",
+       "text": "16 % a cargo del trabajador",
+       "misconception": "Desconoce la parte que paga el empleador"
+      },
+      {
+       "key": "C",
+       "text": "16 %: 12 % el empleador y 4 % el trabajador",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "10 % a cargo del empleador",
+       "misconception": "Desconoce el porcentaje legal de cotización"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "lss3",
+     "level": 2,
+     "approach": "practico",
+     "concept": "Incapacidades",
+     "source_id": "src_incapacidades",
+     "stem": "Camila tiene una incapacidad de cinco días por una enfermedad común. ¿Quién paga los dos primeros días?",
+     "options": [
+      {
+       "key": "A",
+       "text": "El empleador; desde el tercer día paga la EPS",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "La EPS desde el primer día",
+       "misconception": "Desconoce los días a cargo del empleador"
+      },
+      {
+       "key": "C",
+       "text": "La ARL",
+       "misconception": "Confunde una incapacidad de origen común con una de origen laboral"
+      },
+      {
+       "key": "D",
+       "text": "Nadie: los primeros días no se pagan",
+       "misconception": "Cree que los primeros días de incapacidad no se remuneran"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lss4",
+     "level": 2,
+     "approach": "ambos",
+     "concept": "Riesgos laborales",
+     "source_id": "src_ley1562",
+     "stem": "Un trabajador se lesiona mientras cumple una orden de su jefe fuera de la oficina. ¿Cómo se califica el hecho?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Accidente común, porque no ocurrió en la oficina",
+       "misconception": "Cree que el accidente de trabajo solo ocurre en las instalaciones del empleador"
+      },
+      {
+       "key": "B",
+       "text": "Enfermedad laboral",
+       "misconception": "Confunde el accidente de trabajo con la enfermedad laboral"
+      },
+      {
+       "key": "C",
+       "text": "Depende de si fue culpa del trabajador",
+       "misconception": "Cree que la culpa del trabajador define la calificación del accidente"
+      },
+      {
+       "key": "D",
+       "text": "Accidente de trabajo, porque ocurrió con ocasión de una orden del empleador",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  },
+  {
+   "id": "lab_licencias",
+   "name": "Licencias de maternidad, paternidad y lactancia",
+   "module": "Nivel 1 · Módulo 5",
+   "order": 9,
+   "prerequisites": [],
+   "objective_tecnico": "Aplicar las reglas de la licencia de maternidad (art. 236 CST), la licencia de paternidad y el descanso para lactancia (art. 238 CST).",
+   "objective_practico": "Saber cuánto duran las licencias por nacimiento y qué derechos tiene una madre lactante en el trabajo.",
+   "concepts": [
+    "Licencia de maternidad",
+    "Licencia de paternidad",
+    "Descanso para lactancia"
+   ],
+   "risk_level": "media",
+   "risk_note": "La licencia de paternidad puede ampliarse gradualmente según la Ley 2114 de 2021: verificar el número de semanas vigente.",
+   "sources": [
+    {
+     "id": "src_cst_236",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 236 (Leyes 1822 de 2017 y 2114 de 2021)",
+     "detail": "Licencias de maternidad y de paternidad.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Toda trabajadora en estado de embarazo tiene derecho a una licencia de dieciocho semanas en la época del parto, remunerada con el salario que devengue al momento de iniciarla. La licencia de paternidad es de dos semanas y la ley prevé que pueda ampliarse de forma gradual.",
+     "min_level": 1,
+     "priority": 1,
+     "risk_level": "media",
+     "risk_note": "Verificar la ampliación gradual de la licencia de paternidad."
+    },
+    {
+     "id": "src_cst_238",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, art. 238",
+     "detail": "Descanso remunerado durante la lactancia.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "El empleador está obligado a conceder a la trabajadora dos descansos de treinta minutos cada uno, dentro de la jornada, para amamantar a su hijo, sin descuento alguno del salario, durante los primeros seis meses de edad del niño.",
+     "min_level": 1,
+     "priority": 2
+    }
+   ],
+   "questions": [
+    {
+     "id": "lli1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Licencia de maternidad",
+     "source_id": "src_cst_236",
+     "stem": "¿Cuántas semanas dura la licencia de maternidad en Colombia?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Catorce semanas",
+       "misconception": "Aplica la duración anterior a la Ley 1822 de 2017"
+      },
+      {
+       "key": "B",
+       "text": "Dieciocho semanas",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Doce semanas",
+       "misconception": "Subestima la duración legal"
+      },
+      {
+       "key": "D",
+       "text": "Veintiséis semanas",
+       "misconception": "Sobrestima la duración legal"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "lli2",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Licencia de paternidad",
+     "source_id": "src_cst_236",
+     "stem": "Como regla general, ¿cuánto dura la licencia de paternidad?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Ocho días hábiles",
+       "misconception": "Aplica la regla anterior a la Ley 2114 de 2021"
+      },
+      {
+       "key": "B",
+       "text": "Dieciocho semanas",
+       "misconception": "Confunde la licencia de paternidad con la de maternidad"
+      },
+      {
+       "key": "C",
+       "text": "Dos semanas, ampliables gradualmente según la ley",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Un día",
+       "misconception": "Desconoce la licencia de paternidad"
+      }
+     ],
+     "correct_key": "C",
+     "risk_level": "media",
+     "risk_note": "Verificar el número de semanas vigente."
+    },
+    {
+     "id": "lli3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Descanso para lactancia",
+     "source_id": "src_cst_238",
+     "stem": "Durante los primeros seis meses del bebé, ¿qué derecho tiene la trabajadora lactante dentro de la jornada?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Dos descansos de treinta minutos diarios, sin descuento del salario",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Una hora diaria de descanso que se descuenta del salario",
+       "misconception": "Cree que el descanso de lactancia se descuenta"
+      },
+      {
+       "key": "C",
+       "text": "Salir dos horas antes cada día",
+       "misconception": "Inventa un beneficio distinto al legal"
+      },
+      {
+       "key": "D",
+       "text": "Ningún descanso adicional",
+       "misconception": "Desconoce el descanso para lactancia"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "lab_acoso",
+   "name": "Acoso laboral",
+   "module": "Nivel 1 · Módulo 6",
+   "order": 10,
+   "prerequisites": [],
+   "objective_tecnico": "Identificar las modalidades de acoso laboral, las conductas excluidas, los mecanismos de prevención y la caducidad de las acciones (Ley 1010 de 2006).",
+   "objective_practico": "Reconocer qué es acoso laboral, dónde quejarse y en qué plazo hacerlo.",
+   "concepts": [
+    "Definición y modalidades",
+    "Conductas que no son acoso",
+    "Comité de convivencia",
+    "Caducidad"
+   ],
+   "risk_level": "ninguno",
+   "risk_note": "",
+   "sources": [
+    {
+     "id": "src_ley1010",
+     "kind": "norma",
+     "citation": "Ley 1010 de 2006, arts. 2, 8 y 18",
+     "detail": "Acoso laboral: definición, modalidades, exclusiones y caducidad.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1010_2006.html",
+     "fragment": "Acoso laboral es toda conducta persistente y demostrable ejercida sobre un empleado por un empleador, jefe, compañero o subalterno, encaminada a infundir miedo, intimidación, terror y angustia, a causar perjuicio laboral, generar desmotivación en el trabajo o inducir la renuncia. Modalidades (art. 2): maltrato, persecución, discriminación, entorpecimiento, inequidad y desprotección laborales. La persecución laboral comprende conductas reiteradas y arbitrarias que buscan inducir la renuncia, como la descalificación, la carga excesiva de trabajo y los cambios permanentes de horario. No constituyen acoso (art. 8), entre otras, las órdenes para preservar la disciplina ni las exigencias razonables de cumplir el trabajo. Las acciones derivadas del acoso caducan seis meses después de la fecha en que ocurrieron las conductas (art. 18). Las empresas deben tener mecanismos internos de prevención, como el comité de convivencia laboral.",
+     "min_level": 1,
+     "priority": 1
+    }
+   ],
+   "questions": [
+    {
+     "id": "lac1",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Definición y modalidades",
+     "source_id": "src_ley1010",
+     "stem": "¿Cuál de estas situaciones puede constituir acoso laboral?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Un jefe que exige cumplir el horario pactado",
+       "misconception": "Confunde las exigencias razonables con acoso"
+      },
+      {
+       "key": "B",
+       "text": "Un único desacuerdo puntual en una reunión",
+       "misconception": "Desconoce que el acoso laboral es persistente"
+      },
+      {
+       "key": "C",
+       "text": "Un jefe que humilla en público a una trabajadora de forma repetida",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Una evaluación de desempeño negativa basada en criterios objetivos",
+       "misconception": "Confunde una evaluación objetiva con persecución"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "lac2",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Caducidad",
+     "source_id": "src_ley1010",
+     "stem": "¿En qué plazo caducan las acciones derivadas del acoso laboral?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Tres años",
+       "misconception": "Confunde la caducidad del acoso con la prescripción de derechos laborales"
+      },
+      {
+       "key": "B",
+       "text": "Un mes",
+       "misconception": "Subestima el término legal"
+      },
+      {
+       "key": "C",
+       "text": "No caducan",
+       "misconception": "Desconoce el término de caducidad"
+      },
+      {
+       "key": "D",
+       "text": "Seis meses desde que ocurrieron las conductas",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    },
+    {
+     "id": "lac3",
+     "level": 2,
+     "approach": "ambos",
+     "concept": "Definición y modalidades",
+     "source_id": "src_ley1010",
+     "stem": "A un empleado le asignan de forma reiterada una carga excesiva de trabajo y le cambian el horario constantemente para que renuncie. ¿Qué modalidad de acoso es?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Persecución laboral",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Inequidad laboral",
+       "misconception": "Confunde la persecución con la asignación de funciones a menosprecio"
+      },
+      {
+       "key": "C",
+       "text": "Desprotección laboral",
+       "misconception": "Confunde la persecución con conductas que ponen en riesgo la integridad"
+      },
+      {
+       "key": "D",
+       "text": "Discriminación laboral",
+       "misconception": "Confunde la persecución con un trato diferenciado por razones de raza, género u otras"
+      }
+     ],
+     "correct_key": "A"
+    }
+   ]
+  },
+  {
+   "id": "lab_colectivo",
+   "name": "Derecho colectivo: sindicatos, negociación y huelga",
+   "module": "Nivel 2 · Módulo 6 / Nivel 3 · Módulo 3",
+   "order": 11,
+   "prerequisites": [
+    "lab_contrato"
+   ],
+   "objective_tecnico": "Aplicar las reglas de libertad sindical, constitución de sindicatos, convención y pacto colectivo, y los límites del derecho de huelga.",
+   "objective_practico": "Saber qué es un sindicato, qué es una convención colectiva y cuándo se puede hacer huelga.",
+   "concepts": [
+    "Libertad sindical",
+    "Constitución del sindicato",
+    "Convención y pacto colectivo",
+    "Huelga y servicios públicos esenciales"
+   ],
+   "risk_level": "media",
+   "risk_note": "La Ley 2466 de 2025 introdujo cambios en derecho colectivo (por ejemplo, en pactos colectivos): verificar antes de usar preguntas nuevas.",
+   "sources": [
+    {
+     "id": "src_cp_39_56",
+     "kind": "norma",
+     "citation": "Constitución Política, arts. 39 y 56",
+     "detail": "Derecho de asociación sindical y derecho de huelga.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html",
+     "fragment": "Art. 39: los trabajadores y empleadores tienen derecho a constituir sindicatos o asociaciones sin intervención del Estado; su reconocimiento jurídico se produce con la simple inscripción del acta de constitución. Art. 56: se garantiza el derecho de huelga, salvo en los servicios públicos esenciales definidos por el legislador.",
+     "min_level": 1,
+     "priority": 1
+    },
+    {
+     "id": "src_cst_359_467",
+     "kind": "norma",
+     "citation": "Código Sustantivo del Trabajo, arts. 359, 467 y 481",
+     "detail": "Número mínimo de afiliados, convención colectiva y pacto colectivo.",
+     "url": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html",
+     "fragment": "Art. 359: todo sindicato de trabajadores necesita para constituirse o subsistir un número no inferior a veinticinco afiliados. Art. 467: convención colectiva es la que se celebra entre uno o varios empleadores y uno o varios sindicatos para fijar las condiciones de los contratos de trabajo durante su vigencia. Art. 481: el pacto colectivo se celebra entre empleadores y trabajadores no sindicalizados.",
+     "min_level": 1,
+     "priority": 2,
+     "risk_level": "media",
+     "risk_note": "Verificar cambios de la Ley 2466 de 2025 sobre pactos colectivos."
+    }
+   ],
+   "questions": [
+    {
+     "id": "lco1",
+     "level": 1,
+     "approach": "ambos",
+     "concept": "Constitución del sindicato",
+     "source_id": "src_cst_359_467",
+     "stem": "¿Cuántos afiliados necesita como mínimo un sindicato de trabajadores para constituirse?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Diez",
+       "misconception": "Desconoce el número mínimo legal"
+      },
+      {
+       "key": "B",
+       "text": "Veinticinco",
+       "misconception": ""
+      },
+      {
+       "key": "C",
+       "text": "Cincuenta",
+       "misconception": "Desconoce el número mínimo legal"
+      },
+      {
+       "key": "D",
+       "text": "Cien",
+       "misconception": "Desconoce el número mínimo legal"
+      }
+     ],
+     "correct_key": "B"
+    },
+    {
+     "id": "lco2",
+     "level": 1,
+     "approach": "practico",
+     "concept": "Huelga y servicios públicos esenciales",
+     "source_id": "src_cp_39_56",
+     "stem": "¿Se puede hacer huelga en cualquier actividad?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Sí, la huelga no tiene límites",
+       "misconception": "Desconoce el límite de los servicios públicos esenciales"
+      },
+      {
+       "key": "B",
+       "text": "Solo con autorización del empleador",
+       "misconception": "Confunde el derecho de huelga con un permiso del empleador"
+      },
+      {
+       "key": "C",
+       "text": "No: no se permite en los servicios públicos esenciales definidos por el legislador",
+       "misconception": ""
+      },
+      {
+       "key": "D",
+       "text": "Nunca se permite en Colombia",
+       "misconception": "Desconoce que la huelga es un derecho constitucional"
+      }
+     ],
+     "correct_key": "C"
+    },
+    {
+     "id": "lco3",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Convención y pacto colectivo",
+     "source_id": "src_cst_359_467",
+     "stem": "¿Qué diferencia una convención colectiva de un pacto colectivo?",
+     "options": [
+      {
+       "key": "A",
+       "text": "La convención se celebra con sindicatos; el pacto, con trabajadores no sindicalizados",
+       "misconception": ""
+      },
+      {
+       "key": "B",
+       "text": "Son lo mismo con distinto nombre",
+       "misconception": "No distingue las partes de cada acuerdo colectivo"
+      },
+      {
+       "key": "C",
+       "text": "El pacto lo celebra el Ministerio del Trabajo",
+       "misconception": "Confunde las partes del pacto colectivo"
+      },
+      {
+       "key": "D",
+       "text": "La convención solo aplica a empleados públicos",
+       "misconception": "Inventa una restricción que la ley no establece"
+      }
+     ],
+     "correct_key": "A"
+    },
+    {
+     "id": "lco4",
+     "level": 2,
+     "approach": "tecnico",
+     "concept": "Libertad sindical",
+     "source_id": "src_cp_39_56",
+     "stem": "Según el artículo 39 de la Constitución, ¿cómo adquiere un sindicato su reconocimiento jurídico?",
+     "options": [
+      {
+       "key": "A",
+       "text": "Con autorización previa del Ministerio del Trabajo",
+       "misconception": "Cree que el Estado autoriza la creación de sindicatos"
+      },
+      {
+       "key": "B",
+       "text": "Con una sentencia judicial",
+       "misconception": "Confunde el reconocimiento con un trámite judicial"
+      },
+      {
+       "key": "C",
+       "text": "Con la aprobación del empleador",
+       "misconception": "Desconoce la autonomía sindical"
+      },
+      {
+       "key": "D",
+       "text": "Con la simple inscripción del acta de constitución",
+       "misconception": ""
+      }
+     ],
+     "correct_key": "D"
+    }
+   ]
+  }
+ ]
+}
