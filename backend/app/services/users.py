@@ -99,6 +99,15 @@ def ensure_admin(db: Session) -> None:
     if not email:
         return
     existing = db.scalar(select(User).where(User.email == email))
+    if existing and existing.role != "admin":
+        # La cuenta ya existía (p. ej. entró con Google): se promueve a administrador.
+        existing.role = "admin"
+        if settings.admin_password and settings.admin_password != DEFAULT_ADMIN_PASSWORD:
+            existing.password_hash = hash_password(settings.admin_password)  # también puede entrar con contraseña
+        existing.token_version = (existing.token_version or 0) + 1  # su sesión abierta se renueva con el nuevo rol
+        db.commit()
+        log.warning("La cuenta %s se promovió a administrador (ADMIN_EMAIL).", email)
+        return
     if existing:
         if (settings.admin_password and settings.admin_password != DEFAULT_ADMIN_PASSWORD
                 and verify_password(DEFAULT_ADMIN_PASSWORD, existing.password_hash)):

@@ -162,3 +162,22 @@ def test_formation_is_saved_once_and_can_only_advance(client, fresh_user):
     assert client.post("/api/sessions", json=base | {"perfil": "abogado", "semestre": None}).status_code == 201
     assert client.get("/api/auth/me").json()["formacion"]["perfil"] == "abogado"
     assert client.post("/api/sessions", json=base | {"perfil": "estudiante", "semestre": 9}).status_code == 422
+
+
+def test_admin_email_promueve_cuenta_existente(client, monkeypatch):
+    from app.db import SessionLocal
+    from app.models import User
+    from app.services import users
+    from app.config import settings
+    db = SessionLocal()
+    db.add(User(email="promover@ratio.test", name="P", password_hash=users.hash_password("x" * 12),
+                role="usuario", provider="google"))
+    db.commit()
+    monkeypatch.setattr(settings, "admin_email", "promover@ratio.test")
+    monkeypatch.setattr(settings, "admin_password", "otra-clave-segura-123")
+    users.ensure_admin(db)
+    u = db.query(User).filter_by(email="promover@ratio.test").one()
+    assert u.role == "admin" and users.verify_password("otra-clave-segura-123", u.password_hash)
+    users.ensure_admin(db)  # idempotente
+    assert db.query(User).filter_by(email="promover@ratio.test").one().role == "admin"
+    db.close()
