@@ -75,4 +75,27 @@ def init_db() -> list[str]:
                     f" DEFAULT {default}" if isinstance(default, (int, float)) else "")
                 conn.execute(text(f'ALTER TABLE {table.name} ADD COLUMN "{column.name}" {col_type}{clause}'))
                 added.append(f"{table.name}.{column.name}")
+    sync_sequences()
     return added
+
+
+def sync_sequences() -> None:
+    """En PostgreSQL, adelanta los contadores de id autoincremental hasta el máximo existente.
+
+    Si se copiaron filas con su id original (migración desde SQLite), el contador queda
+    atrás y el siguiente INSERT choca con una llave duplicada. Es idempotente.
+    """
+    if engine.dialect.name != "postgresql":
+        return
+    with engine.begin() as conn:
+        for table in Base.metadata.sorted_tables:
+            pk = list(table.primary_key.columns)
+            if len(pk) != 1 or pk[0].autoincrement is not True:
+                continue
+            name, col = table.name, pk[0].name
+            seq = conn.execute(text("SELECT pg_get_serial_sequence(:t, :c)"), {"t": name, "c": col}).scalar()
+            if not seq:
+                continue
+            conn.execute(text(
+                f'SELECT setval(:s, COALESCE((SELECT MAX("{col}") FROM {name}), 0) + 1, false)'
+            ), {"s": seq})

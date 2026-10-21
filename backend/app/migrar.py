@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from sqlalchemy import create_engine, inspect, select
 
 from .config import BASE_DIR, _db_url
-from .db import Base, engine, init_db
+from .db import Base, engine, init_db, sync_sequences
 from . import models  # noqa: F401  (registra las tablas)
 
 
@@ -60,6 +60,7 @@ def migrate(source_url: str) -> dict[str, tuple[int, int]]:
             if rows:
                 dst.execute(table.insert(), rows)
             report[table.name] = (len(rows), skipped)
+    sync_sequences()  # las filas llegaron con su id: adelanta los contadores
     return report
 
 
