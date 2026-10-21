@@ -56,7 +56,7 @@ function reportButton(r, { small = true } = {}) {
 function bindReportButtons(root = $app) {
   root.querySelectorAll("[data-report-locked]").forEach((b) => b.addEventListener("click", () => modal(
     "Tu informe está en verificación",
-    html`<p>No se permite descargar el informe todavía porque está sujeto a verificación: un administrador académico está revisando las preguntas y fuentes marcadas como dudosas.</p>
+    html`<p>Tu informe se está verificando. Un administrador académico lo revisa antes de entregarlo.</p>
       <p>Una vez esté verificado, <strong>te lo enviaremos a tu correo electrónico${auth.user() ? html` (${esc(auth.user().email)})` : ""}</strong> en PDF. También verás el cambio de estado en «Mi historial».</p>`)));
   root.querySelectorAll("[data-report-email]").forEach((b) => b.addEventListener("click", async () => {
     b.disabled = true;
@@ -291,7 +291,7 @@ async function viewHome() {
     <div>
       <p class="eyebrow">Con respaldo</p>
       <h3>Fuentes oficiales y revisión humana</h3>
-      <p class="muted">Cada recomendación cita la norma o sentencia que la sustenta. Si alguna fuente es dudosa, un administrador académico la revisa antes de que puedas descargar tu informe en PDF.</p>
+      <p class="muted">Cada recomendación cita la norma o sentencia que la sustenta. Un administrador académico verifica el informe antes de enviártelo en PDF.</p>
     </div>
     <div>
       <p class="eyebrow">Con IA</p>
@@ -502,7 +502,7 @@ async function viewPrivacy() {
     <h2>Qué datos tratamos</h2>
     <p>Nombre y correo de tu cuenta; tu perfil para el diagnóstico (formación, semestre o profesión, área, temas, objetivo y tiempo disponible); tus respuestas, resultado, ruta de estudio y la revisión del administrador. No pedimos datos sensibles.</p>
     <h2>Para qué</h2>
-    <p>Generar tu diagnóstico y tu ruta de estudio, guardar tu historial, permitir que un administrador académico revise los informes con fuentes dudosas y enviarte el informe por correo.</p>
+    <p>Generar tu diagnóstico y tu ruta de estudio, guardar tu historial, permitir que un administrador académico verifique los informes y enviarte el informe por correo.</p>
     <h2>Con quién se comparten (encargados)</h2>
     <ul>
       <li>Base de datos alojada en Supabase (Estados Unidos).</li>
@@ -946,7 +946,7 @@ function reviewBanner(report) {
   const mail = emailLine(report);
   if (report.download_allowed && r.status === "no_requiere") return html`<div class="banner ok"><strong>Tu informe está listo.</strong> No tenía elementos que requirieran revisión.${mail}</div>`;
   if (report.download_allowed) return html`<div class="banner ok"><strong>Informe aprobado por ${esc(r.reviewed_by || "el administrador")}${r.reviewed_at ? ` (${fmtDate(r.reviewed_at)})` : ""}.</strong> ${esc(r.notes)}${mail}</div>`;
-  return html`<div class="banner"><strong>Tu informe está en verificación.</strong> Algunas fuentes o preguntas quedaron marcadas como dudosas por la IA verificadora y un administrador debe confirmarlas. ${report.email?.enabled ? html`Cuando lo apruebe, te enviaremos el informe en PDF a <strong>${esc(report.email.to)}</strong>.` : "Cuando lo apruebe podrás descargar el PDF desde «Mi historial»."}</div>`;
+  return html`<div class="banner"><strong>Tu informe está en verificación.</strong> Un administrador académico lo revisa antes de entregarlo. ${report.email?.enabled ? html`Cuando lo apruebe, te enviaremos el informe en PDF a <strong>${esc(report.email.to)}</strong>.` : "Cuando lo apruebe podrás descargar el PDF desde «Mi historial»."}</div>`;
 }
 
 async function viewResult(sid) {
@@ -962,7 +962,6 @@ async function viewResult(sid) {
       <ol class="route">${report.route.map((i) => routeItemHtml(i)).join("")}</ol>
     </section>
     ${questionsHtml(report)}
-    ${traceHtml(report)}
     <div class="row"><a class="btn" href="#/perfil">Nuevo diagnóstico</a><a class="btn btn-ghost" href="#/historial">Mi historial</a></div>
   </div>`;
   bindReportButtons();
