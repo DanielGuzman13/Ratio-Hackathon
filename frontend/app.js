@@ -1068,7 +1068,10 @@ async function tabReports(body, onlyPending) {
 async function tabBank(body) {
   const [m, areas, questions] = await Promise.all([meta(), api("/areas"), api("/teacher/questions")]);
   const subOptions = areas.flatMap((a) => a.subtopics.map((s) => `<option value="${esc(s.id)}">${esc(a.name)} · ${esc(s.name)}</option>`)).join("");
-  const pending = questions.filter((q) => q.status === "pendiente" || q.status === "verificada");
+  // Solo se revisan a mano las de riesgo alto; las verificadas por la IA con riesgo bajo o medio quedan probadas.
+  const open = (q) => q.status === "pendiente" || q.status === "verificada";
+  const pending = questions.filter((q) => open(q) && q.risk_level === "alta");
+  const proven = questions.filter((q) => open(q) && q.risk_level !== "alta");
   const counts = questions.reduce((acc, q) => ((acc[q.status] = (acc[q.status] || 0) + 1), acc), {});
   body.innerHTML = html`
   <div class="stack">
@@ -1081,13 +1084,16 @@ async function tabBank(body) {
       </div>
       <div><button class="btn" ${m.ai.generator ? "" : "disabled"}>Generar y verificar</button></div>
     </form>
-    <p class="muted">Banco: ${counts.aprobada || 0} aprobadas · ${counts.verificada || 0} generadas y verificadas por IA (ya se usan; confírmalas) · ${counts.pendiente || 0} pendientes · ${counts.rechazada || 0} rechazadas.</p>
-    <h3>Por revisar (${pending.length})</h3>
-    <div class="stack">${pending.length ? pending.map(questionCard).join("") : '<div class="card empty">No hay preguntas pendientes.</div>'}</div>
+    <p class="muted">Banco: ${counts.aprobada || 0} aprobadas · ${proven.length} verificadas por IA y probadas · ${pending.length} de riesgo alto por revisar · ${counts.rechazada || 0} rechazadas.</p>
+    <h3>Riesgo alto: por revisar (${pending.length})</h3>
+    <p class="muted" style="margin-top:-.4rem">Las preguntas que el verificador aprobó con riesgo bajo o medio ya quedan probadas y no necesitan tu revisión.</p>
+    <div class="stack">${pending.length ? pending.map((q) => questionCard(q, { review: true })).join("") : '<div class="card empty">No hay preguntas de riesgo alto por revisar.</div>'}</div>
+    <details class="card"><summary>Verificadas por IA y probadas (${proven.length})</summary>
+      <div class="stack">${proven.map((q) => questionCard(q)).join("")}</div></details>
     <details class="card"><summary>Rechazadas por el verificador (${counts.rechazada || 0})</summary>
-      <div class="stack">${questions.filter((q) => q.status === "rechazada").map(questionCard).join("")}</div></details>
+      <div class="stack">${questions.filter((q) => q.status === "rechazada").map((q) => questionCard(q)).join("")}</div></details>
     <details class="card"><summary>Banco aprobado (${counts.aprobada || 0})</summary>
-      <div class="stack">${questions.filter((q) => q.status === "aprobada").map(questionCard).join("")}</div></details>
+      <div class="stack">${questions.filter((q) => q.status === "aprobada").map((q) => questionCard(q)).join("")}</div></details>
   </div>`;
   document.getElementById("gen").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -1103,17 +1109,17 @@ async function tabBank(body) {
   }));
 }
 
-function questionCard(q) {
+function questionCard(q, { review = false } = {}) {
   const opts = q.kind === "mc"
     ? `<ol class="opts" type="A">${q.options.map((o) => html`<li class="${o.key === q.correct_key ? "correct" : ""}">${esc(o.text)}${o.misconception ? `<small class="muted">Diagnostica: ${esc(o.misconception)}</small>` : ""}</li>`).join("")}</ol>`
     : `<ul class="opts">${q.rubric.map((r) => `<li>${esc(r.criterion)}</li>`).join("")}</ul>`;
   return html`<article class="card qcard">
     <div class="row between"><small class="muted">${esc(q.subtopic)} · nivel ${q.level} · ${esc(q.approach)} · ${q.origin === "ia" ? "IA" : "curada"}</small>
-      <span class="badge ${q.status === "aprobada" ? "b-fortaleza" : q.status === "rechazada" ? "b-vacio" : "b-review"}">${esc(q.status === "verificada" ? "verificada por IA" : q.status)}</span></div>
+      <span class="badge ${q.status === "aprobada" ? "b-fortaleza" : q.status === "rechazada" ? "b-vacio" : "b-review"}">${esc(q.status === "verificada" ? (q.risk_level === "alta" ? "verificada por IA" : "probada (IA)") : q.status)}</span></div>
     <p style="margin:.5rem 0 0;font-weight:600">${esc(q.stem)}</p>${opts}
     <p class="muted" style="font-size:.85rem;margin-top:.6rem">Fuente: ${esc(q.source || "—")}${q.risk_level !== "ninguno" ? ` · <span class="badge b-${esc(q.risk_level)}">riesgo ${esc(q.risk_level)}</span>` : ""}</p>
     ${q.verifier_note ? `<p class="muted" style="font-size:.85rem">Verificador: ${esc(q.verifier_note)}</p>` : ""}
-    ${q.status === "pendiente" || q.status === "verificada" ? `<div class="row"><button class="btn btn-small" data-decision="aprobada" data-id="${esc(q.id)}">Aprobar</button><button class="btn btn-ghost btn-small" data-decision="rechazada" data-id="${esc(q.id)}">Rechazar</button></div>` : ""}
+    ${review ? `<div class="row"><button class="btn btn-small" data-decision="aprobada" data-id="${esc(q.id)}">Aprobar</button><button class="btn btn-ghost btn-small" data-decision="rechazada" data-id="${esc(q.id)}">Rechazar</button></div>` : ""}
   </article>`;
 }
 

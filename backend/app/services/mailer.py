@@ -105,11 +105,11 @@ def _send(msg: EmailMessage) -> None:
         return
     context = ssl.create_default_context()
     if settings.smtp_port == 465:
-        with smtplib.SMTP_SSL(settings.smtp_host, settings.smtp_port, timeout=30, context=context) as smtp:
+        with smtplib.SMTP_SSL(settings.smtp_host, settings.smtp_port, timeout=15, context=context) as smtp:
             smtp.login(settings.smtp_user, settings.smtp_password)
             smtp.send_message(msg)
     else:
-        with smtplib.SMTP(settings.smtp_host, settings.smtp_port, timeout=30) as smtp:
+        with smtplib.SMTP(settings.smtp_host, settings.smtp_port, timeout=15) as smtp:
             smtp.starttls(context=context)
             smtp.login(settings.smtp_user, settings.smtp_password)
             smtp.send_message(msg)
@@ -175,6 +175,13 @@ def send_report_now(session_id: str) -> str:
             report.email_status = "error"
             report.email_error = ("Gmail rechazó el usuario o la contraseña. SMTP_PASSWORD debe ser una "
                                   "contraseña de aplicación de 16 letras (requiere verificación en dos pasos).")
+        except (OSError, TimeoutError) as exc:
+            report.email_status = "error"
+            report.email_error = str(exc)[:120]
+            if provider() == "smtp" and not isinstance(exc, smtplib.SMTPException):  # p. ej. Render Free bloquea los puertos SMTP (25/465/587)
+                report.email_error = ("El servidor no pudo conectarse por SMTP; el hosting probablemente bloquea "
+                                      "ese puerto (Render Free lo hace). Usa MAIL_PROVIDER=brevo. Detalle: "
+                                      + report.email_error)[:300]
         except Exception as exc:  # noqa: BLE001 - se registra para que el admin pueda reintentar
             report.email_status, report.email_error = "error", str(exc)[:300]
         if report.email_status == "error":

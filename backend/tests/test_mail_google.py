@@ -81,3 +81,19 @@ def test_google_login_creates_account_and_rejects_bad_tokens(client, monkeypatch
     for bad in ("otra-app", "sin-verificar"):
         assert client.post("/api/auth/google", json={"credential": bad.ljust(20, "x")}).status_code == 401
     assert client.get("/api/meta").json()["google_client_id"] == "cliente-123.apps.googleusercontent.com"
+
+
+def test_smtp_bloqueado_explica_la_causa(client, teacher_headers, monkeypatch):
+    """Render Free bloquea SMTP: el admin debe ver por qué no salió el correo."""
+    _settings(monkeypatch, smtp_user="ratio@test.co", smtp_password="abcdabcdabcdabcd")
+    def blocked(msg):
+        raise OSError(101, "Network is unreachable")
+    monkeypatch.setattr(mailer, "_send", blocked)
+    monkeypatch.setattr(mailer, "send_report_async", lambda sid: mailer.send_report_now(sid))
+    report = run_diagnostic(client, STUDENT, weak={"lab_estabilidad"})
+    sid = report["session_id"]
+    items = client.get(f"/api/teacher/reports/{sid}", headers=teacher_headers).json()["checklist_items"]
+    checklist = {i["key"]: {"checked": True, "comment": ""} for i in items}
+    client.post(f"/api/teacher/reports/{sid}/review", headers=teacher_headers, json={"approve": True, "checklist": checklist})
+    email = client.get(f"/api/teacher/reports/{sid}", headers=teacher_headers).json()["email"]
+    assert email["status"] == "error" and "brevo" in email["error"].lower()
