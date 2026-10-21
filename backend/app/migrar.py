@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy import create_engine, inspect, select
 
-from .config import BASE_DIR, _db_url, settings
+from .config import BASE_DIR, _db_url
 from .db import Base, engine, init_db
 from . import models  # noqa: F401  (registra las tablas)
 

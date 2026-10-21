@@ -75,6 +75,11 @@ Reglas obligatorias:
 7. Sin explicaciones ni retroalimentación para el usuario.
 8. Si mencionas un artículo, di SIEMPRE de qué norma es en el enunciado (p. ej. "el artículo 85 de la
    Constitución Política", "el artículo 64 del Código Sustantivo del Trabajo"). Nunca "el artículo 85" a secas.
+9. Evita fechas de calendario concretas. Si usas una, el día de la semana debe ser el real (el 10 de julio de
+   2026 es viernes). Para plazos, di si son días hábiles o calendario, tal como lo diga el fragmento.
+10. Debe haber UNA sola opción correcta. No confundas categorías vecinas (p. ej. requisitos generales vs.
+   causales específicas de la tutela contra providencias; terminación con justa causa vs. sin justa causa).
+11. Cada pregunta evalúa un concepto distinto: no repitas la misma pregunta con otras palabras.
 Responde SOLO JSON:
 {"questions": [{"level": 1, "approach": "practico", "concept": str, "source_id": str, "stem": str,
   "options": [{"key": "A", "text": str, "misconception": str}], "correct_key": "A"}]}"""
@@ -90,8 +95,11 @@ BATCH_VERIFIER_SYSTEM = """Eres un verificador jurídico independiente. Recibes 
 con el fragmento de la fuente que la respalda. No conoces el razonamiento de quien las escribió.
 Para cada pregunta verifica: (a) la opción marcada como correcta está respaldada por el fragmento;
 (b) ninguna otra opción también es correcta; (c) el enunciado no afirma nada ausente del fragmento;
-(d) si se cita un artículo, se indica de qué norma es (Constitución, Código Sustantivo del Trabajo, ley…).
-Si falla (d), no la apruebes e indica "Cita un artículo sin decir de qué norma es".
+(d) si se cita un artículo, se indica de qué norma es (Constitución, Código Sustantivo del Trabajo, ley…);
+(e) las fechas son posibles (el día de la semana corresponde a la fecha) y los plazos se cuentan como dice la
+norma (hábiles o calendario); (f) el enunciado no mezcla supuestos distintos de la norma (p. ej. aplica una
+regla de la terminación con justa causa a un despido sin justa causa).
+Si falla (d), no la apruebes e indica "Cita un artículo sin decir de qué norma es". Ante la duda, no apruebes.
 Responde SOLO JSON: {"results": [{"index": 0, "approved": bool, "issues": [str], "risk": "ninguno" | "media" | "alta"}]}
 Incluye un resultado por cada pregunta, con su mismo índice."""
 

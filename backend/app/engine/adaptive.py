@@ -36,6 +36,7 @@ class QuestionRef:
     origin: str = "seed"  # seed | ia
     fit: int = 2          # ajuste al perfil: 0 generada para esta sesión, 1 mismo perfil, 2 curada, 3 otro perfil
     shown: int = 0        # veces que ya se mostró (para repartir la exposición del banco)
+    concept: str = ""     # concepto evaluado: se evita preguntar dos veces lo mismo con otras palabras
 
 
 WAIT = "esperar"  # el subtema que sigue aún se está generando con IA
@@ -134,6 +135,10 @@ def _is_doubtful(sub_state: dict) -> bool:
     return len(outcomes) == 2
 
 
+def _concept_key(concept: str) -> str:
+    return " ".join((concept or "").lower().split())[:80]
+
+
 def _pick_question(state: dict, sid: str, bank: list[QuestionRef]) -> QuestionRef | None:
     sub = state["subtopics"][sid]
     plan = state["plan"]
@@ -154,14 +159,18 @@ def _pick_question(state: dict, sid: str, bank: list[QuestionRef]) -> QuestionRe
     prefer_ia = state.get("prefer_generated", False)
     seed = state.get("seed", 0)
 
+    seen_concepts = sub.get("concepts", [])
+
     def rank(q: QuestionRef) -> tuple:
         level_gap = abs(q.level - sub["level"])
+        # Un concepto ya preguntado va al final: el mismo vacío no debe contar varias veces.
+        repeat = seen_concepts.count(_concept_key(q.concept)) if q.concept else 0
         prefer_open = 0 if q.kind == "open" else 1  # a igual nivel, la abierta confirma mejor
         approach_rank = prefs.index(q.approach) if q.approach in prefs else 3
         # Estrategia de selección: 1) nivel adecuado, 2) ajuste al perfil (primero lo que la IA generó para
         # esta persona), 3) enfoque, 4) preguntas menos vistas, 5) azar por sesión (nadie ve el mismo examen).
         fit = q.fit if prefer_ia else min(q.fit, 2)
-        return (level_gap, prefer_open, fit, approach_rank, q.shown // 3, jitter(seed, q.id))
+        return (level_gap, repeat, prefer_open, fit, approach_rank, q.shown // 3, jitter(seed, q.id))
 
     return min(pool, key=rank)
 
@@ -217,6 +226,8 @@ def register_answer(state: dict, question: QuestionRef, score: float, correct: b
     if question.kind == "open":
         state["open_used"] += 1
     sub["asked"].append(question.id)
+    if question.concept:
+        sub.setdefault("concepts", []).append(_concept_key(question.concept))
     sub["results"].append({"question_id": question.id, "level": question.level,
                            "score": round(score, 3), "correct": correct, "misconception": misconception})
 

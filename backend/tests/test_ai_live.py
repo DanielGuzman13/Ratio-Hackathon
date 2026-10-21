@@ -17,6 +17,16 @@ BASE = {"perfil": "estudiante", "semestre": 7, "intereses": [], "objetivo": "con
         "horas_semana": 3, "semanas": 4, "consentimiento": True}
 
 
+_WORDS = ("contrato salario jornada tutela despido fuero petición término recargo norma juez prueba cesantías "
+          "vacaciones prima pensión sindicato huelga derecho deber plazo recurso empresa trabajador").split()
+
+
+def _distinct_words() -> str:
+    """Texto distinto en cada pregunta simulada (el generador descarta enunciados casi idénticos)."""
+    import random
+    return " ".join(random.sample(_WORDS, 12)) + f" {time.time_ns()}"
+
+
 class FakeAI:
     """Simula el proveedor: respeta los niveles y el enfoque pedidos, y registra lo que recibe."""
 
@@ -34,7 +44,7 @@ class FakeAI:
             for i, level in enumerate(levels + [levels[0]]):  # una extra que el verificador rechazará
                 bad = i == len(levels)
                 qs.append({"level": level, "approach": approach, "concept": f"Concepto {i}", "source_id": ids[0],
-                           "stem": f"[IA]{'[malo]' if bad else ''} {subtopic} · {i} ({time.time_ns()})",
+                           "stem": f"[IA]{'[malo]' if bad else ''} {subtopic} · {i} " + _distinct_words(),
                            "correct_key": "B",
                            "options": [{"key": "A", "text": f"Opción A{i}", "misconception": "Confunde A con B"},
                                        {"key": "B", "text": f"Opción B{i}", "misconception": ""},

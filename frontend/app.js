@@ -48,8 +48,10 @@ function modal(title, bodyHtml, { actions = "" } = {}) {
 function reportButton(r, { small = true } = {}) {
   const cls = `btn${small ? " btn-small" : ""}`;
   if (!r.download_allowed) return html`<button class="${cls}" data-report-locked="${esc(r.session_id)}">Descargar PDF</button>`;
-  if (r.email?.enabled) return html`<button class="${cls}" data-report-email="${esc(r.session_id)}">Enviar PDF a mi correo</button>`;
-  return html`<a class="${cls}" href="#/informe/${esc(r.session_id)}">Descargar PDF</a>`;
+  // Verificado: se puede pedir al correo y, como respaldo (si el correo falla), ver e imprimir aquí.
+  const print = html`<a class="${cls}${r.email?.enabled ? " btn-ghost" : ""}" href="#/informe/${esc(r.session_id)}">${r.email?.enabled ? "Ver / imprimir" : "Descargar PDF"}</a>`;
+  if (r.email?.enabled) return html`<button class="${cls}" data-report-email="${esc(r.session_id)}">Enviar PDF a mi correo</button>${print}`;
+  return print;
 }
 function bindReportButtons(root = $app) {
   root.querySelectorAll("[data-report-locked]").forEach((b) => b.addEventListener("click", () => modal(
@@ -136,12 +138,19 @@ window.addEventListener("online", async () => {
 });
 window.addEventListener("offline", () => document.body.classList.add("is-offline"));
 
+// Botones genéricos sin JavaScript en línea (la CSP lo bloquea).
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-retry]")) render();
+  if (e.target.closest("[data-print]")) window.print();
+});
+
 // ---------- router ----------
 const routes = [
   [/^#?\/?$/, viewHome, {}],
   [/^#\/ingresar(\?registro)?$/, viewLogin, {}],
   [/^#\/instrucciones\/(\w+)$/, viewInstructions, { login: true }],
   [/^#\/historial$/, viewHistory, { login: true }],
+  [/^#\/privacidad$/, viewPrivacy, {}],
   [/^#\/perfil$/, viewProfile, { login: true }],
   [/^#\/preparando\/(\w+)$/, viewPreparing, { login: true }],
   [/^#\/diagnostico\/(\w+)$/, viewDiagnostic, { login: true }],
@@ -173,7 +182,7 @@ async function render() {
 }
 window.addEventListener("hashchange", render);
 function showError(e) {
-  if (e.status === 403 && auth.user()) {
+  if (e.status === 403 && auth.user() && /otro usuario/.test(e.message)) {
     $app.innerHTML = html`<div class="card stack"><p class="eyebrow">Acceso restringido</p>
       <h2>Este diagnóstico es de otra cuenta</h2>
       <p class="muted">Entraste como <strong>${esc(auth.user().email)}</strong>, y este enlace corresponde a un diagnóstico de otra persona (por ejemplo, si alguien más usó este computador o te compartió el enlace). Cada quien solo ve sus propios diagnósticos; los administradores pueden ver todos desde «Administración».</p>
@@ -181,7 +190,7 @@ function showError(e) {
     return;
   }
   $app.innerHTML = html`<div class="card"><h2>${e.offline ? "Sin conexión" : "Algo salió mal"}</h2><p class="error">${esc(e.message)}</p>
-    <div class="row"><button class="btn" onclick="render()">Reintentar</button><a class="btn btn-ghost" href="#/">Inicio</a></div></div>`;
+    <div class="row"><button class="btn" type="button" data-retry>Reintentar</button><a class="btn btn-ghost" href="#/">Inicio</a></div></div>`;
 }
 
 function renderNav() {
@@ -344,7 +353,7 @@ async function viewLogin(wantsRegister) {
     <aside class="auth-aside">
       <img class="auth-logo" src="img/ratio-icon.png" width="56" height="56" alt="Ratio">
       <p class="eyebrow">${mode === "registro" ? "Crea tu cuenta" : "Bienvenido de nuevo"}</p>
-      <h2>${mode === "registro" ? "Tu diagnóstico jurídico empieza aquí" : "Retoma donde lo dejaste"}</h2>
+      <h1 class="auth-title">${mode === "registro" ? "Tu diagnóstico jurídico empieza aquí" : "Retoma donde lo dejaste"}</h1>
       <ul class="auth-points">
         <li><strong>Diagnóstico adaptativo.</strong> Las preguntas se ajustan a tu nivel y a los temas que elijas.</li>
         <li><strong>Ruta de estudio.</strong> Qué estudiar primero, por qué y con qué fuentes oficiales.</li>
@@ -412,7 +421,100 @@ async function viewHistory() {
         <td>${r.level_name ? html`${esc(r.level_name)}<br><span class="badge ${r.download_allowed ? "b-fortaleza" : "b-review"}">${esc(REVIEW[r.review_status] || r.review_status)}</span>` : '<span class="muted">—</span>'}</td>
         <td><div class="row" style="gap:.4rem">${action(r)}</div></td></tr>`).join("")}
     </tbody></table></div>` : '<div class="card empty">Aún no has presentado diagnósticos.</div>'}
+    ${accountHtml(user)}
   </div>`;
+  bindReportButtons();
+  bindAccount(user);
+}
+
+// ---------- mi cuenta: contraseña, datos y eliminación (Ley 1581) ----------
+function accountHtml(user) {
+  const google = user.provider === "google";
+  return html`<details class="card account" id="account"><summary><strong>Mi cuenta y mis datos</strong></summary>
+    <div class="grid grid-2" style="margin-top:1rem">
+      <form class="stack" id="pw-form" novalidate>
+        <h3>Cambiar contraseña</h3>
+        ${google ? '<p class="hint">Entras con Google; si quieres, crea también una contraseña (deja vacía la actual).</p>' : ""}
+        <div><label class="field-label" for="pw-current">Contraseña actual</label>
+          <input type="password" id="pw-current" autocomplete="current-password"></div>
+        <div><label class="field-label" for="pw-new">Nueva contraseña</label>
+          <input type="password" id="pw-new" minlength="8" autocomplete="new-password">
+          <p class="hint" style="margin-top:.4rem">Mínimo 8 caracteres. Se cerrará la sesión en tus otros dispositivos.</p></div>
+        <p class="error" id="pw-error" role="alert"></p>
+        <button class="btn btn-small" type="submit">Guardar contraseña</button>
+      </form>
+      <div class="stack">
+        <h3>Tus datos</h3>
+        <p class="muted">Puedes descargar todo lo que Ratio guarda de ti o eliminar tu cuenta y tus diagnósticos. Lee la <a href="#/privacidad">política de privacidad</a>.</p>
+        <button class="btn btn-small btn-ghost" type="button" id="export">Descargar mis datos (JSON)</button>
+        <form class="stack danger-zone" id="del-form" novalidate>
+          <label class="field-label" for="del-confirm">Eliminar mi cuenta</label>
+          <p class="hint">Se borran tu cuenta, tus diagnósticos, respuestas e informes. No se puede deshacer. Escribe <strong>ELIMINAR</strong>${google ? "" : " y tu contraseña"}.</p>
+          <input type="text" id="del-confirm" autocomplete="off" placeholder="ELIMINAR">
+          ${google ? "" : '<input type="password" id="del-pw" autocomplete="current-password" placeholder="Tu contraseña">'}
+          <p class="error" id="del-error" role="alert"></p>
+          <button class="btn btn-small btn-danger" type="submit">Eliminar definitivamente</button>
+        </form>
+      </div>
+    </div></details>`;
+}
+
+function bindAccount(user) {
+  const pw = document.getElementById("pw-form");
+  if (!pw) return;
+  pw.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = document.getElementById("pw-error");
+    const body = { current: document.getElementById("pw-current").value, new: document.getElementById("pw-new").value };
+    if (body.new.length < 8) { err.textContent = "La nueva contraseña debe tener al menos 8 caracteres."; return; }
+    try { auth.set(await api("/auth/password", { method: "POST", body })); pw.reset(); err.textContent = ""; toast("Contraseña actualizada"); }
+    catch (ex) { err.textContent = ex.message; }
+  });
+  document.getElementById("export").addEventListener("click", async () => {
+    try {
+      const data = await api("/me/export");
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+      const a = Object.assign(document.createElement("a"), { href: url, download: "mis-datos-ratio.json" });
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+    } catch (ex) { toast(ex.message); }
+  });
+  document.getElementById("del-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = document.getElementById("del-error");
+    const confirm = document.getElementById("del-confirm").value.trim();
+    if (confirm !== "ELIMINAR") { err.textContent = "Escribe ELIMINAR para confirmar."; return; }
+    try {
+      await api("/me/delete", { method: "POST", body: { confirm, password: document.getElementById("del-pw")?.value || "" } });
+      auth.clear(); store.del("ratio_queue"); location.hash = "#/"; toast("Tu cuenta y tus datos fueron eliminados");
+    } catch (ex) { err.textContent = ex.message; }
+  });
+}
+
+// ---------- política de privacidad ----------
+async function viewPrivacy() {
+  const m = await meta();
+  $app.innerHTML = html`<article class="card stack prose">
+    <p class="eyebrow">Ley 1581 de 2012</p>
+    <h1>Política de tratamiento de datos</h1>
+    <p><strong>Responsable:</strong> equipo ${esc(m.app_name)} (Hackatón ICESI 2026-II). Contacto: ${esc(m.contact_email || "el correo del administrador")}.</p>
+    <h2>Qué datos tratamos</h2>
+    <p>Nombre y correo de tu cuenta; tu perfil para el diagnóstico (formación, semestre o profesión, área, temas, objetivo y tiempo disponible); tus respuestas, resultado, ruta de estudio y la revisión del administrador. No pedimos datos sensibles.</p>
+    <h2>Para qué</h2>
+    <p>Generar tu diagnóstico y tu ruta de estudio, guardar tu historial, permitir que un administrador académico revise los informes con fuentes dudosas y enviarte el informe por correo.</p>
+    <h2>Con quién se comparten (encargados)</h2>
+    <ul>
+      <li>Base de datos alojada en Supabase (Estados Unidos).</li>
+      <li>Servidor de la aplicación (Render, Estados Unidos).</li>
+      <li>Proveedor de IA (Groq, Estados Unidos): recibe tu perfil académico (sin nombre ni correo) para generar preguntas a tu medida, y tus respuestas abiertas si se califican con IA.</li>
+      <li>Correo saliente (Gmail u otro proveedor) para enviarte el informe; Google si eliges iniciar sesión con Google.</li>
+    </ul>
+    <p>Al aceptar el consentimiento autorizas esta transmisión internacional para las finalidades descritas.</p>
+    <h2>Tus derechos</h2>
+    <p>Conocer, actualizar, rectificar y suprimir tus datos, y revocar la autorización. Desde <a href="#/historial">Mi historial → Mi cuenta y mis datos</a> puedes descargar todos tus datos o eliminar tu cuenta en cualquier momento. Para otras consultas o reclamos escribe al contacto indicado; respondemos en los plazos de la ley (10 días hábiles para consultas y 15 para reclamos).</p>
+    <h2>Conservación</h2>
+    <p>Conservamos tus datos mientras tengas la cuenta activa. Si la eliminas, se borran tus diagnósticos, respuestas e informes; las preguntas que la IA generó quedan en el banco sin vínculo contigo.</p>
+    <p class="muted">Última actualización: octubre de 2026. Este texto es una base para el proyecto académico y debe revisarlo un asesor antes de un uso real.</p>
+  </article>`;
 }
 
 // ---------- vistas: diagnóstico ----------
@@ -462,7 +564,7 @@ async function viewProfile() {
         <select id="semanas" name="semanas"><option value="" selected disabled>Selecciona…</option>${opts(16, (n) => `${n} semana${n > 1 ? "s" : ""}`)}</select></div>
     </div>
     <label class="consent"><input type="checkbox" name="consentimiento">
-      <span>Autorizo el tratamiento de mis datos de perfil y respuestas para generar mi diagnóstico, guardar mi historial y que un administrador revise mi ruta, conforme a la Ley 1581 de 2012. No se piden datos sensibles.</span></label>
+      <span>Autorizo el tratamiento de mis datos de perfil y respuestas para generar mi diagnóstico, guardar mi historial y que un administrador revise mi ruta, conforme a la Ley 1581 de 2012 y la <a href="#/privacidad" target="_blank" rel="noopener">política de privacidad</a> (incluye el uso de proveedores en el exterior). No se piden datos sensibles.</span></label>
     <p class="error" id="form-error" role="alert"></p>
     <div class="row between"><a href="#/historial" class="btn btn-ghost">Volver</a><button class="btn" type="submit">Empezar el diagnóstico</button></div>
   </form>`;
@@ -839,7 +941,7 @@ async function viewPrintable(sid) {
   $app.innerHTML = html`
   <article class="printable">
     <div class="no-print row between" style="margin-bottom:1rem"><a href="#/resultado/${esc(sid)}">← Volver</a>
-      <button class="btn" onclick="window.print()">Descargar / guardar como PDF</button></div>
+      <button class="btn" type="button" data-print>Descargar / guardar como PDF</button></div>
     <header class="doc-head">
       <div><img class="doc-logo" src="img/ratio-icon.png" width="56" height="56" alt="Ratio"></div>
       <div><h1>Informe de diagnóstico jurídico</h1>

@@ -38,3 +38,11 @@ def admin_token(client):
 @pytest.fixture
 def teacher_headers(admin_token):
     return {"Authorization": f"Bearer {admin_token}"}
+
+
+@pytest.fixture(autouse=True)
+def _reset_rate_limits():
+    """Cada prueba arranca sin intentos acumulados (todas comparten la misma IP de pruebas)."""
+    from app.security import limiter
+    limiter.reset()
+    yield

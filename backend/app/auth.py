@@ -55,8 +55,9 @@ def _unb64(text: str) -> bytes:
     return base64.urlsafe_b64decode(text + "=" * (-len(text) % 4))
 
 
-def make_token(user_id: str, role: str) -> str:
-    payload = _b64(json.dumps({"sub": user_id, "role": role,
+def make_token(user_id: str, role: str, version: int = 0) -> str:
+    """`ver` permite invalidar todas las sesiones de un usuario (cambio de contraseña, cierre global)."""
+    payload = _b64(json.dumps({"sub": user_id, "role": role, "ver": version,
                                "exp": int(time.time()) + settings.token_days * 86400}).encode())
     signature = _b64(hmac.new(_secret(), payload.encode(), hashlib.sha256).digest())
     return f"{payload}.{signature}"
@@ -70,7 +71,10 @@ def read_token(token: str) -> dict | None:
     expected = _b64(hmac.new(_secret(), payload.encode(), hashlib.sha256).digest())
     if not hmac.compare_digest(signature, expected):
         return None
-    data = json.loads(_unb64(payload))
-    if data.get("exp", 0) < time.time():
+    try:
+        data = json.loads(_unb64(payload))
+    except (ValueError, UnicodeDecodeError):
+        return None
+    if not isinstance(data, dict) or data.get("exp", 0) < time.time():
         return None
     return data

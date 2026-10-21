@@ -17,6 +17,14 @@ services:
         sync: false
       - key: APP_URL
         sync: false
+      - key: MAIL_PROVIDER
+        sync: false
+      - key: MAIL_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: CONTACT_EMAIL
+        sync: false
       - key: SMTP_USER
         sync: false
       - key: SMTP_PASSWORD

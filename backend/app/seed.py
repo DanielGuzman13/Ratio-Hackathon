@@ -40,6 +40,54 @@ ARTICLE_REF = re.compile(r"\bart(?:ículo|iculo|\.)s?\s*\d+", re.I)
 NORM_NAME = re.compile(r"Constituci|\bCST\b|C[óo]digo|\bLey \d|Decreto|Sentencia|\bSU-|\bC-\d|\bT-\d|Convenio", re.I)
 
 
+WEEKDAYS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+MONTHS = {m: i for i, m in enumerate(["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
+                                       "septiembre", "octubre", "noviembre", "diciembre"], start=1)}
+DATED_WEEKDAY = re.compile(r"\b(lunes|martes|mi[ée]rcoles|jueves|viernes|s[áa]bado|domingo)\s+(\d{1,2})\s+de\s+"
+                           r"(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)"
+                           r"(?:\s+de\s+(\d{4}))", re.I)
+
+
+def wrong_weekday_dates(*texts: str) -> list[str]:
+    """Fechas con día de la semana que no corresponde (p. ej. «domingo 10 de julio de 2026», que fue viernes)."""
+    import datetime as _dt
+    import unicodedata as _ud
+
+    def plain(t: str) -> str:
+        return _ud.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
+
+    bad = []
+    for text in texts:
+        for wd, day, month, year in DATED_WEEKDAY.findall(text or ""):
+            try:
+                real = _dt.date(int(year), MONTHS[month.lower()], int(day)).weekday()
+            except ValueError:
+                bad.append(f"{wd} {day} de {month} de {year}")
+                continue
+            if plain(WEEKDAYS[real]) != plain(wd):
+                bad.append(f"{wd} {day} de {month} de {year} (fue {WEEKDAYS[real]})")
+    return bad
+
+
+def apply_corrections(db: Session, path: Path | None = None) -> int:
+    """Aplica correcciones jurídicas puntuales (data/review/correcciones.json) una sola vez por pregunta."""
+    path = path or settings.seed_dir.parent / "review" / "correcciones.json"
+    if not path.exists():
+        return 0
+    marker = "[Revisión jurídica]"
+    applied = 0
+    for item in json.loads(path.read_text(encoding="utf-8")).get("preguntas", []):
+        q = db.get(Question, item["id"])
+        if q is None or marker in (q.verifier_note or ""):
+            continue
+        q.status = item["status"]
+        q.verifier_note = f"{marker} {item['nota']} {q.verifier_note or ''}".strip()[:2000]
+        applied += 1
+    if applied:
+        db.commit()
+    return applied
+
+
 def unnamed_article_refs(stem: str, options: list[dict]) -> list[str]:
     """Textos que citan un artículo sin decir de qué norma es (ni en el texto ni en el enunciado)."""
     if NORM_NAME.search(stem):
@@ -65,6 +113,8 @@ def validate_seed(payload: dict) -> list[str]:
                 errors.append(f"{qid}: la pregunta debe citar una fuente de su subtema")
             if unnamed_article_refs(q.get("stem", ""), q.get("options", [])):
                 errors.append(f"{qid}: cita un artículo sin indicar de qué norma es")
+            if wrong_weekday_dates(q.get("stem", ""), *[o.get("text", "") for o in q.get("options", [])]):
+                errors.append(f"{qid}: una fecha no coincide con su día de la semana")
             if q.get("level") not in (1, 2, 3):
                 errors.append(f"{qid}: nivel inválido")
             if q.get("kind", "mc") == "mc":

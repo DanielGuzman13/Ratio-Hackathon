@@ -60,7 +60,7 @@ def _bank(db: Session, area_id: str, session: DiagnosticSession | None = None) -
         query = query.where(Question.subtopic_id.in_(session.state["order"]))  # solo los temas elegidos
     rows = db.scalars(query).all()
     return [adaptive.QuestionRef(q.id, q.subtopic_id, q.level, q.approach, q.kind, q.origin,
-                                 _fit(q, session), q.times_shown or 0) for q in rows]
+                                 _fit(q, session), q.times_shown or 0, q.concept or "") for q in rows]
 
 
 def _session(db: Session, session_id: str, user=None) -> DiagnosticSession:
@@ -258,7 +258,7 @@ def submit_answer(db: Session, session_id: str, question_id: str, answer: str, u
     except AIUnavailable:
         result = RubricKeywordGrader().grade(question, answer)
     ref = adaptive.QuestionRef(question.id, question.subtopic_id, question.level, question.approach, question.kind,
-                               question.origin)
+                               question.origin, concept=question.concept or "")
     decision = adaptive.register_answer(state, ref, result.score, result.correct, result.misconception)
     db.add(Response(session_id=session.id, question_id=question.id, seq=state["count"], answer=answer,
                     score=result.score, is_correct=result.correct, misconception=result.misconception,

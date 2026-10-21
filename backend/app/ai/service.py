@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 
 from ..config import settings
-from ..seed import unnamed_article_refs
+from ..seed import unnamed_article_refs, wrong_weekday_dates
 from ..engine.grading import OPEN_PASS_THRESHOLD, GradeResult
 from . import prompts
 from .client import AIUnavailable, GeminiSearchClient, OpenAICompatibleClient, quota_blocked
@@ -66,6 +66,9 @@ def _validate_generated(data: dict, valid_sources: set[str] | None = None) -> li
         errors.append("Nivel inválido")
     if unnamed_article_refs(data.get("stem") or "", data.get("options") or []):
         errors.append("Cita un artículo sin decir de qué norma es")
+    wrong = wrong_weekday_dates(data.get("stem") or "", *[str(o.get("text", "")) for o in data.get("options") or []])
+    if wrong:
+        errors.append("Fecha imposible: " + "; ".join(wrong))
     options = data.get("options") or []
     keys = [o.get("key") for o in options]
     if not data.get("stem"):
@@ -78,6 +81,20 @@ def _validate_generated(data: dict, valid_sources: set[str] | None = None) -> li
         if opt.get("key") != data.get("correct_key") and not opt.get("misconception"):
             errors.append(f"La opción {opt.get('key')} no declara el error que diagnostica")
     return errors
+
+
+def _near_duplicate(stem: str, existing: set[str], threshold: float = 0.82) -> bool:
+    """Evita enunciados repetidos o casi iguales (el mismo concepto contado varias veces infla el resultado)."""
+    import difflib
+
+    norm = " ".join(stem.lower().split())
+    if not norm:
+        return False
+    for other in existing:
+        if norm == other or difflib.SequenceMatcher(None, norm, other).quick_ratio() >= threshold and \
+                difflib.SequenceMatcher(None, norm, other).ratio() >= threshold:
+            return True
+    return False
 
 
 def generate_question(*, subtopic, source, level: int, approach: str, existing_stems: list[str]) -> dict:
@@ -160,7 +177,7 @@ def generate_batch(*, subtopic_name: str, concepts: list[str], sources: list[dic
     data = generator.chat_json(prompts.BATCH_GENERATOR_SYSTEM, user, temperature=0.7)
     valid_ids = {s["id"] for s in sources}
     good, errors = [], []
-    seen = {s.strip().lower() for s in existing_stems}
+    seen = {" ".join(s.lower().split()) for s in existing_stems}
     raw = data.get("questions") if isinstance(data, dict) else data
     for i, q in enumerate(raw if isinstance(raw, list) else []):
         if not isinstance(q, dict):
@@ -171,12 +188,12 @@ def generate_batch(*, subtopic_name: str, concepts: list[str], sources: list[dic
         if approach in ("practico", "tecnico"):
             q["approach"] = approach
         problems = _validate_generated(q, valid_ids)
-        if (q.get("stem") or "").strip().lower() in seen:
-            problems.append("Pregunta repetida")
+        if _near_duplicate(q.get("stem") or "", seen):
+            problems.append("Pregunta repetida o casi idéntica a una existente")
         if problems:
             errors.append(f"Pregunta {i + 1}: " + "; ".join(problems))
             continue
-        seen.add(q["stem"].strip().lower())
+        seen.add(" ".join(q["stem"].lower().split()))
         good.append(q)
     return good, errors
 

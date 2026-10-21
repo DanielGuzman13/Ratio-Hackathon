@@ -1,7 +1,7 @@
 """Contratos de la API (validación de entrada con Pydantic)."""
 from __future__ import annotations
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -11,9 +11,9 @@ class ProfileIn(BaseModel):
     perfil: Literal["no_abogado", "estudiante", "abogado"]
     semestre: int | None = Field(default=None, ge=1, le=12)
     profesion: str | None = Field(default=None, max_length=80)
-    area_id: str  # id de un área de la lista, o "libre" para un tema generado con IA
+    area_id: str = Field(max_length=60)  # id de un área de la lista, o "libre" para un tema generado con IA
     tema_libre: str | None = Field(default=None, max_length=120)
-    intereses: list[str] = Field(default_factory=list)
+    intereses: list[Annotated[str, Field(max_length=60)]] = Field(default_factory=list, max_length=40)
     objetivo: Literal["conocer_derechos", "examen", "consultorio", "ejercicio", "actualizacion"]
     horas_semana: int = Field(ge=1, le=40)
     semanas: int = Field(ge=1, le=52)
@@ -28,7 +28,7 @@ class ProfileIn(BaseModel):
 
 
 class AnswerIn(BaseModel):
-    question_id: str
+    question_id: str = Field(max_length=60)
     answer: str = Field(min_length=1, max_length=4000)
 
 
@@ -67,7 +67,7 @@ class RegisterIn(BaseModel):
 
 
 class LoginIn(BaseModel):
-    email: str = Field(min_length=3, max_length=160)
+    email: str = Field(min_length=3, max_length=160, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
     password: str = Field(min_length=1, max_length=128)
 
 
@@ -85,3 +85,13 @@ class DecisionIn(BaseModel):
 
 class GoogleIn(BaseModel):
     credential: str = Field(min_length=20, max_length=5000)
+
+
+class PasswordIn(BaseModel):
+    current: str = Field(default="", max_length=128)
+    new: str = Field(min_length=8, max_length=128)
+
+
+class DeleteAccountIn(BaseModel):
+    password: str = Field(default="", max_length=128)
+    confirm: Literal["ELIMINAR"]

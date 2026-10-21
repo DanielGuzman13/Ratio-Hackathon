@@ -1,0 +1,17 @@
+{
+  "descripcion": "Correcciones jurídicas a preguntas generadas por IA que el verificador dejó pasar (auditoría del 20/10/2026). Se aplican al arrancar el servidor, de forma idempotente. 'rechazada' = el motor deja de usarla; 'pendiente' = vuelve a revisión del administrador.",
+  "preguntas": [
+    {"id": "4fd0480ebfcf48178938211e36194907", "status": "rechazada",
+     "nota": "Fecha imposible: el 10 de julio de 2026 es viernes, no domingo."},
+    {"id": "d2d5efbf787e48cc9333080be691d87e", "status": "rechazada",
+     "nota": "Término de impugnación mal calculado: son 3 días (hábiles) siguientes a la notificación (Decreto 2591 de 1991, art. 31); con notificación el jueves 12/03/2026 vence el martes 17/03, no el domingo 15."},
+    {"id": "0056b2e068ec4c97b797e7cf44f99802", "status": "rechazada",
+     "nota": "Confunde requisitos generales con causales específicas (C-590 de 2005): la decisión sin motivación es una causal específica, no un requisito general."},
+    {"id": "bffc8d4144b54688b21269c92b14b41e", "status": "rechazada",
+     "nota": "El deber de manifestar la causal al terminar (CST art. 62, parágrafo) aplica a la terminación con justa causa; en el despido sin justa causa se paga la indemnización del art. 64 y no hay que invocar causal."},
+    {"id": "233655857e2d40f28a317a8c90f05703", "status": "pendiente",
+     "nota": "Ambigua: la opción D (indemnización de 180 días) también se reconoce en la línea de estabilidad por salud; revisar redacción para que haya una sola respuesta correcta."},
+    {"id": "5e420dcf7e18490882988da0ee1cf979", "status": "pendiente",
+     "nota": "Redacción imprecisa: no es 'la providencia' la que agota los medios de defensa sino quien acciona; reformular."}
+  ]
+}

@@ -25,14 +25,15 @@ def classify_subtopic(evidence: list[dict]) -> dict:
     # Un error en un nivel inferior al alcanzado indica dominio inestable: se baja un nivel.
     if level_reached and any(not e["correct"] and e["level"] < level_reached for e in evidence):
         level_reached -= 1
-    if mastery >= 0.75 and len(evidence) >= 2:
+    # «Fortaleza» exige al menos 3 respuestas: con 2 aciertos el azar (25 % por pregunta) pesa demasiado.
+    if mastery >= 0.75 and len(evidence) >= 3:
         status = "fortaleza"
     elif mastery < 0.45:
         status = "vacio"
     else:
         status = "en_desarrollo"
     n = len(evidence)
-    confidence = "alta" if n >= 3 else ("media" if n == 2 else "baja")
+    confidence = "alta" if n >= 4 else ("media" if n >= 2 else "baja")
     failed = [e for e in evidence if not e["correct"]]
     return {
         "status": status,
@@ -54,11 +55,13 @@ def classify_global(per_subtopic: dict[str, dict], approach: str, max_level: int
                 "status_counts": {}}
     avg_level = sum(r["level_reached"] for r in measured) / len(measured)
     avg_mastery = sum(r["mastery"] for r in measured) / len(measured)
+    # El nivel exige a la vez altura (nivel alcanzado) y consistencia (dominio): así no sale
+    # «Intermedio» con un dominio del 39 %, por ejemplo.
     if avg_level >= 2.4 and avg_mastery >= 0.7:
         level = 3
-    elif avg_level >= 1.5:
+    elif avg_level >= 1.5 and avg_mastery >= 0.5:
         level = 2
-    elif avg_level >= 0.75:
+    elif avg_level >= 0.75 and avg_mastery >= 0.3:
         level = 1
     else:
         level = 0

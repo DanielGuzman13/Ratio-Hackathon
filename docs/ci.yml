@@ -1,0 +1,28 @@
+# Integración continua: cada push y pull request corre las pruebas (SQLite y PostgreSQL) y revisa la sintaxis del frontend.
+name: CI
+on: [push, pull_request]
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: {POSTGRES_PASSWORD: postgres, POSTGRES_DB: ratio}
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r backend/requirements-dev.txt ruff
+      - name: Lint (errores reales)
+        run: ruff check backend --select E9,F63,F7,F82,F401 --exclude backend/tests
+      - name: Pruebas con SQLite
+        run: cd backend && python -m pytest -q
+      - name: Pruebas con PostgreSQL
+        env: {TEST_DATABASE_URL: "postgresql+psycopg://postgres:postgres@localhost:5432/ratio"}
+        run: cd backend && python -m pytest -q
+      - uses: actions/setup-node@v4
+        with: {node-version: "20"}
+      - name: Sintaxis del frontend
+        run: node --check frontend/app.js

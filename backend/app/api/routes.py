@@ -1,7 +1,7 @@
 """Endpoints HTTP. Delgados: validan entrada, autentican, llaman al servicio y traducen errores."""
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from sqlalchemy.orm import Session
 
 from ..ai.service import ai_status
@@ -9,8 +9,9 @@ from ..auth import read_token
 from ..config import settings
 from ..db import get_db
 from ..models import User
-from ..schemas import AnswerIn, DecisionIn, GenerateIn, GoogleIn, LoginIn, ProfileIn, RegisterIn, ReviewIn
+from ..schemas import AnswerIn, DecisionIn, DeleteAccountIn, GenerateIn, GoogleIn, LoginIn, PasswordIn, ProfileIn, RegisterIn, ReviewIn
 from ..services import diagnostic, mailer, teacher, users
+from ..security import enforce
 from ..services.diagnostic import DiagnosticError
 
 public = APIRouter(prefix="/api", tags=["diagnóstico"])
@@ -28,6 +29,8 @@ def current_user(authorization: str = Header(default=""), db: Session = Depends(
     token = authorization.removeprefix("Bearer ").strip()
     data = read_token(token) if token else None
     user = db.get(User, data["sub"]) if data else None
+    if user and (data.get("ver", 0) or 0) != (user.token_version or 0):
+        user = None  # la contraseña cambió: las sesiones anteriores ya no sirven
     if not user:
         raise HTTPException(status_code=401, detail="Inicia sesión para continuar")
     return user
@@ -42,18 +45,41 @@ def admin_user(user: User = Depends(current_user)) -> User:
 # --- Cuenta -----------------------------------------------------------------
 
 @public.post("/auth/register", status_code=201)
-def register(body: RegisterIn, db: Session = Depends(get_db)):
+def register(body: RegisterIn, request: Request, db: Session = Depends(get_db)):
+    enforce(request, "registro", limit=5, window=3600)
     return _run(users.register, db, body.nombre, body.email, body.password)
 
 
 @public.post("/auth/login")
-def login(body: LoginIn, db: Session = Depends(get_db)):
+def login(body: LoginIn, request: Request, db: Session = Depends(get_db)):
+    enforce(request, "login-ip", limit=20, window=900)
+    enforce(request, "login-correo", limit=8, window=900, extra=body.email)
     return _run(users.login, db, body.email, body.password)
 
 
 @public.post("/auth/google")
-def google_login(body: GoogleIn, db: Session = Depends(get_db)):
+def google_login(body: GoogleIn, request: Request, db: Session = Depends(get_db)):
+    enforce(request, "google", limit=20, window=900)
     return _run(users.google_login, db, body.credential)
+
+
+@public.post("/auth/password")
+def change_password(body: PasswordIn, request: Request, user: User = Depends(current_user),
+                    db: Session = Depends(get_db)):
+    enforce(request, "clave", limit=8, window=900, extra=user.id)
+    return _run(users.change_password, db, user, body.current, body.new)
+
+
+@public.get("/me/export")
+def export_my_data(user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return users.export_data(db, user)
+
+
+@public.post("/me/delete")
+def delete_my_account(body: DeleteAccountIn, request: Request, user: User = Depends(current_user),
+                      db: Session = Depends(get_db)):
+    enforce(request, "eliminar", limit=5, window=900, extra=user.id)
+    return _run(users.delete_account, db, user, body.password)
 
 
 @public.get("/auth/me")
@@ -76,9 +102,9 @@ def health():
 @public.get("/meta")
 def meta():
     return {"app_name": settings.app_name, "tagline": settings.app_tagline, "ai": ai_status(),
-            "max_questions": settings.max_questions,
             "ai_questions_per_subtopic": settings.ai_questions_per_subtopic,
-            "google_client_id": settings.google_client_id or None, "mail_enabled": mailer.enabled()}
+            "google_client_id": settings.google_client_id or None, "mail_enabled": mailer.enabled(),
+            "contact_email": settings.contact_email or mailer.sender() or None}
 
 
 @public.get("/areas")

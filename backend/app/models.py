@@ -117,6 +117,7 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(String(10), default="usuario")
     provider: Mapped[str] = mapped_column(String(10), default="correo")  # correo | google
+    token_version: Mapped[int] = mapped_column(Integer, default=0)  # sube al cambiar la contraseña: cierra sesiones
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
     last_login: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 

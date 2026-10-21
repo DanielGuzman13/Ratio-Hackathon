@@ -25,7 +25,6 @@ from ..ai import service as ai
 from ..ai.client import AIUnavailable, quota_blocked
 from ..config import settings
 from ..db import SessionLocal
-from ..engine import adaptive
 from ..models import Area, DiagnosticSession, GenerationJob, Question, Source, Subtopic
 
 _job_lock = threading.Lock()

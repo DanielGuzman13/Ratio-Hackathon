@@ -367,3 +367,14 @@ table.list th { font-weight: 500; color: var(--muted); font-size: .8rem; text-tr
   /* En modo oscuro el azul del logo se funde con el fondo: un borde sutil lo separa */
   .brand-logo, .lockup img, .auth-logo { border-radius: 23%; box-shadow: 0 0 0 1px rgba(236, 230, 218, .16); }
 }
+
+/* Accesibilidad y cuenta */
+.skip-link { position: absolute; left: 12px; top: -48px; z-index: 100; background: var(--ink); color: var(--paper); padding: .55rem .9rem; border-radius: 8px; text-decoration: none; }
+.skip-link:focus { top: 12px; }
+.auth-title { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.btn-danger { background: var(--gap); border-color: var(--gap); color: #fff; }
+.danger-zone { border-top: 1px dashed var(--line); padding-top: 1rem; }
+.account summary { cursor: pointer; }
+.prose h2 { font-size: 1.2rem; margin-top: 1.2rem; }
+.prose ul { padding-left: 1.2rem; }
+.prose li { margin-bottom: .4rem; }

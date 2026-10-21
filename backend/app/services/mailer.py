@@ -26,8 +26,23 @@ except ImportError:  # pragma: no cover
                 "para enviar el informe por correo.")
 
 
+API_PROVIDERS = {"brevo", "resend"}
+
+
+def provider() -> str:
+    if settings.mail_provider in API_PROVIDERS and settings.mail_api_key:
+        return settings.mail_provider
+    if settings.smtp_user and settings.smtp_password:
+        return "smtp"
+    return ""
+
+
+def sender() -> str:
+    return settings.mail_from or settings.smtp_user
+
+
 def enabled() -> bool:
-    return bool(settings.smtp_user and settings.smtp_password and report_pdf is not None)
+    return bool(provider() and sender() and report_pdf is not None)
 
 
 def email_info(report) -> dict:
@@ -72,7 +87,7 @@ def build_message(payload: dict) -> EmailMessage:
     profile = payload["profile"]
     msg = EmailMessage()
     msg["Subject"] = f"Tu informe de diagnóstico jurídico — {payload.get('area_name', '')}"
-    msg["From"] = f"{settings.mail_from_name} <{settings.smtp_user}>"
+    msg["From"] = f"{settings.mail_from_name} <{sender()}>"
     msg["To"] = profile["email"]
     msg.set_content(f"Hola, {profile.get('nombre', '')}. Tu diagnóstico ya fue verificado; el informe va adjunto en PDF.")
     msg.add_alternative(_html_body(payload), subtype="html")
@@ -85,6 +100,9 @@ def build_message(payload: dict) -> EmailMessage:
 
 
 def _send(msg: EmailMessage) -> None:
+    if provider() in API_PROVIDERS:
+        _send_api(msg)
+        return
     context = ssl.create_default_context()
     if settings.smtp_port == 465:
         with smtplib.SMTP_SSL(settings.smtp_host, settings.smtp_port, timeout=30, context=context) as smtp:
@@ -95,6 +113,42 @@ def _send(msg: EmailMessage) -> None:
             smtp.starttls(context=context)
             smtp.login(settings.smtp_user, settings.smtp_password)
             smtp.send_message(msg)
+
+
+def _send_api(msg: EmailMessage) -> None:
+    """Envío por API HTTPS (puerto 443): funciona aunque el hosting bloquee los puertos SMTP."""
+    import base64
+
+    import httpx
+
+    text = html = ""
+    files = []
+    for part in msg.walk():
+        ctype = part.get_content_type()
+        if part.get_filename():
+            files.append((part.get_filename(), base64.b64encode(part.get_payload(decode=True)).decode()))
+        elif ctype == "text/plain" and not text:
+            text = part.get_content()
+        elif ctype == "text/html" and not html:
+            html = part.get_content()
+    # Las API no usan imágenes «cid»: el logo se toma de la app publicada (o se omite si es local).
+    logo = f"{settings.app_url.rstrip('/')}/img/ratio-icon.png"
+    html = html.replace("cid:ratio-logo", logo if settings.app_url.startswith("https://") else "")
+    to = str(msg["To"])
+    if provider() == "brevo":
+        res = httpx.post("https://api.brevo.com/v3/smtp/email", timeout=30,
+                         headers={"api-key": settings.mail_api_key, "accept": "application/json"},
+                         json={"sender": {"name": settings.mail_from_name, "email": sender()}, "to": [{"email": to}],
+                               "subject": str(msg["Subject"]), "htmlContent": html, "textContent": text,
+                               "attachment": [{"name": n, "content": c} for n, c in files]})
+    else:
+        res = httpx.post("https://api.resend.com/emails", timeout=30,
+                         headers={"Authorization": f"Bearer {settings.mail_api_key}"},
+                         json={"from": f"{settings.mail_from_name} <{sender()}>", "to": [to],
+                               "subject": str(msg["Subject"]), "html": html, "text": text,
+                               "attachments": [{"filename": n, "content": c} for n, c in files]})
+    if res.status_code >= 300:
+        raise RuntimeError(f"{provider()} respondió {res.status_code}: {res.text[:200]}")
 
 
 def send_report_now(session_id: str) -> str:

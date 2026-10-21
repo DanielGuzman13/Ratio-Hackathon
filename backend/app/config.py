@@ -66,7 +66,12 @@ class Settings:
     smtp_user: str = os.getenv("SMTP_USER", "")
     smtp_password: str = os.getenv("SMTP_PASSWORD", "").replace(" ", "")
     mail_from_name: str = os.getenv("MAIL_FROM_NAME", "Ratio")
-    app_url: str = os.getenv("APP_URL", "http://localhost:8000")  # enlace que va en el correo
+    # Proveedor de correo: smtp (Gmail) o por API HTTPS (brevo / resend), útil donde el hosting bloquea SMTP.
+    mail_provider: str = os.getenv("MAIL_PROVIDER", "").strip().lower()
+    mail_api_key: str = os.getenv("MAIL_API_KEY", "")
+    mail_from: str = os.getenv("MAIL_FROM", "")  # remitente verificado en el proveedor; por defecto SMTP_USER
+    app_url: str = os.getenv("APP_URL", "http://localhost:8000")
+    contact_email: str = os.getenv("CONTACT_EMAIL", "")  # canal de consultas y reclamos (Ley 1581)  # enlace que va en el correo
     # Inicio de sesión con Google: ID de cliente OAuth (tipo "Aplicación web") de Google Cloud.
     google_client_id: str = os.getenv("GOOGLE_CLIENT_ID", "")
     max_questions: int = int(os.getenv("MAX_QUESTIONS", "18"))
@@ -75,6 +80,10 @@ class Settings:
     # Serverless (Vercel): no hay hilos que sigan vivos después de responder; el trabajo en segundo
     # plano se hace en solicitudes propias (la IA) o en la misma solicitud (el correo).
     serverless: bool = _bool("SERVERLESS", bool(os.getenv("VERCEL")))
+    # Producción (Render/Vercel o PRODUCTION=1): oculta /docs, exige contraseña de admin propia, etc.
+    production: bool = _bool("PRODUCTION", bool(os.getenv("RENDER") or os.getenv("VERCEL")))
+    # Orígenes extra permitidos por CORS (separados por coma). La app web es del mismo origen y no lo necesita.
+    cors_origins: str = os.getenv("CORS_ORIGINS", "")
     ai_live: bool = _bool("AI_LIVE_GENERATION", True)
     ai_free_topic: bool = _bool("AI_FREE_TOPIC", not os.getenv("VERCEL"))  # permitir "tema libre"
     ai_web_search: bool = _bool("AI_WEB_SEARCH", True)            # Google Search (solo Gemini)
