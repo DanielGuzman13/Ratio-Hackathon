@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 from ..ai import service as ai
 from . import mailer
 from ..ai.client import AIUnavailable
+from ..engine.routing import needs_check
 from ..models import DiagnosticSession, Question, Report, Source, Subtopic
 from . import live_ai
 from .diagnostic import DiagnosticError, report_payload
@@ -70,7 +71,7 @@ def _qid(flag: dict) -> str | None:
 
 
 def checklist_items(report: Report) -> list[dict]:
-    """Elementos que el administrador debe revisar: marcas de riesgo medio o alto de la ruta original."""
+    """Lo que el administrador debe confirmar: fuentes dudosas (o normas en transición) de la ruta original."""
     route = report.original_route or report.route
     items = []
     for item in route:
@@ -80,7 +81,7 @@ def checklist_items(report: Report) -> list[dict]:
         for i, flag in enumerate(flags):
             if flag["type"] == "pregunta_con_riesgo" and _qid(flag) in ai_ids:
                 continue
-            if flag["severity"] in ("media", "alta"):
+            if needs_check(flag):
                 items.append({"key": f"{item['subtopic_id']}#{i}", "subtopic_id": item["subtopic_id"],
                               "subtopic": item["subtopic"], "type": flag["type"], "severity": flag["severity"],
                               "text": flag["text"], "question_id": _qid(flag)})
@@ -123,7 +124,7 @@ def review_report(db: Session, session_id: str, *, reviewer: str, checklist: dic
     if approve:
         missing = [i for i in items if not clean.get(i["key"], {}).get("checked")]
         if missing:
-            raise DiagnosticError(f"Faltan {len(missing)} elementos de la lista de verificación por revisar.", 422)
+            raise DiagnosticError(f"Faltan {len(missing)} fuentes por confirmar.", 422)
     changed = False
     route = []
     for item in report.original_route:

@@ -173,11 +173,22 @@ def test_admin_email_promueve_cuenta_existente(client, monkeypatch):
     db.add(User(email="promover@ratio.test", name="P", password_hash=users.hash_password("x" * 12),
                 role="usuario", provider="google"))
     db.commit()
-    monkeypatch.setattr(settings, "admin_email", "promover@ratio.test")
-    monkeypatch.setattr(settings, "admin_password", "otra-clave-segura-123")
+    monkeypatch.setattr(users, "settings", dataclasses.replace(
+        settings, admin_email="promover@ratio.test", admin_password="otra-clave-segura-123"))
     users.ensure_admin(db)
     u = db.query(User).filter_by(email="promover@ratio.test").one()
     assert u.role == "admin" and users.verify_password("otra-clave-segura-123", u.password_hash)
     users.ensure_admin(db)  # idempotente
     assert db.query(User).filter_by(email="promover@ratio.test").one().role == "admin"
     db.close()
+
+
+def test_solo_fuentes_dudosas_requieren_revision():
+    from app.engine.routing import _flags, needs_check
+    sub = {"risk_level": "ninguno"}
+    ia = [{"question_id": "a" * 32, "stem": "¿Pregunta?", "origin": "ia", "tailored": True, "risk_level": "alta"}]
+    ok_src = [{"citation": "Constitución, art. 86", "risk_level": "ninguno", "verified_on": "2026-01-01"}]
+    flags = _flags(sub, ok_src, ia, {"confidence": "alta"})
+    assert flags and not any(needs_check(f) for f in flags)  # preguntas de IA: no se revisan
+    risky = [{"citation": "Ley 2466 de 2025", "risk_level": "media", "risk_note": "en transición", "verified_on": "x"}]
+    assert any(needs_check(f) for f in _flags(sub, risky, [], {"confidence": "alta"}))

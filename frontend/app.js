@@ -1157,7 +1157,7 @@ async function viewAdminReport(sid) {
         <span><strong>${esc(it.subtopic)}</strong> · ${esc(FLAG[it.type] || it.type)}<br><small>${esc(flagText(it.text))}</small>
           ${(() => { const x = byQ[flagQid(it)]; return x ? html`<br><small class="muted">Pregunta ${x.seq} del diagnóstico · respondió ${esc(x.kind === "mc" ? x.answer : "texto")}${x.kind === "mc" ? ` (clave ${esc(x.correct_key)})` : ""} · ${x.correct ? "acierto" : "error"}</small>` : ""; })()}</span></label>
       <input type="text" data-comment="${esc(it.key)}" value="${esc(saved[it.key]?.comment || "")}" placeholder="Comentario (opcional): p. ej. «Fuente confirmada en SUIN»">
-    </div>`).join("") : '<p class="muted">Este informe no tiene elementos marcados como dudosos.</p>';
+    </div>`).join("") : '<p class="banner ok" style="margin:0">Ninguna fuente de la ruta está marcada como dudosa. Puedes aprobar y enviar directamente.</p>';
   const editors = r.original_route.map((orig) => {
     const it = current[orig.subtopic_id] || orig;
     const removed = !current[orig.subtopic_id];
@@ -1181,8 +1181,9 @@ async function viewAdminReport(sid) {
     ${resultSummary(r, { admin: true })}
     <form class="stack" id="review">
       <section class="card stack">
-        <div class="row between"><h3>1. Lista de verificación</h3><span class="badge b-review" id="check-count"></span></div>
-        <p class="muted">Revisa cada fuente, pregunta o resultado que la IA verificadora marcó como dudoso. Debes marcarlos todos para aprobar; los comentarios son opcionales y aparecen en el informe de la persona.</p>
+        <div class="row between"><h3>1. Fuentes por confirmar</h3><span class="badge b-review" id="check-count"></span></div>
+        ${items.length ? html`<p class="muted">Solo las fuentes de la ruta de procedencia o vigencia dudosa. Las preguntas que respondió la persona no necesitan revisión. Los comentarios son opcionales y aparecen en el informe.</p>
+        <div><button class="btn btn-small btn-ghost" type="button" id="check-all">Marcar todas como confirmadas</button></div>` : ""}
         ${checklistHtml}
       </section>
       <section class="stack"><h3>2. Ajustes a la ruta (lo que quede aquí es lo que sale en el PDF)</h3>${editors}</section>
@@ -1209,11 +1210,13 @@ async function viewAdminReport(sid) {
   const form = document.getElementById("review");
   const syncCount = () => {
     const done = form.querySelectorAll("[data-check]:checked").length;
-    document.getElementById("check-count").textContent = items.length ? `${done} de ${items.length} revisados` : "Sin elementos";
+    document.getElementById("check-count").textContent = items.length ? `${done} de ${items.length} confirmadas` : "Nada por confirmar";
     document.getElementById("approve").disabled = done < items.length;
   };
   form.addEventListener("change", syncCount);
   syncCount();
+  const checkAll = document.getElementById("check-all");
+  if (checkAll) checkAll.onclick = () => { form.querySelectorAll("[data-check]").forEach((c) => { c.checked = true; }); syncCount(); };
   const collect = (approve) => {
     const checklist = {};
     items.forEach((it) => {

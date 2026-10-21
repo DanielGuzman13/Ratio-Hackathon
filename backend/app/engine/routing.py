@@ -56,6 +56,15 @@ def _quote(stem: str, question_id: str) -> str:
     return f"«{stem[:180]}{'…' if len(stem) > 180 else ''}»"
 
 
+# Lo único que el administrador confirma: fuentes de la ruta de procedencia o vigencia dudosa.
+# Las demás marcas (preguntas de IA, calificación automática, poca evidencia) quedan como información.
+REVIEW_TYPES = {"fuente_con_riesgo", "subtema_en_transicion"}
+
+
+def needs_check(flag: dict) -> bool:
+    return flag["type"] in REVIEW_TYPES and flag["severity"] in ("media", "alta")
+
+
 def _flags(subtopic: dict, sources: list[dict], evidence: list[dict], result: dict) -> list[dict]:
     flags: list[dict] = []
     if subtopic.get("risk_level", "ninguno") != "ninguno":
@@ -161,5 +170,5 @@ def build_route(*, per_subtopic: dict[str, dict], subtopics: dict[str, dict], so
                     "type": "resultado_inconsistente", "severity": "media",
                     "text": "Aparece como fortaleza pero su prerrequisito " + ", ".join(f"«{names[g]}»" for g in gaps)
                             + " es un vacío: posible acierto por azar o vacío mal medido."})
-        item["requires_review"] = any(f["severity"] in ("media", "alta") for f in item["review_flags"])
+        item["requires_review"] = any(needs_check(f) for f in item["review_flags"])
     return route
