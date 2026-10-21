@@ -213,8 +213,10 @@ def next_question(db: Session, session_id: str, user=None) -> dict:
         if state.get("needs_refill"):
             live_ai.maybe_trigger(db, session, urgent=state["needs_refill"])
             return {"finished": False, "waiting": True, "progress": adaptive.progress(state),
+                    "ai": live_ai.session_ai_status(db, session.id),
                     "message": "La IA está generando más preguntas de este tema según tus respuestas…"}
         return {"finished": False, "waiting": True, "progress": adaptive.progress(state),
+                "ai": live_ai.session_ai_status(db, session.id),
                 "message": "La IA está terminando de generar y verificar las preguntas del siguiente subtema…"}
     if ref is None:
         return {"finished": True, "progress": adaptive.progress(state)}
@@ -349,6 +351,11 @@ def report_payload(session: DiagnosticSession) -> dict:
             "tailored": r.question.session_id == session.id} for r in session.responses],
         "created_at": session.created_at.isoformat() if session.created_at else None,
     }
+
+
+def run_ai(db: Session, session_id: str, user=None) -> dict:
+    _session(db, session_id, user)  # solo la dueña de la sesión (o un admin) puede pedirlo
+    return live_ai.run_pending(db, session_id)
 
 
 def resend_report(db: Session, session_id: str, user=None) -> dict:

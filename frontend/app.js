@@ -609,6 +609,7 @@ function offlineCard(sid, pending) {
   }, 4000);
 }
 
+const aiRunning = new Set();
 async function viewDiagnostic(sid) {
   loading();
   store.set("ratio_active", sid);
@@ -619,6 +620,11 @@ async function viewDiagnostic(sid) {
   let data;
   try { data = await api(`/sessions/${sid}/next`); }
   catch (e) { if (e.offline) { offlineCard(sid, queue.pendingFor(sid).length || 0); return; } throw e; }
+  // En la web (serverless) la IA corre en su propia solicitud: se pide sin esperar la respuesta.
+  if (data.ai?.pending && !aiRunning.has(sid)) {
+    aiRunning.add(sid);
+    api(`/sessions/${sid}/ai/run`, { method: "POST" }).catch(() => {}).finally(() => aiRunning.delete(sid));
+  }
   if (data.waiting) {
     $app.innerHTML = html`<section class="card"><p class="eyebrow">Momento 2 · Diagnosticar</p>
       <h2>Un momento…</h2><p class="muted">${esc(data.message)}</p><div class="spinner"></div></section>`;

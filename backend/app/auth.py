@@ -40,7 +40,10 @@ def _secret() -> bytes:
         return settings.secret_key.encode()
     path = Path(BASE_DIR) / ".secret_key"
     if not path.exists():
-        path.write_text(secrets.token_hex(32), encoding="utf-8")
+        try:
+            path.write_text(secrets.token_hex(32), encoding="utf-8")
+        except OSError as exc:  # p. ej. Vercel: el disco es de solo lectura
+            raise RuntimeError("Define la variable SECRET_KEY (una cadena larga y aleatoria) en el servidor.") from exc
     return path.read_text(encoding="utf-8").strip().encode()
 
 

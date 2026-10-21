@@ -118,6 +118,12 @@ def report(session_id: str, user: User = Depends(current_user), db: Session = De
     return _run(diagnostic.get_report, db, session_id, user)
 
 
+@public.post("/sessions/{session_id}/ai/run")
+def run_ai(session_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    """Serverless: el navegador pide aquí que se generen las preguntas de IA pendientes."""
+    return _run(diagnostic.run_ai, db, session_id, user)
+
+
 @public.post("/sessions/{session_id}/email")
 def email_report(session_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     return _run(diagnostic.resend_report, db, session_id, user)

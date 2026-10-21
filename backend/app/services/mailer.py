@@ -138,4 +138,7 @@ def send_report_async(session_id: str) -> None:
         if session and session.report:
             session.report.email_status = "enviando"
             db.commit()
+    if settings.serverless:  # sin hilos en serverless: se envía dentro de la misma solicitud (2-5 s)
+        send_report_now(session_id)
+        return
     threading.Thread(target=send_report_now, args=(session_id,), daemon=True, name=f"mail-{session_id}").start()

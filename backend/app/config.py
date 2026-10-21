@@ -72,8 +72,11 @@ class Settings:
     max_questions: int = int(os.getenv("MAX_QUESTIONS", "18"))
     questions_per_subtopic: int = int(os.getenv("QUESTIONS_PER_SUBTOPIC", "3"))
     # Generación en vivo: al iniciar un diagnóstico la IA genera y verifica preguntas del área.
+    # Serverless (Vercel): no hay hilos que sigan vivos después de responder; el trabajo en segundo
+    # plano se hace en solicitudes propias (la IA) o en la misma solicitud (el correo).
+    serverless: bool = _bool("SERVERLESS", bool(os.getenv("VERCEL")))
     ai_live: bool = _bool("AI_LIVE_GENERATION", True)
-    ai_free_topic: bool = _bool("AI_FREE_TOPIC", True)            # permitir "tema libre"
+    ai_free_topic: bool = _bool("AI_FREE_TOPIC", not os.getenv("VERCEL"))  # permitir "tema libre"
     ai_web_search: bool = _bool("AI_WEB_SEARCH", True)            # Google Search (solo Gemini)
     ai_prefer_generated: bool = _bool("AI_PREFER_GENERATED", True)  # usar primero preguntas de IA
     ai_questions_per_subtopic: int = int(os.getenv("AI_QUESTIONS_PER_SUBTOPIC", "6"))

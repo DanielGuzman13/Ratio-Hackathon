@@ -1,0 +1,9 @@
+.venv
+.env
+.env.*
+*.db
+.secret_key
+preguntas_exportadas.csv
+backend/tests
+**/__pycache__
+.pytest_cache

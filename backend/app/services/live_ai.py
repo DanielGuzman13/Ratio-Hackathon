@@ -17,8 +17,9 @@ from __future__ import annotations
 import logging
 import threading
 import time
+from datetime import datetime, timezone
 
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 
 from ..ai import service as ai
 from ..ai.client import quota_blocked
@@ -112,12 +113,25 @@ def choose_targets(db, session: DiagnosticSession, urgent: str | None = None) ->
     return [t for t in picked if t["count"] > 0]
 
 
+STALE_SECONDS = 300  # un lote «en curso» por más de 5 min se da por perdido (p. ej. la función se cortó)
+
+
+def _busy(batch: AIBatch) -> bool:
+    if batch.status not in ("en_curso", "pendiente"):
+        return False
+    created = batch.created_at
+    if created is None:
+        return True
+    created = created if created.tzinfo else created.replace(tzinfo=timezone.utc)
+    return (datetime.now(timezone.utc) - created).total_seconds() < STALE_SECONDS
+
+
 def should_trigger(db, session: DiagnosticSession, urgent: str | None = None) -> bool:
     if not enabled() or not session.state or session.status != "en_curso":
         return False
     batches = db.scalars(select(AIBatch).where(AIBatch.session_id == session.id)
                          .order_by(AIBatch.id.desc())).all()
-    if any(b.status == "en_curso" for b in batches):
+    if any(_busy(b) for b in batches):
         return False
     if len(batches) >= max_batches(session):
         return False
@@ -140,10 +154,13 @@ def maybe_trigger(db, session: DiagnosticSession, urgent: str | None = None) -> 
         targets = choose_targets(db, session, urgent)
         if not targets:
             return None
-        batch = AIBatch(session_id=session.id, answers_at_trigger=session.state.get("count", 0), targets=targets)
+        batch = AIBatch(session_id=session.id, answers_at_trigger=session.state.get("count", 0), targets=targets,
+                        status="pendiente" if settings.serverless else "en_curso")
         db.add(batch)
         db.commit()
         batch_id = batch.id
+    if settings.serverless:  # lo ejecuta el navegador con POST /sessions/{id}/ai/run (ver run_pending)
+        return batch
     threading.Thread(target=_run_batch, args=(batch_id,), daemon=True, name=f"ia-lote-{batch_id}").start()
     return batch
 
@@ -234,7 +251,7 @@ def refillable(db, session: DiagnosticSession) -> set[str]:
     if not enabled() or not session.state:
         return set()
     batches = db.scalars(select(AIBatch).where(AIBatch.session_id == session.id)).all()
-    if not any(b.status == "en_curso" for b in batches) and len(batches) >= max_batches(session):
+    if not any(_busy(b) for b in batches) and len(batches) >= max_batches(session):
         return set()
     # Si los últimos lotes fallaron, no se espera indefinidamente.
     recent = sorted(batches, key=lambda b: b.id)[-2:]
@@ -247,8 +264,26 @@ def session_ai_status(db, session_id: str) -> dict:
     batches = db.scalars(select(AIBatch).where(AIBatch.session_id == session_id)).all()
     tailored = db.scalar(select(func.count()).select_from(Question).where(
         Question.session_id == session_id, Question.status == "verificada")) or 0
-    return {"enabled": enabled(), "active": any(b.status == "en_curso" for b in batches),
+    return {"enabled": enabled(), "active": any(_busy(b) for b in batches),
+            "pending": any(b.status == "pendiente" and _busy(b) for b in batches),
             "batches": len(batches), "tailored_questions": tailored}
+
+
+def run_pending(db, session_id: str) -> dict:
+    """Serverless: ejecuta aquí mismo los lotes pendientes de la sesión (el navegador lo pide sin esperar).
+
+    El cambio pendiente -> en_curso es atómico, así que dos solicitudes no generan el mismo lote.
+    """
+    ran = []
+    ids = db.scalars(select(AIBatch.id).where(AIBatch.session_id == session_id, AIBatch.status == "pendiente")).all()
+    for batch_id in ids:
+        claimed = db.execute(update(AIBatch).where(AIBatch.id == batch_id, AIBatch.status == "pendiente")
+                             .values(status="en_curso")).rowcount
+        db.commit()
+        if claimed:
+            _run_batch(batch_id)
+            ran.append(batch_id)
+    return {"ran": ran}
 
 
 def batches_payload(db, session_id: str) -> list[dict]:

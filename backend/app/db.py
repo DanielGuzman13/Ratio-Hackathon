@@ -16,8 +16,14 @@ _is_sqlite = settings.database_url.startswith("sqlite")
 # timeout: la generación con IA escribe desde un hilo en segundo plano mientras la API atiende.
 _connect_args = {"check_same_thread": False, "timeout": 30} if _is_sqlite else {}
 # pool_pre_ping: las bases en la nube (Supabase) cierran conexiones inactivas; así se reconecta solo.
-engine = create_engine(settings.database_url, connect_args=_connect_args, future=True,
-                       pool_pre_ping=not _is_sqlite, pool_recycle=300 if not _is_sqlite else -1)
+if settings.serverless and not _is_sqlite:
+    # Cada instancia serverless vive poco: sin pool propio (Supabase ya tiene su pooler).
+    from sqlalchemy.pool import NullPool
+
+    engine = create_engine(settings.database_url, future=True, poolclass=NullPool)
+else:
+    engine = create_engine(settings.database_url, connect_args=_connect_args, future=True,
+                           pool_pre_ping=not _is_sqlite, pool_recycle=300 if not _is_sqlite else -1)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
 

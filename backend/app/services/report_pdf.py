@@ -19,7 +19,9 @@ STATUS = {"fortaleza": "Fortaleza", "en_desarrollo": "En desarrollo", "vacio": "
           "sin_evidencia": "Sin evidencia"}
 PRIORITY = {"alta": "Prioridad alta", "media": "Prioridad media", "baja": "Prioridad baja"}
 LOGO = Path(__file__).resolve().parents[3] / "frontend" / "img" / "ratio-icon.png"
+FONTS = Path(__file__).resolve().parents[1] / "fonts"  # DejaVu incluida en el proyecto (licencia libre)
 FONT_CANDIDATES = [
+    (str(FONTS / "DejaVuSans.ttf"), str(FONTS / "DejaVuSans-Bold.ttf")),
     ("C:/Windows/Fonts/arial.ttf", "C:/Windows/Fonts/arialbd.ttf"),
     ("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
     ("/Library/Fonts/Arial.ttf", "/Library/Fonts/Arial Bold.ttf"),

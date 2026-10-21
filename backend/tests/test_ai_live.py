@@ -287,3 +287,26 @@ def test_malformed_model_output_does_not_break_batch(monkeypatch):
     assert any("no declara el error" in e for e in errors)  # opciones en texto sin errores declarados: se descarta
     monkeypatch.setattr(service.verifier, "chat_json", lambda *a, **k: ["no es un dict"])
     assert service.verify_batch(good, {"s1": src[0]})[0]["approved"] is False
+
+
+def test_serverless_mode_runs_ai_in_its_own_request(client, fake_ai):
+    """En Vercel no hay hilos: el lote queda «pendiente» y lo ejecuta la solicitud /ai/run del navegador."""
+    from app.config import settings
+    object.__setattr__(settings, "serverless", True)
+    try:
+        res = client.post("/api/sessions", json=BASE | {"area_id": "laboral", "intereses": ["lab_jornada"]}).json()
+        sid = res["session_id"]
+        with SessionLocal() as db:
+            batches = db.scalars(select(AIBatch).where(AIBatch.session_id == sid)).all()
+            assert [b.status for b in batches] == ["pendiente"], "no se lanzó ningún hilo"
+        nxt = client.get(f"/api/sessions/{sid}/next").json()
+        assert nxt["ai"]["pending"] is True, "el navegador sabe que debe pedir la generación"
+        ran = client.post(f"/api/sessions/{sid}/ai/run").json()["ran"]
+        assert len(ran) == 1
+        assert client.post(f"/api/sessions/{sid}/ai/run").json()["ran"] == [], "no se repite el mismo lote"
+        with SessionLocal() as db:
+            assert db.get(AIBatch, ran[0]).status == "listo"
+            assert db.scalars(select(Question).where(Question.session_id == sid)).all()
+        assert client.get(f"/api/sessions/{sid}/next").json()["ai"]["pending"] is False
+    finally:
+        object.__setattr__(settings, "serverless", False)

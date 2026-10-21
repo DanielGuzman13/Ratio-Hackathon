@@ -1,0 +1,9 @@
+# Configuración para desplegar en Vercel (la app sigue funcionando igual en local con run.bat).
+[project]
+name = "ratio"
+version = "1.0.0"
+requires-python = ">=3.12"
+
+[tool.vercel]
+# La app FastAPI vive en backend/app/main.py; el frontend y el banco semilla se leen desde la raíz.
+entrypoint = "backend.app.main:app"
