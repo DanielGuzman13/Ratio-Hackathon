@@ -61,7 +61,7 @@ function bindReportButtons(root = $app) {
   root.querySelectorAll("[data-report-email]").forEach((b) => b.addEventListener("click", async () => {
     b.disabled = true;
     try {
-      const res = await api(`/sessions/${b.dataset.reportEmail}/email`, { method: "POST" });
+      const res = await api(`/sessions/${encodeURIComponent(b.dataset.reportEmail)}/email`, { method: "POST" });
       modal("Informe enviado", html`<p>Estamos enviando tu informe en PDF a <strong>${esc(res.to)}</strong>. Llega en uno o dos minutos; si no lo ves, revisa la carpeta de spam o de promociones.</p>`);
     } catch (e) { modal("No se pudo enviar", html`<p>${esc(e.message)}</p>`); }
     b.disabled = false;
@@ -140,6 +140,8 @@ window.addEventListener("offline", () => document.body.classList.add("is-offline
 
 // Botones genéricos sin JavaScript en línea (la CSP lo bloquea).
 document.addEventListener("click", (e) => {
+  // «Saltar al contenido»: mueve el foco sin cambiar el hash (el router usa el hash para las vistas).
+  if (e.target.closest(".skip-link")) { e.preventDefault(); $app.focus(); $app.scrollIntoView(); return; }
   if (e.target.closest("[data-retry]")) render();
   if (e.target.closest("[data-print]")) window.print();
 });
@@ -511,6 +513,8 @@ async function viewPrivacy() {
     <p>Al aceptar el consentimiento autorizas esta transmisión internacional para las finalidades descritas.</p>
     <h2>Tus derechos</h2>
     <p>Conocer, actualizar, rectificar y suprimir tus datos, y revocar la autorización. Desde <a href="#/historial">Mi historial → Mi cuenta y mis datos</a> puedes descargar todos tus datos o eliminar tu cuenta en cualquier momento. Para otras consultas o reclamos escribe al contacto indicado; respondemos en los plazos de la ley (10 días hábiles para consultas y 15 para reclamos).</p>
+    <h2>Menores de edad</h2>
+    <p>Ratio está dirigido a personas mayores de 18 años. Si eres menor de edad, solo puedes usarlo con la autorización de tu representante legal, quien puede ejercer tus derechos sobre los datos (Ley 1581 de 2012, art. 7). Si detectamos una cuenta de un menor sin autorización, la eliminaremos.</p>
     <h2>Conservación</h2>
     <p>Conservamos tus datos mientras tengas la cuenta activa. Si la eliminas, se borran tus diagnósticos, respuestas e informes; las preguntas que la IA generó quedan en el banco sin vínculo contigo.</p>
     <p class="muted">Última actualización: octubre de 2026. Este texto es una base para el proyecto académico y debe revisarlo un asesor antes de un uso real.</p>
@@ -564,7 +568,7 @@ async function viewProfile() {
         <select id="semanas" name="semanas"><option value="" selected disabled>Selecciona…</option>${opts(16, (n) => `${n} semana${n > 1 ? "s" : ""}`)}</select></div>
     </div>
     <label class="consent"><input type="checkbox" name="consentimiento">
-      <span>Autorizo el tratamiento de mis datos de perfil y respuestas para generar mi diagnóstico, guardar mi historial y que un administrador revise mi ruta, conforme a la Ley 1581 de 2012 y la <a href="#/privacidad" target="_blank" rel="noopener">política de privacidad</a> (incluye el uso de proveedores en el exterior). No se piden datos sensibles.</span></label>
+      <span>Autorizo el tratamiento de mis datos de perfil y respuestas para generar mi diagnóstico, guardar mi historial y que un administrador revise mi ruta, conforme a la Ley 1581 de 2012 y la <a href="#/privacidad" target="_blank" rel="noopener">política de privacidad</a> (incluye el uso de proveedores en el exterior). Declaro que soy mayor de 18 años o que cuento con la autorización de mi representante legal. No se piden datos sensibles.</span></label>
     <p class="error" id="form-error" role="alert"></p>
     <div class="row between"><a href="#/historial" class="btn btn-ghost">Volver</a><button class="btn" type="submit">Empezar el diagnóstico</button></div>
   </form>`;

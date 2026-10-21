@@ -12,6 +12,8 @@ from collections import defaultdict, deque
 
 from fastapi import HTTPException, Request
 
+from .config import settings
+
 # La app usa estilos en línea (atributo style) y carga Google Fonts y Google Identity Services.
 CSP = "; ".join([
     "default-src 'self'",
@@ -38,7 +40,7 @@ async def security_headers(request: Request, call_next):
     headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
     # El popup de Google necesita poder comunicarse con la ventana que lo abrió.
     headers.setdefault("Cross-Origin-Opener-Policy", "same-origin-allow-popups")
-    if request.url.scheme == "https":
+    if request.url.scheme == "https" or settings.production:  # en producción siempre va detrás de https
         headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
     if request.url.path.startswith("/api/"):
         headers.setdefault("Cache-Control", "no-store")

@@ -136,3 +136,12 @@ def test_legal_corrections_are_applied_once(tmp_path):
         q.status = "aprobada"  # el administrador la corrige y la vuelve a aprobar: no se pisa
         db.commit()
         assert apply_corrections(db, path) == 0 and db.get(Question, q.id).status == "aprobada"
+
+
+def test_register_rejects_html_in_email_and_hsts_in_production(client, monkeypatch):
+    bad = client.post("/api/auth/register", json={"nombre": "X Y", "email": "<b>x</b>@test.co", "password": "secreto12"},
+                      headers={"Authorization": ""})
+    assert bad.status_code == 422
+    from app import security
+    monkeypatch.setattr(security, "settings", dataclasses.replace(config.settings, production=True))
+    assert "strict-transport-security" in client.get("/").headers, "también en la página, no solo en la API"

@@ -60,9 +60,12 @@ class ReviewIn(BaseModel):
     edits: dict[str, ItemEdit] = Field(default_factory=dict)
 
 
+EMAIL_PATTERN = r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"  # sin < > " ' ni espacios
+
+
 class RegisterIn(BaseModel):
     nombre: str = Field(min_length=2, max_length=120)
-    email: str = Field(min_length=5, max_length=160, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    email: str = Field(min_length=5, max_length=160, pattern=EMAIL_PATTERN)
     password: str = Field(min_length=6, max_length=128)
 
 

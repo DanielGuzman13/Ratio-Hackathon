@@ -411,3 +411,57 @@ Al final, agrega:
 - Calificador con IA endurecido.
 - Recuperación de contraseña.
 - Migrar las plantillas a escape por defecto.
+
+**Estado del despliegue para la segunda auditoría** (`https://ratio-9m0a.onrender.com`, 20/10/2026, 23:50):
+
+- **Ya visible en producción:** `/docs` y `/openapi.json` dan 404. `/api/meta` ya no publica `max_questions` y sí `contact_email`. El botón de Google se carga bien con la CSP activa.
+- **Pendiente de configuración:**
+  - La IA sigue apagada en la web: faltan `AI_BASE_URL`, `AI_API_KEY` y `AI_MODEL_GENERATOR` en Render.
+  - El correo sigue por SMTP: falta configurar Brevo.
+  - No hay ping externo para evitar el arranque en frío.
+  - El flujo de CI está en `docs/ci.yml` y falta moverlo a `.github/workflows/`.
+- **Se pide al auditor:** volver a probar los hallazgos A-01 a B-03 contra el código del repositorio y el sitio desplegado.
+
+### Cómo hacer la prueba con sesión iniciada
+
+No crees cuentas en el sitio de producción. **Pide a la persona del equipo que inicie sesión ella misma** en su navegador, en `https://ratio-9m0a.onrender.com` (con su cuenta de usuario normal, con Google o con correo). Cuando te confirme "listo", continúa la revisión en esa pestaña y con esa sesión. Si necesitas el panel de administrador, pídele que cierre sesión y entre con la cuenta de administrador; nunca escribas tú contraseñas.
+
+**Con la sesión de usuario, revisa:**
+
+1. Un diagnóstico completo (perfil → instrucciones → preguntas → resultado). Usa el perfil "No abogado" para que se reconozca como prueba. Confirma:
+   - que aparezcan preguntas "✦ generadas por IA a la medida", si la IA ya está encendida;
+   - en DevTools → Network, que `/api/sessions/{id}/next` no incluya la clave ni el error asociado (M-05).
+2. En el resultado:
+   - el aviso del PDF cuando el informe está "en verificación";
+   - "Ver / imprimir" cuando ya está aprobado.
+3. En "Mi historial → Mi cuenta y mis datos":
+   - que el formulario de cambio de contraseña y "Eliminar mi cuenta" se vean y validen. **No los ejecutes**: no cambies la contraseña de la persona ni elimines su cuenta;
+   - "Descargar mis datos (JSON)" sí se puede ejecutar: solo descarga un archivo.
+4. La página `#/privacidad` y el enlace en el consentimiento.
+5. La consola del navegador: que no haya errores de JavaScript ni violaciones de la CSP.
+6. IDOR: con la sesión de usuario, que pedir `/api/sessions/{id}/report` de un diagnóstico que no es suyo (pide un id al equipo) dé 403, y que `/api/teacher/reports` dé 403.
+
+**Con la sesión de administrador (si te la dan):**
+
+- La lista de verificación de un informe "en revisión": preguntas citadas por su enunciado, sin códigos, y aprobación bloqueada hasta marcar todo.
+- El estado del correo después de aprobar.
+
+**Lo que puedes probar sin sesión:**
+
+- Cabeceras de seguridad.
+- `/docs` y `/openapi.json` con 404.
+- El límite de intentos de ingreso: con un correo inventado, el 9.º intento en 15 minutos debe dar 429. Usa un correo que no sea del equipo, para no bloquear a nadie.
+
+**No hagas:** crear cuentas, cambiar contraseñas, eliminar cuentas, aprobar informes reales ni enviar correos sin que el equipo lo autorice en el momento.
+
+
+### Segunda ronda (21/10/2026, 00:10)
+
+| ID | Corrección |
+|---|---|
+| N-01 | «Saltar al contenido» mueve el foco a `<main>` sin cambiar el hash (`preventDefault`), así que el router no cambia de vista. |
+| N-02 | HSTS se envía en todas las respuestas cuando `PRODUCTION` está activo (Render), también en `/` y en los archivos estáticos. Hay una prueba sobre `/`. |
+| N-03 | El registro solo acepta correos con caracteres `[A-Za-z0-9._%+-]` (rechaza `<`, `>`, comillas y espacios) y hay una prueba de 422. El id del botón va con `encodeURIComponent`. Las líneas ~1180 y ~1188 usan `toast()`, que asigna `textContent`, no HTML, así que no son inyectables. El correo del panel ya pasa por `esc()`. |
+| N-04 | El consentimiento incluye la declaración de mayoría de edad o la autorización del representante. La política tiene una sección «Menores de edad» (art. 7). |
+
+El repositorio va adjunto en un zip (`ratio-repo.zip`), sin `.env` ni base de datos.
