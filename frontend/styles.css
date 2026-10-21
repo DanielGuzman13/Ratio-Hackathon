@@ -381,3 +381,7 @@ table.list th { font-weight: 500; color: var(--muted); font-size: .8rem; text-tr
 
 .formation-saved { font-weight: 600; margin: .2rem 0 .7rem; }
 .formation-saved .muted { font-weight: 400; font-size: .85rem; }
+
+/* Riesgo normativo: fuente con su botón de verificación al lado */
+.src-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.src-item > div { flex: 1 1 280px; min-width: 0; }

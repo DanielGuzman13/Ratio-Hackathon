@@ -340,8 +340,11 @@ def finish_session(db: Session, session_id: str, user=None) -> dict:
                         "objective_practico": s.objective_practico, "concepts": s.concepts,
                         "risk_level": s.risk_level, "risk_note": s.risk_note} for s in area.subtopics}
     sources = {s.id: [{"id": x.id, "kind": x.kind, "citation": x.citation, "detail": x.detail, "url": x.url,
-                       "min_level": x.min_level, "priority": x.priority, "verified_on": x.verified_on,
-                       "risk_level": x.risk_level, "risk_note": x.risk_note} for x in s.sources]
+                       "min_level": x.min_level, "priority": x.priority,
+                       # Confirmada por el administrador: verificada y sin riesgo pendiente.
+                       "verified_on": (x.confirmed_on or "")[:10] or x.verified_on,
+                       "risk_level": "ninguno" if x.confirmed_on else x.risk_level,
+                       "risk_note": x.risk_note} for x in s.sources]
                for s in area.subtopics}
     evidence: dict[str, list[dict]] = {sid: [] for sid in subtopics}
     for r in session.responses:

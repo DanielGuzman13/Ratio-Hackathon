@@ -98,3 +98,7 @@ class PasswordIn(BaseModel):
 class DeleteAccountIn(BaseModel):
     password: str = Field(default="", max_length=128)
     confirm: Literal["ELIMINAR"]
+
+
+class SourceConfirmIn(BaseModel):
+    confirm: bool = True

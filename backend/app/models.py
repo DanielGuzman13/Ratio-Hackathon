@@ -70,6 +70,9 @@ class Source(Base):
     verified_on: Mapped[str] = mapped_column(String(20), default="")
     risk_level: Mapped[str] = mapped_column(String(10), default="ninguno")
     risk_note: Mapped[str] = mapped_column(Text, default="")
+    # Confirmación del administrador: va aparte para que la recarga del banco semilla no la borre.
+    confirmed_on: Mapped[str] = mapped_column(String(40), default="")
+    confirmed_by: Mapped[str] = mapped_column(String(120), default="")
 
     subtopic: Mapped[Subtopic] = relationship(back_populates="sources")
 

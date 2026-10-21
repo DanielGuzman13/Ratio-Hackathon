@@ -192,3 +192,20 @@ def test_solo_fuentes_dudosas_requieren_revision():
     assert flags and not any(needs_check(f) for f in flags)  # preguntas de IA: no se revisan
     risky = [{"citation": "Ley 2466 de 2025", "risk_level": "media", "risk_note": "en transición", "verified_on": "x"}]
     assert any(needs_check(f) for f in _flags(sub, risky, [], {"confidence": "alta"}))
+
+
+def test_admin_verifica_fuente_y_sobrevive_a_la_recarga(client, teacher_headers):
+    from app.db import SessionLocal
+    from app.seed import load_all
+    risks = client.get("/api/teacher/risks", headers=teacher_headers).json()
+    assert risks["sources"]
+    sid = risks["sources"][0]["id"]
+    r = client.post(f"/api/teacher/sources/{sid}/confirm", headers=teacher_headers, json={"confirm": True})
+    assert r.status_code == 200 and r.json()["confirmed_on"]
+    with SessionLocal() as db:
+        load_all(db)  # lo que pasa en cada arranque del servidor
+    risks = client.get("/api/teacher/risks", headers=teacher_headers).json()
+    assert sid not in {s["id"] for s in risks["sources"]} and sid in {s["id"] for s in risks["confirmed"]}
+    client.post(f"/api/teacher/sources/{sid}/confirm", headers=teacher_headers, json={"confirm": False})
+    assert sid in {s["id"] for s in client.get("/api/teacher/risks", headers=teacher_headers).json()["sources"]}
+    assert client.post(f"/api/teacher/sources/{sid}/confirm", json={"confirm": True}).status_code in (401, 403)

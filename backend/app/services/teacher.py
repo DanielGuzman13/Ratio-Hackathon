@@ -220,6 +220,23 @@ def decide_question(db: Session, question_id: str, decision: str, note: str) -> 
     return _question_payload(question)
 
 
+def _source_row(s: Source) -> dict:
+    return {"id": s.id, "citation": s.citation, "subtopic_id": s.subtopic_id, "url": s.url,
+            "risk_level": s.risk_level, "note": s.risk_note, "verified_on": s.verified_on,
+            "confirmed_on": s.confirmed_on, "confirmed_by": s.confirmed_by}
+
+
+def confirm_source(db: Session, source_id: str, reviewer: str, confirm: bool = True) -> dict:
+    """El administrador confirma (o deshace) que una fuente es correcta y vigente."""
+    source = db.get(Source, source_id)
+    if not source:
+        raise DiagnosticError("Fuente no encontrada", 404)
+    source.confirmed_on = datetime.now(timezone.utc).isoformat(timespec="seconds") if confirm else ""
+    source.confirmed_by = reviewer[:120] if confirm else ""
+    db.commit()
+    return _source_row(source)
+
+
 def risk_inventory(db: Session) -> dict:
     subs = db.scalars(select(Subtopic).where(Subtopic.risk_level != "ninguno").order_by(Subtopic.area_id)).all()
     srcs = db.scalars(select(Source)).all()
@@ -227,9 +244,9 @@ def risk_inventory(db: Session) -> dict:
     return {
         "subtopics": [{"id": s.id, "area_id": s.area_id, "name": s.name, "risk_level": s.risk_level,
                        "note": s.risk_note} for s in subs],
-        "sources": [{"id": s.id, "citation": s.citation, "subtopic_id": s.subtopic_id, "url": s.url,
-                     "risk_level": s.risk_level, "note": s.risk_note, "verified_on": s.verified_on}
-                    for s in srcs if s.risk_level != "ninguno" or not s.verified_on],
+        "sources": [_source_row(s) for s in srcs if (s.risk_level != "ninguno" or not s.verified_on)
+                    and not s.confirmed_on],
+        "confirmed": [_source_row(s) for s in srcs if s.confirmed_on],
         "questions": [{"id": q.id, "subtopic_id": q.subtopic_id, "level": q.level, "risk_level": q.risk_level,
                        "note": q.risk_note, "status": q.status} for q in qs],
     }

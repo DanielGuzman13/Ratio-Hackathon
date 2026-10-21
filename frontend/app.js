@@ -1125,16 +1125,43 @@ function questionCard(q, { review = false } = {}) {
 
 async function tabRisks(body) {
   const r = await api("/teacher/risks");
+  const order = { alta: 0, media: 1, baja: 2, ninguno: 3 };
+  r.sources.sort((a, b) => (order[a.risk_level] ?? 3) - (order[b.risk_level] ?? 3));
+  const safe = r.sources.filter((s) => s.risk_level === "ninguno");
+  const link = (s) => (s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.citation)}</a>` : esc(s.citation));
+  const risk = (s) => `<span class="badge b-${s.risk_level === "ninguno" ? "baja" : esc(s.risk_level)}">${s.risk_level === "ninguno" ? "sin riesgo" : `riesgo ${esc(s.risk_level)}`}</span>`;
   body.innerHTML = html`
   <div class="stack">
     <div class="card"><h3>Temas en transición normativa</h3>
       <ul class="flags">${r.subtopics.map((s) => html`<li class="sev-${esc(s.risk_level)}"><strong>${esc(s.name)}</strong> (${esc(s.area_id)}): ${esc(s.note)}</li>`).join("")}</ul></div>
-    <div class="card table-wrap"><h3>Fuentes con riesgo o por verificar</h3>
-      <table class="list"><thead><tr><th>Fuente</th><th>Riesgo</th><th>Verificada</th></tr></thead><tbody>
-      ${r.sources.map((s) => html`<tr><td>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.citation)}</a>` : esc(s.citation)}<br><small>${esc(s.note)}</small></td>
-        <td><span class="badge b-${s.risk_level === "ninguno" ? "baja" : esc(s.risk_level)}">${esc(s.risk_level)}</span></td><td>${esc(s.verified_on || "pendiente")}</td></tr>`).join("")}
-      </tbody></table></div>
+    <div class="card stack"><div class="row between"><h3>Fuentes por verificar</h3><span class="badge b-review">${r.sources.length} pendientes</span></div>
+      <p class="muted" style="margin:0">Abre el enlace, confirma que la norma o sentencia es correcta y vigente, y márcala como verificada. Sale de esta lista y deja de pedir revisión en los informes nuevos. Las de riesgo alto o medio van primero.</p>
+      ${safe.length ? html`<div><button class="btn btn-small btn-ghost" type="button" id="confirm-safe">✓ Marcar como verificadas las ${safe.length} fuentes sin riesgo</button></div>` : ""}
+      ${r.sources.length ? r.sources.map((s) => html`<div class="check-item src-item">
+        <div><strong>${link(s)}</strong> ${risk(s)}${s.note ? `<br><small class="muted">${esc(s.note)}</small>` : ""}</div>
+        <button class="btn btn-small" type="button" data-confirm="${esc(s.id)}">✓ Fuente verificada</button></div>`).join("")
+        : '<div class="empty">No hay fuentes pendientes por verificar.</div>'}</div>
+    <details class="card"><summary>Fuentes ya verificadas por un administrador (${r.confirmed.length})</summary>
+      <div class="stack" style="margin-top:.6rem">${r.confirmed.map((s) => html`<div class="check-item src-item">
+        <div><strong>${link(s)}</strong><br><small class="muted">Verificada por ${esc(s.confirmed_by || "administrador")} · ${fmtDate(s.confirmed_on)}</small></div>
+        <button class="btn btn-small btn-ghost" type="button" data-unconfirm="${esc(s.id)}">Deshacer</button></div>`).join("")}</div></details>
   </div>`;
+  const act = (attr, confirm, msg) => body.querySelectorAll(`[${attr}]`).forEach((b) => b.addEventListener("click", async () => {
+    b.disabled = true;
+    try { await api(`/teacher/sources/${encodeURIComponent(b.getAttribute(attr))}/confirm`, { method: "POST", body: { confirm } }); toast(msg); tabRisks(body); }
+    catch (e) { toast(e.message); b.disabled = false; }
+  }));
+  act("data-confirm", true, "Fuente marcada como verificada");
+  const all = document.getElementById("confirm-safe");
+  if (all) all.onclick = async () => {
+    all.disabled = true; all.textContent = "Marcando…";
+    try {
+      for (const s of safe) await api(`/teacher/sources/${encodeURIComponent(s.id)}/confirm`, { method: "POST", body: { confirm: true } });
+      toast(`${safe.length} fuentes marcadas como verificadas`);
+    } catch (e) { toast(e.message); }
+    tabRisks(body);
+  };
+  act("data-unconfirm", false, "Fuente devuelta a la lista de pendientes");
 }
 
 function aiBatchesHtml(batches) {

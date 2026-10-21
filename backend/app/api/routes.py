@@ -9,7 +9,7 @@ from ..auth import read_token
 from ..config import settings
 from ..db import get_db
 from ..models import User
-from ..schemas import AnswerIn, DecisionIn, DeleteAccountIn, GenerateIn, GoogleIn, LoginIn, PasswordIn, ProfileIn, RegisterIn, ReviewIn
+from ..schemas import AnswerIn, DecisionIn, DeleteAccountIn, GenerateIn, GoogleIn, LoginIn, PasswordIn, ProfileIn, RegisterIn, ReviewIn, SourceConfirmIn
 from ..services import diagnostic, mailer, teacher, users
 from ..security import enforce
 from ..services.diagnostic import DiagnosticError
@@ -216,3 +216,9 @@ def teacher_decision(question_id: str, body: DecisionIn, _: User = Depends(admin
 @docente.get("/risks")
 def teacher_risks(_: User = Depends(admin_user), db: Session = Depends(get_db)):
     return teacher.risk_inventory(db)
+
+
+@docente.post("/sources/{source_id}/confirm")
+def teacher_confirm_source(source_id: str, body: SourceConfirmIn, admin: User = Depends(admin_user),
+                           db: Session = Depends(get_db)):
+    return _run(teacher.confirm_source, db, source_id, admin.name or admin.email, body.confirm)
